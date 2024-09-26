@@ -19,15 +19,15 @@
         </div>
         <div class="right-section">
             <h2>Entrar</h2>
-            <form>
+            <form action="" method="get">
                 <div class="input-container">
                     <label for="email">E-mail:</label>
-                    <input type="email" id="email" placeholder="exemplo@gmail.com">
+                    <input name="email" type="email" id="email" placeholder="exemplo@gmail.com">
                 </div>
                 <!-- Campo de Senha -->
                 <div class="input-container">
                     <label for="password">Senha:</label>
-                    <input type="password" id="password" placeholder="******">
+                    <input name="password" type="password" id="password" placeholder="******">
                     <span id="toggle-password" class="toggle-icon">
                         <i class="fas fa-eye"></i>
                     </span>
@@ -44,5 +44,13 @@
             </form>
         </div>
     </div>
+    <?php
+    if(isset($_GET['email']) && isset($_GET['password'])){
+        $email = $_GET['email'];
+        $password = $_GET['password'];
+        echo $email . $password;
+    }
+    
+    ?>
 </body>
 </html>
