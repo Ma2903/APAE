@@ -1,3 +1,7 @@
+<?php
+    require_once __DIR__ . "/../../../controller/userController.php";
+    $userController = new ControladorUsuarios();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -48,7 +52,9 @@
     if(isset($_GET['email']) && isset($_GET['password'])){
         $email = $_GET['email'];
         $password = $_GET['password'];
-        echo $email . $password;
+        $userController->logarUsuarios($email,$password);
+
+        // var_dump($_SESSION['user']);
     }
     
     ?>
