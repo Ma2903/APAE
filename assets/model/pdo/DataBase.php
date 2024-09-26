@@ -35,49 +35,57 @@ class Database {
         }
     }
 
-    public function update($table, $data, $where) {
-        $fields = "";
+public function update($table, $data, $id) {
+    $fields = "";
+    foreach ($data as $key => $value) {
+        $fields .= "$key = :$key, ";
+    }
+    $fields = rtrim($fields, ", ");
+    $sql = "UPDATE $table SET $fields WHERE id = :id";
+    
+    try {
+        $stmt = $this->conn->prepare($sql);
         foreach ($data as $key => $value) {
-            $fields .= "$key = :$key, ";
+            $stmt->bindValue(":$key", $value);
         }
-        $fields = rtrim($fields, ", ");
-        $sql = "UPDATE $table SET $fields WHERE $where";
-        
-        try {
-            $stmt = $this->conn->prepare($sql);
-            foreach ($data as $key => $value) {
-                $stmt->bindValue(":$key", $value);
-            }
-            return $stmt->execute();
-        } catch (PDOException $exception) {
-            echo "Erro ao atualizar: " . $exception->getMessage();
-            return false;
-        }
+        $stmt->bindValue(":id", $id);
+        return $stmt->execute();
+    } catch (PDOException $exception) {
+        echo "Erro ao atualizar: " . $exception->getMessage();
+        return false;
     }
+} 
 
-    public function delete($table, $where) {
-        $sql = "DELETE FROM $table WHERE $where";
-        
-        try {
-            $stmt = $this->conn->prepare($sql);
-            return $stmt->execute();
-        } catch (PDOException $exception) {
-            echo "Erro ao deletar: " . $exception->getMessage();
-            return false;
-        }
+public function delete($table, $id) {
+    $sql = "DELETE FROM $table WHERE id = :id";
+    
+    try {
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(":id", $id);
+        return $stmt->execute();
+    } catch (PDOException $exception) {
+        echo "Erro ao deletar: " . $exception->getMessage();
+        return false;
     }
+}
 
-    public function read($table, $columns = "*", $where = "1") {
-        $sql = "SELECT $columns FROM $table WHERE $where";
-        
-        try {
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $exception) {
-            echo "Erro ao ler: " . $exception->getMessage();
-            return false;
-        }
+public function read($table, $columns = "*", $id = null) {
+    $sql = "SELECT $columns FROM $table";
+    if ($id !== null) {
+        $sql .= " WHERE id = :id";
     }
+    
+    try {
+        $stmt = $this->conn->prepare($sql);
+        if ($id !== null) {
+            $stmt->bindValue(":id", $id);
+        }
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $exception) {
+        echo "Erro ao ler: " . $exception->getMessage();
+        return false;
+    }
+}
 }
 ?>
