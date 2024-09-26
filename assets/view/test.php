@@ -1,9 +1,6 @@
 <?php
 require_once __DIR__ . '/../controller/produtoController.php';
 $controlador = new ControladorProdutos();
-
-$controlador->cadastrarProdutos();
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,8 +11,24 @@ $controlador->cadastrarProdutos();
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 </head>
 <body>
-    <input type="text" name="nome" id="nome">
-    <input type="text" name="preco" id="preco">
-    <input type="text">
+    <form action="" method="get">
+        <input type="text" name="nome" id="nome">
+        <input type="text" name="categoria" id="categoria">
+        <input type="text" name="unidade_medida" id="unidade_medida">
+        <input type="date" name="dt_criacao" id="dt_criacao">
+        <input type="submit" value="Cadastrar">
+    </form>
+    <?php
+    // Cadastrar Produtos
+
+    // if (isset($_GET['nome']) && isset($_GET['categoria']) && isset($_GET['unidade_medida']) && isset($_GET['dt_criacao'])) {
+    //     $nome = $_GET['nome'];
+    //     $categoria = $_GET['categoria'];
+    //     $un = $_GET['unidade_medida'];
+    //     $dt_criacao = $_GET['dt_criacao'];
+
+    //     $controlador->cadastrarProdutos($nome, $categoria, $un, $dt_criacao);
+    // }
+    ?>
 </body>
 </html>
