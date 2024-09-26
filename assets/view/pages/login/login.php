@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - APAE</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script defer src="script.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script defer src="../global.js"></script>
 </head>
 <body>
     <div class="container">
@@ -35,16 +36,12 @@
                 <a href="#" class="forgot-password">Esqueceu a Senha?</a>
 
                 <button type="submit">Entrar</button>
+                <p>Ou continuar com</p>
+                <div class="social-login">
+                    <i class='bx bxl-facebook-circle'> </i>
+                    <i class='bx bxl-google' ></i>
+                </div>
             </form>
-
-            <p>Ou continuar com</p>
-            <div class="social-login">
-                <!-- <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-google"></i></a> -->
-                facebook
-                apple
-                google
-            </div>
         </div>
     </div>
 </body>

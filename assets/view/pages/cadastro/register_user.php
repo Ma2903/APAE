@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro - APAE</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script defer src="script.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script defer src="../global.js"></script>
 </head>
 <body>
     <div class="container">
@@ -101,9 +102,8 @@
 
             <p>Ou Continue Com</p>
             <div class="social-icons">
-                <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
-                <a href="#"><img src="apple-icon.png" alt="Apple"></a>
-                <a href="#"><img src="google-icon.png" alt="Google"></a>
+                 <i class='bx bxl-facebook-circle'> </i>
+                 <i class='bx bxl-google' ></i>
             </div>
         </div>
     </div>

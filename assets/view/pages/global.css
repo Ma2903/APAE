@@ -1,0 +1,220 @@
+/* Reset de margens e paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Estilos gerais do body */
+body {
+    background-color: #ffffff;
+    height: 100vh;
+}
+
+/* Container principal para ambas as páginas */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 250px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Seções à esquerda */
+.left-section {
+    flex: 1;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.left-section .logo {
+    width: 20%;
+    position: absolute;
+    margin: 50px;
+    top: 0;
+    left: 0%;
+    right: 0%;
+}
+
+.left-section h1, .left-section h2 {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 10px 0 20px 0; 
+    color: #000;
+}
+
+.left-section p {
+    font-size: 1.2em;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.left-section a {
+    color: #3b49df;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1em;
+}
+
+.left-section .login-link {
+    color: #3b49df;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1em;
+}
+
+/* Seção à direita */
+.right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: white;
+    padding: 60px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.register-link {
+    color: #2a3e85;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1em;
+}
+
+.forgot-password{
+    text-align: right;
+    color: #2a3e85;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1em;
+}
+
+.right-section h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #000;
+}
+
+.right-section p {
+    color: #bebcaf;
+    font-size: 1em;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Estilos gerais dos formulários */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+label {
+    margin: 10px;
+    font-size: 1rem;
+    width: 10%;
+}
+
+input, select {
+    width: 86%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f3f3f3;
+    font-size: 1rem;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+input:focus, select:focus {
+    background-color: #eaeaea;
+}
+
+/* Estilos para containers de input */
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* Estilo para o ícone de alternância */
+.toggle-icon {
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+}
+
+.toggle-icon i {
+    transition: color 0.3s;
+}
+
+.toggle-icon:hover i {
+    color: #000;
+}
+
+/* Estilos para botões */
+button {
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: #2a3e85;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color:  #3e9bd4;
+}
+
+.forgot-password:hover{
+    color: #3e9bd4;
+}
+
+/* Estilos para os ícones de login social */
+.social-icons, .social-login {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.social-login i , .social-icons i {
+    margin: 0 10px;
+    font-size: 2em;
+    color: #2a3e85;
+    text-decoration: none;
+}
+
+.social-login i:hover, .social-icons i:hover {
+    color: #3e9bd4;
+}
+
+input:focus{
+    border-color: #2a3e85; /* Cor da borda ao focar */
+    box-shadow: 0 0 5px rgba(42, 62, 133, 0.5); /* Sombra ao focar */
+    outline: none; /* Remove o contorno padrão */
+}
