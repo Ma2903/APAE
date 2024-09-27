@@ -6,18 +6,18 @@ class Fornecedor {
     private $telefone;
     private $whatsapp;
     private $email;
-    private $ramo;
-    private $dt_criacao;
+    private $ramo_atuacao;
+    private $data_criacao;
 
-    public function __construct($id, $nome, $endereco, $telefone, $whatsapp, $email, $ramo, $dt_criacao) {
+    public function __construct($id, $nome, $endereco, $telefone, $whatsapp, $email, $ramo_atuacao, $data_criacao) {
         $this->id = $id;
         $this->nome = $nome;
         $this->endereco = $endereco;
         $this->telefone = $telefone;
         $this->whatsapp = $whatsapp;
         $this->email = $email;
-        $this->ramo = $ramo;
-        $this->dt_criacao = $dt_criacao;
+        $this->ramo_atuacao = $ramo_atuacao;
+        $this->daata_criacao = $data_criacao;
     }
 
     public function getId() {
@@ -72,16 +72,16 @@ class Fornecedor {
         return $this->ramo;
     }
 
-    public function setRamo($ramo) {
-        $this->ramo = $ramo;
+    public function setRamo($ramo_atuacao) {
+        $this->ramo_atuacao = $ramo_atuacao;
     }
 
-    public function getDtCriacao() {
-        return $this->dt_criacao;
+    public function getDataCriacao() {
+        return $this->data_criacao;
     }
 
-    public function setDtCriacao($dt_criacao) {
-        $this->dt_criacao = $dt_criacao;
+    public function setDataCriacao($data_criacao) {
+        $this->data_criacao = $data_criacao;
     }
 }
 ?>
