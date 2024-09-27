@@ -1,0 +1,70 @@
+@import url('global.css');
+
+body {
+    display: flex;
+    flex-direction: column; /* Layout flexível na vertical */
+    min-height: 100vh;
+}
+
+.container {
+    display: flex; /* Layout flexível na horizontal */
+    flex: 1; /* Permite que o container ocupe o espaço restante */
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #2a3e85;
+    color: #fff;
+    padding: 20px;
+    position: absolute;
+    left: 0%;
+    top: 15%;
+    height: 85%;
+    display: none;
+
+}
+
+.sidebar .menu-item a {
+    text-decoration: none;
+    display: block;
+    padding: 10px 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.menu-item {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    background-color: #3e9bd4; /* Azul claro */
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.menu-item a {
+    text-decoration: none;
+    color: #ffffff; /* Cor do texto do menu */
+    font-weight: bold;
+}
+
+.menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Branco transparente suave */
+}

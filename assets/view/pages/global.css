@@ -12,6 +12,66 @@ body {
     height: 100vh;
 }
 
+header {
+    background-color: #2a3e85;
+    color: #fff;
+    padding: 10px 20px;
+    height: 15%;
+    width: 100%;
+    align-items: center;
+    display: flex;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+    margin-right: 10px; /* Espaço entre a logo e o nome do sistema */
+}
+
+.system-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffffff; /* Cor do nome do sistema */
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info span {
+    margin-right: 15px;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.header-container {
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logout-btn {
+    background-color: #d9534f; /* Vermelho */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: #c9302c; /* Vermelho mais escuro */
+}
+
 /* Container principal para ambas as páginas */
 .container {
     display: flex;
@@ -217,4 +277,14 @@ input:focus{
     border-color: #2a3e85; /* Cor da borda ao focar */
     box-shadow: 0 0 5px rgba(42, 62, 133, 0.5); /* Sombra ao focar */
     outline: none; /* Remove o contorno padrão */
+}
+
+footer {
+    text-align: center;
+    padding: 20px; /* Aumenta a altura do footer */
+    background-color: #2a3e85; /* Cor azul */
+    color: #fff; /* Cor do texto branco para contraste */
+    width: 100%;
+    position: fixed;
+    bottom: 0;
 }
