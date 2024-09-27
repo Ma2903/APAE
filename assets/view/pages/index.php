@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartControl - Menu Principal</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,7 +15,12 @@
                 <h1 class="system-name">SmartControl</h1>
             </div>
             <div class="user-info">
-                <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
+                <span class="notification">
+                    <i class='bx bxs-bell'></i>
+                </span>
+                <span class="username">
+                    <!-- <?php echo $user['nome']; ?> -->
+                </span>
                 <a href="logout.php" class="logout-btn">Sair</a>
             </div>
         </div>

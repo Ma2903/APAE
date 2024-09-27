@@ -29,6 +29,26 @@ body {
     display: none;
 
 }
+.user-info{
+    background: red;
+    height: 100%;
+}
+.user-info .notification{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background: yellow;
+    padding: 20px;
+    font-size: 24px;
+    border-radius: 50%;
+}
+.user-info .username{
+    width: 100px;
+    height: 100%;
+    background: blue;
+}
 
 .sidebar .menu-item a {
     text-decoration: none;
