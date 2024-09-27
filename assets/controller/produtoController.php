@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../model/pdo/DataBase.php';
+require_once __DIR__ .'/../model/produto.php';
 
 class ControladorProdutos{
     private $bd;
@@ -15,23 +16,24 @@ class ControladorProdutos{
         ]);
     }
     public function verProdutos(){
-        
+        $todosProdutos = $this->bd->read("produtos");
+        $arr = [];
+        foreach($todosProdutos as $produto){
+            $novoProduto = new Produto($produto['id'], $produto['nome'], $produto['categoria'], $produto['unidade_medida'], $produto['data_criacao']);
+            $arr[] = $novoProduto;
+        }
+        return $arr;
     }
-    public function editarProdutos(){
-
-    }
+    public function editarProdutos($idParaEditar, $nome, $categoria, $un){
+            $this->bd->update('produtos', (object)[
+                'nome'=> $nome,
+                'categoria'=> $categoria,
+                'unidade_medida'=> $un,
+            ],$idParaEditar);
+        }
     public function deletarProdutos($id){
         $this->bd->delete("produtos", $id);
     }
     
 }
-
-    // $db = new Database();
-    // $conn = $db->getConnection();
-    // $result = $db->insert("usuarios", (object)["nome" => "teste"]);
-    // if ($result) {
-    //     echo "Inserido com sucesso. ID: " . $result;
-    // } else {
-    //     echo "Falha na inserção.";
-    // }
 ?>

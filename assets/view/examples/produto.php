@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../controller/produtoController.php';
+require_once __DIR__ . '/../../controller/produtoController.php';
 $controlador = new ControladorProdutos();
 ?>
 <!DOCTYPE html>
@@ -29,6 +29,19 @@ $controlador = new ControladorProdutos();
 
     //     $controlador->cadastrarProdutos($nome, $categoria, $un, $dt_criacao);
     // }
+
+    // Ver Produtos
+
+    // $produtos = $controlador->verProdutos();
+
+    // echo "<pre>";
+    // var_dump( $produtos );
+    // echo "</pre>";
+
+    // Editar Produtos
+
+
+    // $controlador->editarProdutos(1, "Produto Editado", "Categoria Editada", "CX");
     ?>
 </body>
 </html>
