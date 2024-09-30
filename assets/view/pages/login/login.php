@@ -19,11 +19,11 @@
             <img src="../../../../src/logo0.jpg" alt="Logo" class="logo">
             <h2>Bem Vindo!</h2>
             <p>Se você não tem uma conta registre-se!</p>
-            <a href="../cadastro/register_user.php" class="register-link">Registrar Aqui!</a>
+            <a href="../cadastroUsuario/register_user.php" class="register-link">Registrar Aqui!</a>
         </div>
         <div class="right-section">
             <h2>Entrar</h2>
-            <form action="" method="get">
+            <form action="" method="POST">
                 <div class="input-container">
                     <label for="email">E-mail:</label>
                     <input name="email" type="email" id="email" placeholder="exemplo@gmail.com">
@@ -37,7 +37,7 @@
                     </span>
                 </div>
 
-                <a href="#" class="forgot-password">Esqueceu a Senha?</a>
+                <a href="../redefinirSenha/RedefinirSenha.php" class="forgot-password">Esqueceu a Senha?</a>
 
                 <button type="submit">Entrar</button>
                 <p>Ou continuar com</p>

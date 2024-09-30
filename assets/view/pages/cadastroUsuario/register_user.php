@@ -13,68 +13,59 @@
     <div class="container">
         <div class="left-section">
             <img src="../../../../src/logo0.jpg" alt="APAE Logo" class="logo">
-            <h1>Cadastre-se</h1>
+            <h1>Cadastrar</h1>
             <p>Se você já tem uma conta</p>
             <p>Você pode <a href="../login/login.php" class="login-link">Entrar Aqui!</a></p>
         </div>
         <div class="right-section">
-            <h2>Cadastrar-se</h2>
+            <h2>Cadastrar</h2>
             <form method="POST" action="../controller/UserController.php?action=register">
                 <!-- Campo CPF -->
                 <div class="input-container">
-                <label for="email">Digite seu CPF:</label>
+                <label for="email">Digite o CPF:</label>
                     <input type="text" name="cpf" placeholder="CPF" required>
                 </div>
                 
                 <!-- Campo Nome -->
                 <div class="input-container">
-                <label for="email">Digite seu Nome:</label>
+                <label for="email">Digite o Nome:</label>
                     <input type="text" name="nome" placeholder="Nome" required>
                 </div>
                 
                 <!-- Campo Sobrenome -->
                 <div class="input-container">
-                <label for="email">Digite seu Sobrenome:</label>
+                <label for="email">Digite o Sobrenome:</label>
                     <input type="text" name="sobrenome" placeholder="Sobrenome" required>
                 </div>
                 
                 <!-- Campo Data de Nascimento -->
                 <div class="input-container">
-                <label for="email">Digite sua Data de Nascimento:</label>
+                <label for="email">Digite a Data de Nascimento:</label>
                     <input type="date" name="data_nascimento" required>
                 </div>
                 
                 <!-- Campo Endereço -->
                 <div class="input-container">
-                <label for="endereco">Digite seu Endereço:</label>
+                <label for="endereco">Digite o Endereço:</label>
                     <input type="text" name="endereco" placeholder="Endereço">
                 </div>
                 
                 <!-- Campo Telefone -->
                 <div class="input-container">
-                <label for="telefone">Digite seu Telefone:</label>
+                <label for="telefone">Digite o Telefone:</label>
                     <input type="tel" name="telefone" placeholder="Telefone">
                 </div>
                 
                 <!-- Campo E-mail -->
                 <div class="input-container">
-                <label for="email">Digite seu E-mail:</label>
+                <label for="email">Digite o E-mail:</label>
                     <input type="email" name="email" placeholder="E-mail" required>
                 </div>
                 
                 <!-- Campo de Senha -->
                 <div class="input-container">
-                    <label for="password">Digite sua Senha:</label>
+                    <label for="password">Digite a Senha:</label>
                     <input type="password" id="password" placeholder="******">
-                    <span id="toggle-password" class="toggle-icon">
-                        <i class="fas fa-eye"></i>
-                    </span>
-                </div>
-
-                <!-- Campo Confirmar Senha -->
-                <div class="input-container">
-                    <label for="password">Confirmar Senha:</label>
-                    <input type="password" id="confirm-password" placeholder="******" required>
                     <span id="toggle-password" class="toggle-icon">
                         <i class="fas fa-eye"></i>
                     </span>
@@ -82,7 +73,7 @@
 
                 <!-- Campo Tipo de Usuário -->
                 <div class="input-container">
-                <label for="tipo_usuario">Selecione o seu Cargo:</label>
+                <label for="tipo_usuario">Selecione o Cargo:</label>
                     <select name="tipo_usuario" required>
                         <option value="administrador">Administrador</option>
                         <option value="funcionario">Funcionário</option>
@@ -92,7 +83,7 @@
 
                 <!-- Campo CRN (Somente Nutricionistas) -->
                 <div class="input-container">
-                <label for="CRN">Digite seu CRN:</label>
+                <label for="CRN">Digite o CRN:</label>
                     <input type="text" name="crn" placeholder="CRN (Somente Nutricionistas)">
                 </div>
                 

@@ -28,7 +28,7 @@ header {
 }
 
 .logo {
-    height: 50px;
+    height: 150px;
     width: auto;
     margin-right: 10px; /* Espaço entre a logo e o nome do sistema */
 }
@@ -115,37 +115,35 @@ header {
 }
 
 .left-section a {
-    color: #3b49df;
+    color: #2a3e85;
     font-weight: bold;
     text-decoration: none;
     font-size: 1em;
 }
 
 .left-section .login-link {
-    color: #3b49df;
+    color: #2a3e85;
     font-weight: bold;
     text-decoration: none;
     font-size: 1em;
 }
 
+.left-section a:hover , .left-section .login-link:hover {
+    color: #3e9bd4;
+}
+
 /* Seção à direita */
 .right-section {
-    flex: 1;
+    width: 50%;
+    height: 85%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     background-color: white;
-    padding: 60px;
+    padding: 30px;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.register-link {
-    color: #2a3e85;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 1em;
 }
 
 .forgot-password{
@@ -205,7 +203,6 @@ input:focus, select:focus {
     position: relative;
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 .toggle-password {

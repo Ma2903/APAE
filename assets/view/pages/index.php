@@ -3,59 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartControl - Menu Principal</title>
+    <title>Login - APAE</title>
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="style.css">
+    <script defer src="../global.js"></script>
 </head>
 <body>
-    <header>
-        <div class="header-container">
-            <div class="logo-container">
-                <img src="../../../src/logo0.jpg" alt="Logo do SmartControl" class="logo">
-                <h1 class="system-name">SmartControl</h1>
-            </div>
-            <div class="user-info">
-                <span class="notification">
-                    <i class='bx bxs-bell'></i>
-                </span>
-                <span class="username">
-                    <!-- <?php echo $user['nome']; ?> -->
-                </span>
-                <a href="logout.php" class="logout-btn">Sair</a>
-            </div>
-        </div>
-    </header>
-
     <div class="container">
-        <div class="sidebar">
-            <h2>Menu</h2>
-            <div class="menu">
-                <div class="menu-item">
-                    <a href="user_management.php">Gerenciar Usuários</a>
-                </div>
-                <div class="menu-item">
-                    <a href="product_management.php">Gerenciar Produtos</a>
-                </div>
-                <div class="menu-item">
-                    <a href="supplier_management.php">Gerenciar Fornecedores</a>
-                </div>
-                <div class="menu-item">
-                    <a href="quotation_management.php">Gerenciar Cotações</a>
-                </div>
-                <div class="menu-item">
-                    <a href="menu_management.php">Gerenciar Cardápios</a>
-                </div>
-            </div>
+        <div class="left-section">
+            <img src="../../../src/logo0.jpg" alt="Logo" class="logo">
+            <h2>Bem Vindo!</h2>
+            <p>Se você não tem uma conta, registre-se!</p>
+            <a href="cadastroUsuario/register_user.php" class="register-link">Registrar Aqui!</a>
         </div>
-        <div class="main-content">
-            <h2>Bem-vindo ao SmartControl</h2>
-            <p>Este é o sistema principal para gerenciar cotações e cardápios. Utilize o menu à esquerda para navegar pelas diferentes funcionalidades do sistema.</p>
-            <img src="../assets/images/welcome_image.jpg" alt="Imagem de boas-vindas" style="max-width: 100%; height: auto;">
+        <div class="right-section">
+            <h2>Entrar</h2>
+            <!-- Altere o método para POST -->
+            <form action="" method="post">
+                <div class="input-container">
+                    <label for="email">E-mail:</label>
+                    <input name="email" type="email" id="email" placeholder="exemplo@gmail.com">
+                </div>
+                <!-- Campo de Senha -->
+                <div class="input-container">
+                    <label for="password">Senha:</label>
+                    <input name="password" type="password" id="password" placeholder="******">
+                    <span id="toggle-password" class="toggle-icon">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
+
+                <a href="#" class="forgot-password">Esqueceu a Senha?</a>
+
+                <button type="submit">Entrar</button>
+                <p>Ou continuar com</p>
+                <div class="social-login">
+                    <i class='bx bxl-facebook-circle'> </i>
+                    <i class='bx bxl-google' ></i>
+                </div>
+            </form>
+            <?php
+            // Exiba mensagem de erro (se necessário)
+            if(isset($_POST['email']) && isset($_POST['password'])){
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                
+                // Verificar login
+                if($userController->logarUsuarios($email, $password)){
+                    // Redirecionar após login bem-sucedido
+                    header("Location: /dashboard.php");
+                    exit();
+                } else {
+                    echo "<p class='error'>E-mail ou senha inválidos.</p>";
+                }
+            }
+            ?>
         </div>
     </div>
-
-    <footer>
-        <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
-    </footer>
 </body>
 </html>
