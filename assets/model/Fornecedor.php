@@ -17,7 +17,7 @@ class Fornecedor {
         $this->whatsapp = $whatsapp;
         $this->email = $email;
         $this->ramo_atuacao = $ramo_atuacao;
-        $this->daata_criacao = $data_criacao;
+        $this->data_criacao = $data_criacao;
     }
 
     public function getId() {
@@ -69,7 +69,7 @@ class Fornecedor {
     }
 
     public function getRamo() {
-        return $this->ramo;
+        return $this->ramo_atuacao;
     }
 
     public function setRamo($ramo_atuacao) {

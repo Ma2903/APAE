@@ -1,3 +1,7 @@
+<?php
+    require_once __DIR__ . "/../../../controller/produtoController.php";
+    $controler = new ControladorProdutos();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -10,7 +14,7 @@
 <header>
     <div class="header-container">
         <div class="logo-container">
-            <img src="../../../../../src/logo0.jpg" alt="Logo do SmartControl" class="logo">
+            <img src="../../../../src/logo0.jpg" alt="Logo do SmartControl" class="logo">
             <h1 class="system-name">SmartControl</h1>
         </div>
         <div class="user-info">
@@ -20,7 +24,7 @@
     </div>
 </header>
 <main>
-    <h1>Listar Produtos</h1>
+    <h1>Listar Produtos</h1>    
     <table>
         <thead>
             <tr>
@@ -35,18 +39,17 @@
         <tbody>
             <!-- Aqui você deve adicionar o código PHP para listar os produtos -->
             <?php
-            // Exemplo de código PHP para listar produtos
-            // $produtos = obterProdutos(); // Função fictícia para obter produtos do banco de dados
-            // foreach ($produtos as $produto) {
-            //     echo "<tr>";
-            //     echo "<td>{$produto['id']}</td>";
-            //     echo "<td>{$produto['nome']}</td>";
-            //     echo "<td>{$produto['categoria']}</td>";
-            //     echo "<td>{$produto['unidade_medida']}</td>";
-            //     echo "<td>{$produto['data_criacao']}</td>";
-            //     echo "<td><a href='editProduto.php?id={$produto['id']}'>Editar</a></td>";
-            //     echo "</tr>";
-            // }
+            $produtos = $controler->verProdutos(); // Função fictícia para obter produtos do banco de dados
+            foreach ($produtos as $produto) {
+                echo "<tr>";
+                echo "<td>{$produto->getId()}</td>";
+                echo "<td>{$produto->getNome()}</td>";
+                echo "<td>{$produto->getCategoria()}</td>";
+                echo "<td>{$produto->getUn()}</td>";
+                echo "<td>{$produto->getDtCriacao()}</td>";
+                echo "<td><a href='./editarProduto?id={$produto->getId()}'>Editar</a></td>";
+                echo "</tr>";
+            }
             ?>
         </tbody>
     </table>

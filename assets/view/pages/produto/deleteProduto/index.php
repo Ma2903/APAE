@@ -1,3 +1,7 @@
+<?php
+    require_once __DIR__ . "/../../../../controller/produtoController.php";
+    $controler = new ControladorProdutos();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -25,6 +29,14 @@
             <div>
                 <label for="produto_id">Selecione o Produto:</label>
                 <select id="produto_id" name="produto_id" required>
+                    <?php
+                        $produtos = $controler->verProdutos();
+                        
+                        foreach ($produtos as $produto){
+                            echo "<option value =".$produto->getId()." >".$produto->getNome()."";
+                        }
+                    
+                    ?>
                 </select>
             </div>
             <div>

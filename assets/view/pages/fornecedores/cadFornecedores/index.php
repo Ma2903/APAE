@@ -1,0 +1,48 @@
+<?php
+    require_once __DIR__ . "/../../../../controller/fornecedorController.php";
+    $controler = new ControladorFornecedor();
+?>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Fornecedor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Cadastrar Fornecedor</h2>
+    <form action="" method="POST">
+        <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $nome = $_POST['nome'];
+                $endereco = $_POST['endereco'];
+                $telefone = $_POST['telefone'];
+                $whatsapp = $_POST['whatsapp'];
+                $email = $_POST['email'];
+                $ramo_atuacao = $_POST['ramo_atuacao'];
+                date_default_timezone_set('America/Sao_Paulo');
+                $data_criacao = date("Y-m-d H:i:s");
+
+                if (!empty($nome) && !empty($endereco) && !empty($telefone) && !empty($whatsapp) && !empty($email) && !empty($ramo_atuacao)) {
+                    $controler->cadastrarFornecedor($nome, $endereco, $telefone, $whatsapp, $email, $ramo_atuacao ,$data_criacao);
+                    header("Location: index.php");
+                }
+            }
+        ?>
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" required>
+        <label for="endereco">Endereço:</label>
+        <input type="text" name="endereco">
+        <label for="telefone">Telefone:</label>
+        <input type="text" name="telefone">
+        <label for="whatsapp">WhatsApp:</label>
+        <input type="text" name="whatsapp">
+        <label for="email">E-mail:</label>
+        <input type="email" name="email">
+        <label for="ramo_atuacao">Ramo de Atuação:</label>
+        <input type="text" name="ramo_atuacao">
+        <button type="submit">Cadastrar</button>
+    </form>
+</body>
+</html>
