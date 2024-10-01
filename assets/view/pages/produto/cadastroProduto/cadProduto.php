@@ -8,19 +8,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Produto</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <header>
-        <div class="header-container">
-            <div class="logo-container">
-                <img src="../../../../../src/logo0.jpg" alt="Logo do SmartControl" class="logo">
+        <section class="header-container">
+            <section class="logo-container">
+            <img src="../../../../../src/logo_sem_fundo.png" alt="Logo do SmartControl" class="logo">
                 <h1 class="system-name">SmartControl</h1>
-            </div>
-            <div class="user-info">
-                <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
-                <a href="logout.php" class="logout-btn">Sair</a>
-            </div>
-        </div>
+            </section>
+            <section class="user-info">
+            <a href="../../index.php" class="home-btn">Home</a>
+            <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
+            <a href="logout.php" class="logout-btn">Sair</a>
+        </section>
+        </section>
     </header>
 <body>
     <main>
@@ -35,18 +36,18 @@
 
             if (!empty($nome) && !empty($categoria) && !empty($unidade_medida) && !empty($data_criacao)) {
                 $controler->cadastrarProdutos($nome, $categoria, $unidade_medida, $data_criacao);
-                header("Location: index.php");
+                header("Location: ../listarProduto/listarProduto.php");
             } else {
             echo "<p>Por favor, preencha todos os campos.</p>";
             }
         }
         ?>
         <form action="" method="post">
-            <div>
+            <section>
             <label for="nome">Nome do Produto:</label>
             <input type="text" id="nome" name="nome" required>
-            </div>
-            <div>
+            </section>
+            <section>
             <label for="categoria">Categoria:</label>
             <select id="categoria" name="categoria" required>
                 <option value="Frutas">Frutas</option>
@@ -58,8 +59,8 @@
                 <option value="Frios">Frios</option>
                 <option value="Outros">Outros</option>
             </select>
-            </div>
-            <div>
+            </section>
+            <section>
             <label for="unidade_medida">Unidade de Medida:</label>
             <select id="unidade_medida" name="unidade_medida" required>
                 <option value="CX">CX</option>
@@ -67,10 +68,10 @@
                 <option value="KG">KG</option>
                 <option value="SC">SC</option>
             </select>
-            </div>
-            <div>
+            </section>
+            <section>
             <button type="submit">Cadastrar Produto</button>
-            </div>
+            </section>
         </form>
     </main>
     <footer>

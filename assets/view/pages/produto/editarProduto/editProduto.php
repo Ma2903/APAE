@@ -9,40 +9,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Produto</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 <header>
-    <div class="header-container">
-        <div class="logo-container">
-            <img src="../../../../../src/logo0.jpg" alt="Logo do SmartControl" class="logo">
+    <section class="header-container">
+        <section class="logo-container">
+            <img src="../../../../../src/logo_sem_fundo.png" alt="Logo do SmartControl" class="logo">
             <h1 class="system-name">SmartControl</h1>
-        </div>
-        <div class="user-info">
+        </section>
+        <section class="user-info"></section>
             <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
             <a href="logout.php" class="logout-btn">Sair</a>
-        </div>
-    </div>
+        </section>
+    </section>
 </header>
 <main>
     <h1>Editar Produto</h1>
     <form action="" method="post">
-        <div>
+        <section>
             <label for="produto_id">Selecione o Produto:</label>
             <?php
                 echo '<input id="produto_id" name="produto_id" required disabled value="'.$_GET['id'].'">';
             ?>
-        </div>
+        </section>
         <?php
             $produtos = $controler->verProdutos();
             foreach ($produtos as $produto){
                 if($produto->getId() == $_GET['id']){
                     echo '
-                    <div>
+                    <section>
                         <label for="nome">Nome do Produto:</label>
                         <input type="text" id="nome" name="nome" required value="'.$produto->getNome().'">
-                    </div>
-                    <div>
+                    </section>
+                    <section>
                     <label for="categoria">Categoria:</label>
                     <select type="text" id="categoria" name="categoria" required>
                         <option value="Verduras"';if($produto->getCategoria() == "Verduras") echo ' selected';echo'>Verduras</option>
@@ -53,8 +53,8 @@
                         <option value="Frios"';if($produto->getCategoria() == "Frios") echo ' selected';echo'>Frios</option>
                         <option value="Outros"';if($produto->getCategoria() == "Outros") echo ' selected';echo'>Outros</option>
                     </select>
-                    </div>
-                    <div>
+                    </section>
+                    <section>
                     <label for="unidade_medida">Unidade de Medida:</label>
                     <select type="text" id="unidade_medida" name="unidade_medida" required>
                         <option value="CX"';if($produto->getUn() == "CX") echo ' selected'; echo '>CX</option>
@@ -62,19 +62,19 @@
                         <option value="KG"';if($produto->getUn() == "KG") echo ' selected'; echo '>KG</option>
                         <option value="SC"';if($produto->getUn() == "SC") echo ' selected'; echo '>SC</option>
                     </select>
-                    </div>';
+                    </section>';
                 }
             }
         ?>
-        <div>
+        <section>
             <button type="submit">Salvar Alterações</button>
-        </div>
+        </section>
         <?php
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Verifica se todos os campos estão preenchidos
                 if (!empty($_POST['nome']) && !empty($_POST['categoria']) && !empty($_POST['unidade_medida'])) {
                     $controler->editarProdutos($_GET['id'],$_POST['nome'],$_POST['categoria'],$_POST['unidade_medida']);
-                    header('Location: ../index.php');
+                    header('Location: ../listarProduto/listarProduto.php');
                 } else {
                     echo '<p>Por favor, preencha todos os campos.</p>';
                 }
