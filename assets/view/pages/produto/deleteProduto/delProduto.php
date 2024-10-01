@@ -1,3 +1,7 @@
+<?php
+    require_once __DIR__ . "/../../../../controller/produtoController.php";
+    $controler = new ControladorProdutos();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -25,14 +29,31 @@
     <p>Tem certeza que deseja excluir o seguinte produto?</p>
     
     <ul>
-        <li> </li>
+        <li>
+        <?php 
+            $produtos = $controler->verProdutos();
+            foreach ($produtos as $produto){
+                if($produto->getId() == $_GET['id']){
+                    echo $produto->getNome();
+                }
+            }
+    
+        ?>
+        </li>
     </ul>
     
-    <form method="POST" action="processaDelecao.php">
+    <form method="POST" action="">
         <input type="hidden" name="produto_id">
         <button type="submit" name="confirmar">Confirmar Exclusão</button>
         <button type="submit" name="cancelar">Cancelar</button>
     </form>
+    <?php
+    if(isset($_POST['confirmar'])){
+        $controler->deletarProdutos($_GET['id']);
+        header('Location: ../listarProduto/listarProduto.php');
+    }
+    
+    ?>
 </main>
 <footer>
     <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>

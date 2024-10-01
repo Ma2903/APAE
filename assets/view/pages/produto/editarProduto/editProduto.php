@@ -46,6 +46,7 @@
                     <label for="categoria">Categoria:</label>
                     <select type="text" id="categoria" name="categoria" required>
                         <option value="Verduras"';if($produto->getCategoria() == "Verduras") echo ' selected';echo'>Verduras</option>
+                        <option value="Frutas"';if($produto->getCategoria() == "Frutas") echo ' selected';echo'>Frutas</option>
                         <option value="Higiene Pessoal"';if($produto->getCategoria() == "Higiene Pessoal") echo ' selected';echo'>Higiene Pessoal</option>
                         <option value="Açougue"';if($produto->getCategoria() == "Açougue") echo ' selected';echo'>Açougue</option>
                         <option value="Limpeza"';if($produto->getCategoria() == "Limpeza") echo ' selected';echo'>Limpeza</option>
