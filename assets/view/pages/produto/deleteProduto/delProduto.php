@@ -37,10 +37,11 @@
             $produtos = $controler->verProdutos();
             foreach ($produtos as $produto){
                 if($produto->getId() == $_GET['id']){
-                    echo $produto->getNome();
+                    echo "Nome: " . $produto->getNome() . "<br>";
+                    echo "Preço: " . $produto->getUn() . "<br>";
+                    echo "Descrição: " . $produto->getCategoria() . "<br>";
                 }
             }
-    
         ?>
         </li>
     </ul>

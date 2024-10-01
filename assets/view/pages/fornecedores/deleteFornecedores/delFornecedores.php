@@ -1,3 +1,7 @@
+<?php
+    require_once __DIR__ . "/../../../../controller/fornecedorController.php";
+    $controler = new ControladorFornecedor();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -28,19 +32,38 @@
     <p>Tem certeza que deseja excluir o seguinte fornecedor?</p>
     
     <ul>
-        <li><strong>ID:</strong> </li>
-        <li><strong>Nome:</strong></li>
-        <li><strong>Endereço:</strong> </li>
-        <li><strong>Telefone:</strong> </li>
-        <li><strong>WhatsApp:</strong> </li>
-        <li><strong>E-mail:</strong> </li>
-        <li><strong>Ramo de Atuação:</strong> </li>
+        <?php
+        
+        $fornecedores = $controler->verFornecedor();
+        foreach ($fornecedores as $fornecedor){
+            if($fornecedor->getId() == $_GET['id']){
+                echo '
+            <li><strong>ID:</strong> ' . htmlspecialchars($fornecedor->getId()) . '</li>
+            <li><strong>Nome:</strong> ' . htmlspecialchars($fornecedor->getNome()) . '</li>
+            <li><strong>Endereço:</strong> ' . htmlspecialchars($fornecedor->getEndereco()) . '</li>
+            <li><strong>Telefone:</strong> ' . htmlspecialchars($fornecedor->getTelefone()) . '</li>
+            <li><strong>WhatsApp:</strong> ' . htmlspecialchars($fornecedor->getWhatsapp()) . '</li>
+            <li><strong>E-mail:</strong> ' . htmlspecialchars($fornecedor->getEmail()) . '</li>
+            <li><strong>Ramo de Atuação:</strong> ' . htmlspecialchars($fornecedor->getRamo()) . '</li>';
+            }
+        }
+        
+        ?>
+
     </ul>
     
     <form method="POST" action="">
         <button type="submit" name="confirmar">Confirmar Exclusão</button>
         <button type="submit" name="cancelar">Cancelar</button>
     </form>
+
+    <?php
+    if(isset($_POST['confirmar'])){
+        $controler->deletarFornecedor($_GET['id']);
+        header('Location: ../listarFornecedores/listarFornecedores.php');
+    }
+    
+    ?>
 </main>
 <footer>
     <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
