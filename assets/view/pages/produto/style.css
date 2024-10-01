@@ -148,3 +148,19 @@ table tbody tr:hover {
 .add-product-btn:hover {
     background-color: #3e9bd4;
 }
+
+.back-btn {
+    position: absolute;
+    left: 30px;
+    top: 150px; /* Ajuste conforme necessário */
+    padding: 10px 20px;
+    background-color: #2a3e85;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #3e9bd4;
+}

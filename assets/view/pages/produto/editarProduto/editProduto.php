@@ -1,15 +1,16 @@
 <?php
-    require_once __DIR__ . "/../../../../controller/produtoController.php";
-    $controler = new ControladorProdutos();
+require_once __DIR__ . "/../../../../controller/produtoController.php";
+$controler = new ControladorProdutos();
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Produto</title>
-    <link rel="stylesheet" href="../style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editar Produto</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 <header>
@@ -18,73 +19,75 @@
             <img src="../../../../../src/logo_sem_fundo.png" alt="Logo do SmartControl" class="logo">
             <h1 class="system-name">SmartControl</h1>
         </section>
-        <section class="user-info"></section>
+        <section class="user-info">
+            <a href="../../index.php" class="home-btn">Home</a>
             <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
             <a href="logout.php" class="logout-btn">Sair</a>
         </section>
     </section>
 </header>
 <main>
-    <h1>Editar Produto</h1>
-    <form action="" method="post">
-        <section>
-            <label for="produto_id">Selecione o Produto:</label>
-            <?php
-                echo '<input id="produto_id" name="produto_id" required disabled value="'.$_GET['id'].'">';
-            ?>
-        </section>
+<a href="../listarProduto/listarProduto.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
+<h1>Editar Produto</h1>
+<form action="" method="post">
+    <section>
+        <label for="produto_id">Selecione o Produto:</label>
         <?php
-            $produtos = $controler->verProdutos();
-            foreach ($produtos as $produto){
-                if($produto->getId() == $_GET['id']){
-                    echo '
-                    <section>
-                        <label for="nome">Nome do Produto:</label>
-                        <input type="text" id="nome" name="nome" required value="'.$produto->getNome().'">
-                    </section>
-                    <section>
-                    <label for="categoria">Categoria:</label>
-                    <select type="text" id="categoria" name="categoria" required>
-                        <option value="Verduras"';if($produto->getCategoria() == "Verduras") echo ' selected';echo'>Verduras</option>
-                        <option value="Frutas"';if($produto->getCategoria() == "Frutas") echo ' selected';echo'>Frutas</option>
-                        <option value="Higiene Pessoal"';if($produto->getCategoria() == "Higiene Pessoal") echo ' selected';echo'>Higiene Pessoal</option>
-                        <option value="Açougue"';if($produto->getCategoria() == "Açougue") echo ' selected';echo'>Açougue</option>
-                        <option value="Limpeza"';if($produto->getCategoria() == "Limpeza") echo ' selected';echo'>Limpeza</option>
-                        <option value="Descartáveis"';if($produto->getCategoria() == "Descartáveis") echo ' selected';echo'>Descartáveis</option>
-                        <option value="Frios"';if($produto->getCategoria() == "Frios") echo ' selected';echo'>Frios</option>
-                        <option value="Outros"';if($produto->getCategoria() == "Outros") echo ' selected';echo'>Outros</option>
-                    </select>
-                    </section>
-                    <section>
-                    <label for="unidade_medida">Unidade de Medida:</label>
-                    <select type="text" id="unidade_medida" name="unidade_medida" required>
-                        <option value="CX"';if($produto->getUn() == "CX") echo ' selected'; echo '>CX</option>
-                        <option value="UN"';if($produto->getUn() == "UN") echo ' selected'; echo '>UN</option>
-                        <option value="KG"';if($produto->getUn() == "KG") echo ' selected'; echo '>KG</option>
-                        <option value="SC"';if($produto->getUn() == "SC") echo ' selected'; echo '>SC</option>
-                    </select>
-                    </section>';
-                }
-            }
+            echo '<input id="produto_id" name="produto_id" required disabled value="'.$_GET['id'].'">';
         ?>
-        <section>
-            <button type="submit">Salvar Alterações</button>
-        </section>
-        <?php
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                // Verifica se todos os campos estão preenchidos
-                if (!empty($_POST['nome']) && !empty($_POST['categoria']) && !empty($_POST['unidade_medida'])) {
-                    $controler->editarProdutos($_GET['id'],$_POST['nome'],$_POST['categoria'],$_POST['unidade_medida']);
-                    header('Location: ../listarProduto/listarProduto.php');
-                } else {
-                    echo '<p>Por favor, preencha todos os campos.</p>';
-                }
+    </section>
+    <?php
+        $produtos = $controler->verProdutos();
+        foreach ($produtos as $produto){
+            if($produto->getId() == $_GET['id']){
+                echo '
+                <section>
+                    <label for="nome">Nome do Produto:</label>
+                    <input type="text" id="nome" name="nome" required value="'.$produto->getNome().'">
+                </section>
+                <section>
+                <label for="categoria">Categoria:</label>
+                <select type="text" id="categoria" name="categoria" required>
+                    <option value="Verduras"';if($produto->getCategoria() == "Verduras") echo ' selected';echo'>Verduras</option>
+                    <option value="Frutas"';if($produto->getCategoria() == "Frutas") echo ' selected';echo'>Frutas</option>
+                    <option value="Higiene Pessoal"';if($produto->getCategoria() == "Higiene Pessoal") echo ' selected';echo'>Higiene Pessoal</option>
+                    <option value="Açougue"';if($produto->getCategoria() == "Açougue") echo ' selected';echo'>Açougue</option>
+                    <option value="Limpeza"';if($produto->getCategoria() == "Limpeza") echo ' selected';echo'>Limpeza</option>
+                    <option value="Descartáveis"';if($produto->getCategoria() == "Descartáveis") echo ' selected';echo'>Descartáveis</option>
+                    <option value="Frios"';if($produto->getCategoria() == "Frios") echo ' selected';echo'>Frios</option>
+                    <option value="Outros"';if($produto->getCategoria() == "Outros") echo ' selected';echo'>Outros</option>
+                </select>
+                </section>
+                <section>
+                <label for="unidade_medida">Unidade de Medida:</label>
+                <select type="text" id="unidade_medida" name="unidade_medida" required>
+                    <option value="CX"';if($produto->getUn() == "CX") echo ' selected'; echo '>CX</option>
+                    <option value="UN"';if($produto->getUn() == "UN") echo ' selected'; echo '>UN</option>
+                    <option value="KG"';if($produto->getUn() == "KG") echo ' selected'; echo '>KG</option>
+                    <option value="SC"';if($produto->getUn() == "SC") echo ' selected'; echo '>SC</option>
+                </select>
+                </section>';
             }
-        ?>
-    </form>
+        }
+    ?>
+    <section>
+        <button type="submit">Salvar Alterações</button>
+    </section>
+    <?php
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Verifica se todos os campos estão preenchidos
+            if (!empty($_POST['nome']) && !empty($_POST['categoria']) && !empty($_POST['unidade_medida'])) {
+                $controler->editarProdutos($_GET['id'],$_POST['nome'],$_POST['categoria'],$_POST['unidade_medida']);
+                header('Location: ../listarProduto/listarProduto.php');
+            } else {
+                echo '<p>Por favor, preencha todos os campos.</p>';
+            }
+        }
+    ?>
+</form>
 </main>
 <footer>
-    <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
+<p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
 </footer>
 </body>
 </html>
