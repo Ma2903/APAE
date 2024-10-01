@@ -1,0 +1,198 @@
+@import url('../global.css');
+
+h1 {
+    color: #2a3e85;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+form input, form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical; /* Permite redimensionar apenas na vertical */
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    box-sizing: border-box; /* Inclui padding e border no cálculo da largura */
+}
+
+textarea:focus {
+    border-color: #2a3e85;
+    outline: none; /* Remove o contorno padrão do navegador */
+    box-shadow: 0 0 5px rgba(42, 62, 133, 0.5); /* Adiciona uma sombra ao redor do textarea */
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2a3e85;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #3e9bd4;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+table thead tr {
+    background-color: #2a3e85;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #dddddd;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+table tbody tr:last-of-type {
+    border-bottom: 2px solid #2a3e85;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-width: 300px;
+}
+
+.search button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2a3e85;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search button:hover {
+    background-color: #3e9bd4;
+}
+
+.home-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2a3e85;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none; /* Remove o sublinhado do link */
+    transition: background-color 0.3s ease;
+}
+
+.add-cardapio {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.add-cardapio-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #2a3e85;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.add-cardapio-btn:hover {
+    background-color: #3e9bd4;
+}
+
+.back-btn {
+    position: absolute;
+    left: 30px;
+    top: 150px; /* Ajuste conforme necessário */
+    padding: 10px 20px;
+    background-color: #2a3e85;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #3e9bd4;
+}
+
+footer {
+    background-color: #2a3e85;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

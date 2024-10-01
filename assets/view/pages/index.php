@@ -36,7 +36,7 @@
                     <a href="cotacoes/listarCotacoes/listarCotacoes.php">Gerenciar Cotações</a>
                 </section>
                 <section class="menu-item">
-                    <a href="menu_management.php">Gerenciar Cardápios</a>
+                    <a href="cardapio/listarCardapio/listarCardapio.php">Gerenciar Cardápios</a>
                 </section>
             </section>
         </section>
