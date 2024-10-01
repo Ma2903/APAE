@@ -5,8 +5,10 @@
 ## Funcionalidades
 
 - **Cadastro de Usuários**: Gerencie informações de usuários e suas permissões.
-- **Controle de Eventos**: Organize e acompanhe eventos e atividades promovidos pela APAE.
-- **Gerenciamento de Recursos**: Controle de recursos e serviços oferecidos pela instituição.
+- **Gerenciamento de Recursos**: Controle de recursos e serviços oferecidos pelo sistema, como:
+- **Gerenciar Produtos**
+- **Gerenciar Fornecedores**
+- **Gerenciar Cotações**
 
 ## Tecnologias
 
