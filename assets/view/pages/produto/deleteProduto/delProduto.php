@@ -29,24 +29,22 @@
     <a href="../listarProduto/listarProduto.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h1>Excluir Produto</h1>
     
-    <p>Tem certeza que deseja excluir o seguinte produto?</p>
-    
-    <ul>
-        <li>
+    <form method="POST" action="">
+    <h3>Tem certeza que deseja excluir o seguinte produto?</h3>
         <?php 
             $produtos = $controler->verProdutos();
             foreach ($produtos as $produto){
                 if($produto->getId() == $_GET['id']){
-                    echo "Nome: " . $produto->getNome() . "<br>";
-                    echo "Preço: " . $produto->getUn() . "<br>";
-                    echo "Descrição: " . $produto->getCategoria() . "<br>";
+                    echo '<label for="nome">Nome:</label>';
+                    echo '<input type="text" id="nome" name="nome" value="' . htmlspecialchars($produto->getNome()) . '" readonly><br>';
+                    echo '<label for="preco">Preço:</label>';
+                    echo '<input type="text" id="preco" name="preco" value="' . htmlspecialchars($produto->getUn()) . '" readonly><br>';
+                    echo '<label for="descricao">Descrição:</label>';
+                    echo '<input type="text" id="descricao" name="descricao" value="' . htmlspecialchars($produto->getCategoria()) . '" readonly><br>';
                 }
             }
         ?>
-        </li>
-    </ul>
     
-    <form method="POST" action="">
         <input type="hidden" name="produto_id">
         <button type="submit" name="confirmar">Confirmar Exclusão</button>
         <button type="submit" name="cancelar">Cancelar</button>

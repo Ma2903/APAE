@@ -33,7 +33,7 @@
                     <a href="fornecedores/listarFornecedores/listarFornecedores.php">Gerenciar Fornecedores</a>
                 </section>
                 <section class="menu-item">
-                    <a href="quotation_management.php">Gerenciar Cotações</a>
+                    <a href="cotacoes/listarCotacoes/listarCotacoes.php">Gerenciar Cotações</a>
                 </section>
                 <section class="menu-item">
                     <a href="menu_management.php">Gerenciar Cardápios</a>

@@ -27,7 +27,7 @@
 </header>
 <main>
 <a href="../listarFornecedores/listarFornecedores.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
-    <h2>Cadastrar Fornecedor</h2>
+    <h1>Cadastrar Fornecedor</h1>
     <form action="" method="POST">
         <?php
             if ($_SERVER["REQUEST_METHOD"] == "POST") {

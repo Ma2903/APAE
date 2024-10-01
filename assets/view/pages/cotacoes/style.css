@@ -14,19 +14,26 @@ main {
 }
 
 form {
+    margin-bottom: 15px;
     max-width: 500px; /* Ajuste conforme necessário */
 }
 
 form label {
     display: block;
     font-weight: bold;
+    margin: 15px;
     width: 60%;
 }
 
 form input, form select {
     width: 100%;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+form select {
+    margin-bottom: 15px;
 }
 
 button {
@@ -123,12 +130,12 @@ table tbody tr:hover {
     transition: background-color 0.3s ease;
 }
 
-.add-product {
+.add-quote {
     margin-top: 20px;
     text-align: right;
 }
 
-.add-product-btn {
+.add-quote-btn {
     display: inline-block;
     padding: 10px 20px;
     background-color: #2a3e85;
@@ -138,7 +145,7 @@ table tbody tr:hover {
     transition: background-color 0.3s ease;
 }
 
-.add-product-btn:hover {
+.add-quote-btn:hover {
     background-color: #3e9bd4;
 }
 

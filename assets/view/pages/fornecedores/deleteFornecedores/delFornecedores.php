@@ -28,31 +28,30 @@
 <main>
 <a href="../listarFornecedores/listarFornecedores.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h2>Excluir Fornecedor</h2>
-    
-    <p>Tem certeza que deseja excluir o seguinte fornecedor?</p>
-    
-    <ul>
+    <form method="POST" action="">
+    <h3>Tem certeza que deseja excluir o seguinte fornecedor?</h3>
         <?php
-        
         $fornecedores = $controler->verFornecedor();
         foreach ($fornecedores as $fornecedor){
             if($fornecedor->getId() == $_GET['id']){
-                echo '
-            <li><strong>ID:</strong> ' . htmlspecialchars($fornecedor->getId()) . '</li>
-            <li><strong>Nome:</strong> ' . htmlspecialchars($fornecedor->getNome()) . '</li>
-            <li><strong>Endereço:</strong> ' . htmlspecialchars($fornecedor->getEndereco()) . '</li>
-            <li><strong>Telefone:</strong> ' . htmlspecialchars($fornecedor->getTelefone()) . '</li>
-            <li><strong>WhatsApp:</strong> ' . htmlspecialchars($fornecedor->getWhatsapp()) . '</li>
-            <li><strong>E-mail:</strong> ' . htmlspecialchars($fornecedor->getEmail()) . '</li>
-            <li><strong>Ramo de Atuação:</strong> ' . htmlspecialchars($fornecedor->getRamo()) . '</li>';
+            echo '
+            <label for="id"><strong>ID:</strong></label>
+            <input type="text" id="id" name="id" value="' . htmlspecialchars($fornecedor->getId()) . '" readonly>
+            <label for="nome"><strong>Nome:</strong></label>
+            <input type="text" id="nome" name="nome" value="' . htmlspecialchars($fornecedor->getNome()) . '" readonly>
+            <label for="endereco"><strong>Endereço:</strong></label>
+            <input type="text" id="endereco" name="endereco" value="' . htmlspecialchars($fornecedor->getEndereco()) . '" readonly>
+            <label for="telefone"><strong>Telefone:</strong></label>
+            <input type="text" id="telefone" name="telefone" value="' . htmlspecialchars($fornecedor->getTelefone()) . '" readonly>
+            <label for="whatsapp"><strong>WhatsApp:</strong></label>
+            <input type="text" id="whatsapp" name="whatsapp" value="' . htmlspecialchars($fornecedor->getWhatsapp()) . '" readonly>
+            <label for="email"><strong>E-mail:</strong></label>
+            <input type="text" id="email" name="email" value="' . htmlspecialchars($fornecedor->getEmail()) . '" readonly>
+            <label for="ramo"><strong>Ramo de Atuação:</strong></label>
+            <input type="text" id="ramo" name="ramo" value="' . htmlspecialchars($fornecedor->getRamo()) . '" readonly>';
             }
         }
-        
         ?>
-
-    </ul>
-    
-    <form method="POST" action="">
         <button type="submit" name="confirmar">Confirmar Exclusão</button>
         <button type="submit" name="cancelar">Cancelar</button>
     </form>

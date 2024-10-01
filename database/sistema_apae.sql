@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 18/09/2024 às 03:40
+-- Tempo de geração: 01/10/2024 às 13:43
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -158,7 +158,7 @@ CREATE TABLE `produtos` (
 --
 
 INSERT INTO `produtos` (`id`, `nome`, `categoria`, `unidade_medida`, `data_criacao`) VALUES
-(1, 'Maçã', 'Frutas', 'KG', '2024-09-18 01:39:26'),
+(1, 'Maçã', 'Verduras', 'KG', '2024-09-18 01:39:26'),
 (2, 'Frango', 'Carnes', 'KG', '2024-09-18 01:39:26'),
 (3, 'Sabão em Pó', 'Limpeza', 'CX', '2024-09-18 01:39:26');
 
@@ -272,7 +272,7 @@ ALTER TABLE `cotas`
 -- AUTO_INCREMENT de tabela `fornecedores`
 --
 ALTER TABLE `fornecedores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes`
@@ -284,7 +284,7 @@ ALTER TABLE `notificacoes`
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`

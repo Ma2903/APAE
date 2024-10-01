@@ -14,20 +14,17 @@ main {
 }
 
 form {
-    margin-bottom: 15px;
     max-width: 500px; /* Ajuste conforme necessário */
 }
 
 form label {
     display: block;
     font-weight: bold;
-    margin: 15px;
     width: 60%;
 }
 
 form input, form select {
     width: 100%;
-    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }

@@ -31,7 +31,7 @@ $controler = new ControladorProdutos();
 <h1>Editar Produto</h1>
 <form action="" method="post">
     <section>
-        <label for="produto_id">Selecione o Produto:</label>
+        <label for="produto_id">Id do Produto Escolhido:</label>
         <?php
             echo '<input id="produto_id" name="produto_id" required disabled value="'.$_GET['id'].'">';
         ?>
