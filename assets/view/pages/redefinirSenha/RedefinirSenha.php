@@ -19,7 +19,7 @@
             <img src="../../../../src/logo0.jpg" alt="Logo" class="logo">
             <h2>Redefinir Senha</h2>
             <p>Digite sua nova senha abaixo para redefini-la.</p>
-            <a href="../login/login.php" class="back-link">Voltar para o Login</a>
+            <a href="../index.php" class="back-link">Voltar para o Login</a>
         </section>
         <section class="right-section">
             <h2>Redefinir Senha</h2>

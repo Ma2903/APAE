@@ -1,53 +1,60 @@
+<?php
+    // require_once __DIR__ . "/../../../controller/userController.php";
+    // $userController = new ControladorUsuarios();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartControl - Menu Principal</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Login - APAE</title>
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script defer src="global.js"></script>
 </head>
 <body>
-    <header>
-        <section class="header-container">
-            <section class="logo-container">
-                <img src="../../../src/logo_sem_fundo.png" alt="Logo do SmartControl" class="logo">
-                <h1 class="system-name">SmartControl</h1>
-            </section>
-            <section class="user-info">
-                <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
-                <a href="logout.php" class="logout-btn">Sair</a>
-            </section>
-        </section>
-    </header>
     <section class="container">
-        <section class="sidebar">
-            <h2>Menu</h2>
-            <section class="menu">
-                <!-- <div class="menu-item">
-                    <a href="user_management.php">Gerenciar Usuários</a>
-                </div> -->
-                <section class="menu-item">
-                    <a href="produto/listarProduto/listarProduto.php">Gerenciar Produtos</a>
-                </section>
-                <section class="menu-item">
-                    <a href="fornecedores/listarFornecedores/listarFornecedores.php">Gerenciar Fornecedores</a>
-                </section>
-                <section class="menu-item">
-                    <a href="cotacoes/listarCotacoes/listarCotacoes.php">Gerenciar Cotações</a>
-                </section>
-                <section class="menu-item">
-                    <a href="cardapio/listarCardapio/listarCardapio.php">Gerenciar Cardápios</a>
-                </section>
-            </section>
+        <section class="left-section">
+            <img src="../../../src/logo0.jpg" alt="Logo" class="logo">
+            <h2>Bem Vindo!</h2>
         </section>
-        <section class="main-content">
-            <h2>Bem-vindo ao SmartControl</h2>
-            <p>Este é o sistema principal para gerenciar cotações e cardápios. Utilize o menu à esquerda para navegar pelas diferentes funcionalidades do sistema.</p>
-            <img src="../assets/images/welcome_image.jpg" alt="Imagem de boas-vindas" style="max-width: 100%; height: auto;">
+        <section class="right-section">
+            <h2>Entrar</h2>
+            <form action="" method="POST">
+                <section class="input-container">
+                    <label for="email">E-mail:</label>
+                    <input name="email" type="email" id="email" placeholder="exemplo@gmail.com">
+                </section>
+                <!-- Campo de Senha -->
+                <section class="input-container">
+                    <label for="password">Senha:</label>
+                    <input name="password" type="password" id="password" placeholder="******">
+                    <span id="toggle-password" class="toggle-icon">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </section>
+
+                <a href="redefinirSenha/RedefinirSenha.php" class="forgot-password">Esqueceu a Senha?</a>
+
+                <button type="submit">Entrar</button>
+                <p>Ou continuar com</p>
+                <section class="social-login">
+                    <i class='bx bxl-facebook-circle'> </i>
+                    <i class='bx bxl-google' ></i>
+                </section>
+            </form>
         </section>
     </section>
-    <footer>
-        <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
-    </footer>
+    <?php
+    if(isset($_GET['email']) && isset($_GET['password'])){
+        $email = $_GET['email'];
+        $password = $_GET['password'];
+        $userController->logarUsuarios($email,$password);
+
+        // var_dump($_SESSION['user']);
+    }
+    
+    ?>
 </body>
 </html>

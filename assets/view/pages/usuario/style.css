@@ -18,6 +18,7 @@ form label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
+    width: 100%;
 }
 
 form input, form select {
@@ -25,24 +26,6 @@ form input, form select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-}
-
-textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: vertical; /* Permite redimensionar apenas na vertical */
-    font-family: Arial, sans-serif;
-    font-size: 1rem;
-    line-height: 1.5;
-    box-sizing: border-box; /* Inclui padding e border no cálculo da largura */
-}
-
-textarea:focus {
-    border-color: #2a3e85;
-    outline: none; /* Remove o contorno padrão do navegador */
-    box-shadow: 0 0 5px rgba(42, 62, 133, 0.5); /* Adiciona uma sombra ao redor do textarea */
 }
 
 button {
@@ -139,12 +122,12 @@ table tbody tr:hover {
     transition: background-color 0.3s ease;
 }
 
-.add-fornecedor {
+.add-user {
     margin-top: 20px;
     text-align: right;
 }
 
-.add-fornecedor-btn {
+.add-user-btn {
     display: inline-block;
     padding: 10px 20px;
     background-color: #2a3e85;
@@ -154,7 +137,7 @@ table tbody tr:hover {
     transition: background-color 0.3s ease;
 }
 
-.add-fornecedor-btn:hover {
+.add-user-btn:hover {
     background-color: #3e9bd4;
 }
 

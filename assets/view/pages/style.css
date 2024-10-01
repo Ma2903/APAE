@@ -1,11 +1,5 @@
 @import url('global.css');
 
-body {
-    display: flex;
-    flex-direction: column; /* Layout flexível na vertical */
-    min-height: 100vh;
-}
-
 .container {
     display: flex; /* Layout flexível na horizontal */
     flex: 1; /* Permite que o container ocupe o espaço restante */

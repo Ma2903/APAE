@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Usuário</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+    <section class="header-container">
+        <section class="logo-container">
+            <img src="../../../../../src/logo_sem_fundo.png" alt="Logo do SmartControl" class="logo">
+            <h1 class="system-name">SmartControl</h1>
+        </section>
+        <section class="user-info">
+            <a href="../../index.php" class="home-btn">Home</a>
+            <a href="logout.php" class="logout-btn">Sair</a>
+        </section>
+    </section>
+</header>
+<main>
+    <a href="../listarUsuario/listarUsuario.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
+    <h1>Cadastrar Usuário</h1>
+    <form action="../controller/UserController.php?action=register" method="post">
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" name="cpf" placeholder="CPF" required>
+         <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" placeholder="Nome" required>
+          <label for="sobrenome">Sobrenome:</label>
+            <input type="text" id="sobrenome" name="sobrenome" placeholder="Sobrenome" required>
+        <label for="data_nascimento">Data de Nascimento:</label>
+            <input type="date" id="data_nascimento" name="data_nascimento" required>
+       <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" name="endereco" placeholder="Endereço">
+        <label for="telefone">Telefone:</label>
+            <input type="tel" id="telefone" name="telefone" placeholder="Telefone">
+        <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" placeholder="E-mail" required>
+         <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" placeholder="******" required>
+        <label for="tipo_usuario">Tipo de Usuário:</label>
+            <select id="tipo_usuario" name="tipo_usuario" required>
+                <option value="administrador">Administrador</option>
+                <option value="funcionario">Funcionário</option>
+                <option value="nutricionista">Nutricionista</option>
+            </select>
+        <label for="crn">CRN (Somente Nutricionistas):</label>
+            <input type="text" id="crn" name="crn" placeholder="CRN">
+         <button type="submit">Cadastrar Usuário</button>
+         </form>
+</main>
+<footer>
+    <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
+</footer>
+</body>
+</html>

@@ -10,6 +10,9 @@
 body {
     background-color: #ffffff;
     height: 100vh;
+    display: flex;
+    flex-direction: column; /* Layout flexível na vertical */
+    min-height: 100vh;
 }
 
 header {
@@ -171,9 +174,14 @@ header {
 
 /* Estilos gerais dos formulários */
 form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
-    width: 100%;
 }
 
 label {

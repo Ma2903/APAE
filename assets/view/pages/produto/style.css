@@ -3,6 +3,7 @@
 h1 {
     color: #2a3e85;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 main {
@@ -10,27 +11,38 @@ main {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 80%;
-}
-
-form {
-    max-width: 500px; /* Ajuste conforme necessário */
+    padding: 20px;
 }
 
 form label {
     display: block;
     font-weight: bold;
-    width: 60%;
+    margin-bottom: 5px;
 }
 
 form input, form select {
     width: 100%;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-form select {
-    margin-bottom: 15px;
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical; /* Permite redimensionar apenas na vertical */
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    box-sizing: border-box; /* Inclui padding e border no cálculo da largura */
+}
+
+textarea:focus {
+    border-color: #2a3e85;
+    outline: none; /* Remove o contorno padrão do navegador */
+    box-shadow: 0 0 5px rgba(42, 62, 133, 0.5); /* Adiciona uma sombra ao redor do textarea */
 }
 
 button {
@@ -49,7 +61,7 @@ button:hover {
 }
 
 table {
-    width: 90%; /* Reduz a largura da tabela para 90% */
+    width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
     font-size: 18px;
@@ -87,8 +99,8 @@ table tbody tr:hover {
 .search {
     display: flex;
     align-items: center;
-    justify-content: center; /* Centraliza o componente de busca */
-    margin-bottom: 20px; /* Adiciona um espaço abaixo do componente de busca */
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 .search input[type="text"] {
@@ -97,7 +109,7 @@ table tbody tr:hover {
     margin-right: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    max-width: 300px; /* Limita a largura máxima do input */
+    max-width: 300px;
 }
 
 .search button {
@@ -160,4 +172,14 @@ table tbody tr:hover {
 
 .back-btn:hover {
     background-color: #3e9bd4;
+}
+
+footer {
+    background-color: #2a3e85;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
