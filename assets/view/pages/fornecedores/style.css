@@ -1,11 +1,11 @@
-@import url('../../global.css');
+@import url('../global.css');
 
 h1 {
     color: #2a3e85;
     text-align: center;
 }
 
-main{
+main {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,7 +14,7 @@ main{
 }
 
 form {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     max-width: 500px; /* Ajuste conforme necessário */
 }
 
@@ -25,9 +25,126 @@ form label {
     width: 60%;
 }
 
-form input {
+form input, form select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+form select {
+    margin-bottom: 15px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2a3e85;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #3e9bd4;
+}
+
+table {
+    width: 90%; /* Reduz a largura da tabela para 90% */
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+table thead tr {
+    background-color: #2a3e85;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #dddddd;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+table tbody tr:last-of-type {
+    border-bottom: 2px solid #2a3e85;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centraliza o componente de busca */
+    margin-bottom: 20px; /* Adiciona um espaço abaixo do componente de busca */
+}
+
+.search input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-width: 300px; /* Limita a largura máxima do input */
+}
+
+.search button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2a3e85;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search button:hover {
+    background-color: #3e9bd4;
+}
+
+.home-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2a3e85;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none; /* Remove o sublinhado do link */
+    transition: background-color 0.3s ease;
+}
+
+.add-product {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.add-product-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #2a3e85;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.add-product-btn:hover {
+    background-color: #3e9bd4;
 }

@@ -30,7 +30,7 @@
                     <a href="produto/listarProduto/listarProduto.php">Gerenciar Produtos</a>
                 </section>
                 <section class="menu-item">
-                    <a href="supplier_management.php">Gerenciar Fornecedores</a>
+                    <a href="fornecedores/listarFornecedores/listarFornecedores.php">Gerenciar Fornecedores</a>
                 </section>
                 <section class="menu-item">
                     <a href="quotation_management.php">Gerenciar Cotações</a>

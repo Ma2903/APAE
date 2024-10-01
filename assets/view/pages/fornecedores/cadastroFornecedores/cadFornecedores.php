@@ -8,9 +8,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Fornecedor</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+<header>
+    <section class="header-container">
+        <section class="logo-container">
+            <img src="../../../../../src/logo_sem_fundo.png" alt="Logo do SmartControl" class="logo">
+            <h1 class="system-name">SmartControl</h1>
+        </section>
+        <section class="user-info">
+            <a href="../../index.php" class="home-btn">Home</a>
+            <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
+            <a href="logout.php" class="logout-btn">Sair</a>
+        </section>
+    </section>
+</header>
+<main>
     <h2>Cadastrar Fornecedor</h2>
     <form action="" method="POST">
         <?php
@@ -26,7 +40,7 @@
 
                 if (!empty($nome) && !empty($endereco) && !empty($telefone) && !empty($whatsapp) && !empty($email) && !empty($ramo_atuacao)) {
                     $controler->cadastrarFornecedor($nome, $endereco, $telefone, $whatsapp, $email, $ramo_atuacao ,$data_criacao);
-                    header("Location: index.php");
+                    header("Location: ../listarFornecedores/listarFornecedores.php");
                 }
             }
         ?>
@@ -44,5 +58,9 @@
         <input type="text" name="ramo_atuacao">
         <button type="submit">Cadastrar</button>
     </form>
+</main>
+<footer>
+    <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
+</footer>
 </body>
 </html>

@@ -8,14 +8,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Fornecedor</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+<header>
+    <section class="header-container">
+        <section class="logo-container">
+            <img src="../../../../../src/logo_sem_fundo.png" alt="Logo do SmartControl" class="logo">
+            <h1 class="system-name">SmartControl</h1>
+        </section>
+        <section class="user-info">
+            <a href="../../index.php" class="home-btn">Home</a>
+            <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
+            <a href="logout.php" class="logout-btn">Sair</a>
+        </section>
+    </section>
+</header>
+<main>
     <h2>Editar Fornecedor</h2>
     <form action="" method="POST">
-        <label for="id">Id</label>
         <?php
-            echo '<input type="text" name="id" value="'.$_GET['id'].'" required disable>';
+        echo '<label for="nome">Id:</label>';
+        echo '<input type="text" name="id" value="'.$_GET['id'].'" required readonly>';
             $fornecedores = $controler->verFornecedor();
             foreach($fornecedores as $fornecedor){
                 if($fornecedor->getId() == $_GET['id']){
@@ -39,10 +53,14 @@
             <?php 
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $controler->editarFornecedor($_POST['id'], $_POST['nome'], $_POST['endereco'], $_POST['telefone'], $_POST['whatsapp'], $_POST['email'], $_POST['ramo_atuacao']);
-                header('Location: ../index.php');
+                header('Location: ../listarFornecedores/listarFornecedores.php');
             }
             
             ?>
     </form>
+</main>
+<footer>
+    <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
+</footer>
 </body>
 </html>
