@@ -9,8 +9,9 @@ abstract class Usuario {
     protected $telefone;
     protected $email;
     protected $senha;
+    protected $tipo_usuario;
 
-    public function __construct($id, $cpf, $nome, $sobrenome, $dataNasc, $endereco, $telefone, $email, $senha) {
+    public function __construct($id, $cpf, $nome, $sobrenome, $dataNasc, $endereco, $telefone, $email, $senha,$tipo_usuario) {
         $this->id = $id;
         $this->cpf = $cpf;
         $this->nome = $nome;
@@ -20,6 +21,7 @@ abstract class Usuario {
         $this->telefone = $telefone;
         $this->email = $email;
         $this->senha = $senha;
+        $this->tipo_usuario = $tipo_usuario;
     }
 
     public function getId() {
@@ -92,6 +94,9 @@ abstract class Usuario {
 
     public function setSenha($senha) {
         $this->senha = $senha;
+    }
+    public function getTipoUsuario() {
+        return $this->tipo_usuario;
     }
 }
 ?>

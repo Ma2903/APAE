@@ -1,3 +1,9 @@
+<?php
+    require_once __DIR__ . "/../../controller/userController.php";
+    session_start();
+
+    $user = $_SESSION['user'];
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -14,7 +20,7 @@
                 <h1 class="system-name">SmartControl</h1>
             </section>
             <section class="user-info">
-                <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
+                <span><?php echo get_class($user) .'//'. $user->getNome()?></span>
                 <a href="logout.php" class="logout-btn">Sair</a>
             </section>
         </section>

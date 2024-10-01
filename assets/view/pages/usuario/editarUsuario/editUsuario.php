@@ -1,3 +1,7 @@
+<?php 
+    require_once __DIR__ . "/../../../../controller/userController.php";
+    $controler = new ControladorUsuarios();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -23,33 +27,53 @@
 <main>
     <a href="../listarUsuario/listarUsuario.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h1>Editar Usuário</h1>
-    <form action="../controller/UserController.php?action=update&id=<?php echo $usuario_id; ?>" method="post">
-            <label for="cpf">CPF:</label>
-            <input type="text" id="cpf" name="cpf" value="<?php echo htmlspecialchars($usuario['cpf']); ?>" required>
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($usuario['nome']); ?>" required>
-            <label for="sobrenome">Sobrenome:</label>
-            <input type="text" id="sobrenome" name="sobrenome" value="<?php echo htmlspecialchars($usuario['sobrenome']); ?>" required>
-            <label for="data_nascimento">Data de Nascimento:</label>
-            <input type="date" id="data_nascimento" name="data_nascimento" value="<?php echo htmlspecialchars($usuario['data_nascimento']); ?>" required>
-            <label for="endereco">Endereço:</label>
-            <input type="text" id="endereco" name="endereco" value="<?php echo htmlspecialchars($usuario['endereco']); ?>">
-            <label for="telefone">Telefone:</label>
-            <input type="tel" id="telefone" name="telefone" value="<?php echo htmlspecialchars($usuario['telefone']); ?>">
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($usuario['email']); ?>" required>
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" placeholder="******">
-            <label for="tipo_usuario">Tipo de Usuário:</label>
-            <select id="tipo_usuario" name="tipo_usuario" required>
-                <option value="administrador" <?php echo $usuario['tipo_usuario'] == 'administrador' ? 'selected' : ''; ?>>Administrador</option>
-                <option value="funcionario" <?php echo $usuario['tipo_usuario'] == 'funcionario' ? 'selected' : ''; ?>>Funcionário</option>
-                <option value="nutricionista" <?php echo $usuario['tipo_usuario'] == 'nutricionista' ? 'selected' : ''; ?>>Nutricionista</option>
-            </select>
-            <label for="crn">CRN (Somente Nutricionistas):</label>
-            <input type="text" id="crn" name="crn" value="<?php echo htmlspecialchars($usuario['crn']); ?>">
-            <button type="submit">Salvar Alterações</button>
+    <form action="" method="POST">
+        <?php
+            $usuarios = $controler->listarUsuarios();
+            foreach ($usuarios as $usuario) {
+                if($usuario->getId() == $_GET['id']){
+                    echo '  <label for="cpf">CPF:</label>
+                    <input type="text" id="cpf" name="cpf" value="'.$usuario->getCpf().'" required>
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" value="'.$usuario->getNome().'" required>
+                    <label for="sobrenome">Sobrenome:</label>
+                    <input type="text" id="sobrenome" name="sobrenome" value="'.$usuario->getSobrenome().'" required>
+                    <label for="data_nascimento">Data de Nascimento:</label>
+                    <input type="date" id="data_nascimento" name="data_nascimento" value="'.$usuario->getDataNasc().'" required>
+                    <label for="endereco">Endereço:</label>
+                    <input type="text" id="endereco" name="endereco" value="'.$usuario->getEndereco().'">
+                    <label for="telefone">Telefone:</label>
+                    <input type="tel" id="telefone" name="telefone" value="'.$usuario->getTelefone().'">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" value="'.$usuario->getEmail().'" required>
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" name="senha" placeholder="******" required>
+                    <label for="tipo_usuario">Tipo de Usuário:</label>
+                    <select id="tipo_usuario" name="tipo_usuario" required>
+                    <option value="administrador"'; if($usuario->getTipoUsuario() == 'administrador') echo 'selected'; echo '>Administrador</option>
+                    <option value="funcionario"'; if($usuario->getTipoUsuario() == 'funcionario') echo 'selected'; echo '>Funcionário</option>
+                    <option value="nutricionista"'; if($usuario->getTipoUsuario() == 'nutricionista') echo 'selected'; echo '>Nutricionista</option>
+                    </select>';
+                    if($usuario->getTipoUsuario() == 'nutricionista'){
+                        
+                        echo '<label for="CRN">CRN</label> <input type="text" name="crn" value="'.$usuario->getCrn().'">';
+                    }
+                    echo '<button type="submit">Salvar Alterações</button>';
+                }
+            }
+        ?>
     </form>
+    <?php
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        if(isset($_POST['crn'])){
+            $controler->editarUsuario($_GET['id'], $_POST['cpf'], $_POST['nome'], $_POST['sobrenome'], $_POST['data_nascimento'], $_POST['endereco'], $_POST['telefone'], $_POST['email'], $_POST['senha'], $_POST['tipo_usuario'],$_POST['crn']);
+        }else{
+            $crn = 'nulo';
+            $controler->editarUsuario($_GET['id'], $_POST['cpf'], $_POST['nome'], $_POST['sobrenome'], $_POST['data_nascimento'], $_POST['endereco'], $_POST['telefone'], $_POST['email'], $_POST['senha'], $_POST['tipo_usuario'],$crn);
+        }
+        header('Location: ../listarUsuario/listarUsuario.php');
+    }
+    ?>
 </main>
 <footer>
     <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>

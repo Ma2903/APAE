@@ -1,3 +1,8 @@
+<?php 
+require_once __DIR__ . "/../../../../controller/userController.php";
+require_once __DIR__ . "/../../global.php";
+$controler = new ControladorUsuarios();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -42,24 +47,25 @@
             </tr>
         </thead>
         <tbody>
-            <?php
-            // if ($usuarios) {
-            //     foreach ($usuarios as $usuario) {
-            //         echo "<tr>";
-            //         echo "<td>{$usuario['id']}</td>";
-            //         echo "<td>{$usuario['cpf']}</td>";
-            //         echo "<td>{$usuario['nome']}</td>";
-            //         echo "<td>{$usuario['sobrenome']}</td>";
-            //         echo "<td>{$usuario['data_nascimento']}</td>";
-            //         echo "<td>{$usuario['email']}</td>";
-            //         echo "<td>{$usuario['tipo_usuario']}</td>";
-                     echo "<td><a href='../editarUsuario/editUsuario.php?'>Editar</a></td>";
-                     echo "<td><a href='../deleteUsuario/delUsuario.php?'>Deletar</a></td>";
-            //         echo "</tr>";
-            //     }
-            // } else {
-            //     echo "<tr><td colspan='9'>Nenhum usuário encontrado.</td></tr>";
-            // }
+                    <?php
+            $usuarios = $controler->listarUsuarios();
+            if ($usuarios) {
+                foreach ($usuarios as $usuario) {
+                    echo "<tr>";
+                    echo "<td>{$usuario->getId()}</td>";
+                    echo "<td>{$usuario->getCpf()}</td>";
+                    echo "<td>{$usuario->getNome()}</td>";
+                    echo "<td>{$usuario->getSobrenome()}</td>";
+                    echo "<td>".converterDataParaBR($usuario->getDataNasc())."</td>";
+                    echo "<td>{$usuario->getEmail()}</td>";
+                    echo "<td>{$usuario->getTipoUsuario()}</td>";
+                    echo "<td><a href='../editarUsuario/editUsuario.php?id={$usuario->getId()}'>Editar</a></td>";
+                    echo "<td><a href='../deleteUsuario/delUsuario.php?id={$usuario->getId()}'>Deletar</a></td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='9'>Nenhum usuário encontrado.</td></tr>";
+            }
             ?>
         </tbody>
     </table>

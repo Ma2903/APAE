@@ -1,6 +1,6 @@
 <?php
-    // require_once __DIR__ . "/../../../controller/userController.php";
-    // $userController = new ControladorUsuarios();
+    require_once __DIR__ . "/../../controller/userController.php";
+    $userController = new ControladorUsuarios();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -47,12 +47,16 @@
         </section>
     </section>
     <?php
-    if(isset($_GET['email']) && isset($_GET['password'])){
-        $email = $_GET['email'];
-        $password = $_GET['password'];
-        $userController->logarUsuarios($email,$password);
-
-        // var_dump($_SESSION['user']);
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if(isset($_POST['email']) && isset($_POST['password'])){
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $userController->logarUsuarios($email,$password);
+    
+            header("Location: principal.php");
+        }else{
+            echo "<script>alert('Usuário ou senha incorretos!')</script>";
+        }
     }
     
     ?>
