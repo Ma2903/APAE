@@ -228,5 +228,14 @@ class ControladorUsuarios
         $stmt->bindParam(':email', $email);
     }
     
+    public function obterPermissoes($tipo_usuario) {
+        $conn = $this->banco->conn;
+        $sql = "SELECT * FROM permissoes WHERE tipo_usuario = :tipo_usuario";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":tipo_usuario", $tipo_usuario);
+        $stmt->execute();
+        $permissoes = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $permissoes;
+    }
 }
 ?>

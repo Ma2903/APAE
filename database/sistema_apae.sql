@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01/10/2024 às 13:43
+-- Tempo de geração: 02/10/2024 às 05:10
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -142,6 +142,33 @@ INSERT INTO `notificacoes` (`id`, `usuario_id`, `mensagem`, `data_notificacao`) 
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `permissoes`
+--
+
+CREATE TABLE `permissoes` (
+  `id` int(11) NOT NULL,
+  `tipo_usuario` enum('administrador','funcionario','nutricionista') NOT NULL,
+  `gerenciar_usuarios` tinyint(1) NOT NULL DEFAULT 0,
+  `gerenciar_cardapios` tinyint(1) NOT NULL DEFAULT 0,
+  `ver_cardapios` tinyint(1) NOT NULL DEFAULT 0,
+  `gerenciar_produtos` tinyint(1) NOT NULL DEFAULT 0,
+  `ver_produtos` tinyint(1) NOT NULL DEFAULT 0,
+  `gerenciar_cotacoes` tinyint(1) NOT NULL DEFAULT 0,
+  `ver_cotacoes` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `permissoes`
+--
+
+INSERT INTO `permissoes` (`id`, `tipo_usuario`, `gerenciar_usuarios`, `gerenciar_cardapios`, `ver_cardapios`, `gerenciar_produtos`, `ver_produtos`, `gerenciar_cotacoes`, `ver_cotacoes`) VALUES
+(1, 'administrador', 1, 1, 1, 1, 1, 1, 1),
+(2, 'funcionario', 0, 0, 0, 1, 1, 1, 1),
+(3, 'nutricionista', 0, 1, 1, 0, 1, 0, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `produtos`
 --
 
@@ -190,7 +217,8 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id`, `cpf`, `nome`, `sobrenome`, `data_nascimento`, `endereco`, `telefone`, `email`, `senha`, `tipo_usuario`, `crn`, `data_criacao`) VALUES
 (1, '12345678901', 'Carlos', 'Silva', '1980-05-14', 'Rua das Flores, 123', '(18) 99999-9999', 'carlos@apae.org', 'admin123', 'administrador', NULL, '2024-09-18 01:39:03'),
 (2, '98765432100', 'Maria', 'Oliveira', '1985-03-22', 'Av. Brasil, 456', '(18) 98888-8888', 'maria@apae.org', 'funcionario123', 'funcionario', NULL, '2024-09-18 01:39:03'),
-(3, '11122233344', 'Ana', 'Santos', '1990-07-10', 'Rua da Saúde, 789', '(18) 97777-7777', 'ana@apae.org', 'nutri123', 'nutricionista', 'CRN-12345', '2024-09-18 01:39:03');
+(3, '11122233344', 'Ana', 'Santos', '1990-07-10', 'Rua da Saúde, 789', '(18) 97777-7777', 'ana@apae.org', 'nutri123', 'nutricionista', 'CRN-12345', '2024-09-18 01:39:03'),
+(4, '487.677.598', 'MANOELA', 'DA SILVA', '2006-03-29', 'Rua Ângelo Salvatore, 125', '18996816585', 'manoela2903@outlook.com', '0401', 'administrador', '', '2024-10-02 02:58:40');
 
 --
 -- Índices para tabelas despejadas
@@ -231,6 +259,12 @@ ALTER TABLE `fornecedores`
 ALTER TABLE `notificacoes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`);
+
+--
+-- Índices de tabela `permissoes`
+--
+ALTER TABLE `permissoes`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices de tabela `produtos`
@@ -281,6 +315,12 @@ ALTER TABLE `notificacoes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de tabela `permissoes`
+--
+ALTER TABLE `permissoes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
@@ -290,7 +330,7 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restrições para tabelas despejadas
