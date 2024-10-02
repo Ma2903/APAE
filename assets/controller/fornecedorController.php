@@ -41,5 +41,17 @@ class ControladorFornecedor{
         $this->bd->delete("fornecedores", $id);
     }
     
+    public function verFornecedorPorId($id) {
+        // Supondo que você tenha um método para obter todos os fornecedores
+        $fornecedores = $this->verFornecedor();
+        
+        foreach ($fornecedores as $fornecedor) {
+            if ($fornecedor->getId() == $id) {
+                return $fornecedor;
+            }
+        }
+        
+        return null; // Retorna null se o fornecedor não for encontrado
+    }
 }
 ?>

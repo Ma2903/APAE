@@ -20,6 +20,38 @@ $user = $_SESSION['user'];
     }
 
     $podeGerenciarCotacoes = verificarPermissao($tipo_usuario, 'gerenciar_cotacoes');
+
+    // Função para calcular maior e menor preço por produto
+function calcularMaiorMenorPreco($cotas) {
+    $resultados = [];
+
+    foreach ($cotas as $cotacao) {
+        $produtoId = $cotacao->getProdutoId();
+        $preco = $cotacao->getPrecoUnitario();
+        $fornecedorId = $cotacao->getFornecedorId();
+
+        if (!isset($resultados[$produtoId])) {
+            $resultados[$produtoId] = [
+                "maior_preco" => $preco,
+                "menor_preco" => $preco,
+                "fornecedor_maior" => $fornecedorId,
+                "fornecedor_menor" => $fornecedorId
+            ];
+        } else {
+            if ($preco > $resultados[$produtoId]["maior_preco"]) {
+                $resultados[$produtoId]["maior_preco"] = $preco;
+                $resultados[$produtoId]["fornecedor_maior"] = $fornecedorId;
+            }
+            if ($preco < $resultados[$produtoId]["menor_preco"]) {
+                $resultados[$produtoId]["menor_preco"] = $preco;
+                $resultados[$produtoId]["fornecedor_menor"] = $fornecedorId;
+            }
+        }
+    }
+
+    return $resultados;
+}
+$precos = calcularMaiorMenorPreco($cotas);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -59,39 +91,61 @@ $user = $_SESSION['user'];
                 <th>ID</th>
                 <th>Nome do Produto</th>
                 <th>Preço</th>
-                <th>Data</th>
+                <th>Quantidade</th>
                 <th>Fornecedor</th>
                 <th>DataCotação</th>
+                <th>Maior Preço</th>
+                <th>Fornecedor Maior Preço</th>
+                <th>Menor Preço</th>
+                <th>Fornecedor Menor Preço</th>
                 <?php if ($podeGerenciarCotacoes): ?>
                 <th colspan="2">Ações</th>
                 <?php endif; ?>
             </tr>
         </thead>
         <tbody>
-        <?php // Função fictícia para obter cotações do banco de dados
+        <?php
             foreach ($cotas as $cotacao) {
+                $produtoId = $cotacao->getProdutoId();
+                $fornecedorId = $cotacao->getFornecedorId();
+                $produtoNome = '';
+                $fornecedorNome = '';
+
+                foreach ($controladorProduto->verProdutos() as $produto) {
+                    if ($produtoId == $produto->getId()) {
+                        $produtoNome = $produto->getNome();
+                    }
+                }
+
+                foreach ($controladorFornecedor->verFornecedor() as $fornecedor) {
+                    if ($fornecedorId == $fornecedor->getId()) {
+                        $fornecedorNome = $fornecedor->getNome();
+                    }
+                }
+
+                $maiorPreco = $precos[$produtoId]['maior_preco'];
+                $menorPreco = $precos[$produtoId]['menor_preco'];
+                $fornecedorMaiorPreco = $controladorFornecedor->verFornecedorPorId($precos[$produtoId]['fornecedor_maior'])->getNome();
+                $fornecedorMenorPreco = $controladorFornecedor->verFornecedorPorId($precos[$produtoId]['fornecedor_menor'])->getNome();
+
                 echo "<tr>";
                 echo "<td>{$cotacao->getId()}</td>";
-                foreach ($controladorProduto->verProdutos() as $produto) {
-                    if($cotacao->getProdutoId() == $produto->getId()){
-                        echo "<td>{$produto->getNome()}</td>";
-                    }
-                }
-                foreach ($controladorFornecedor->verFornecedor() as $fornecedor) {
-                    if($cotacao->getFornecedorId() == $fornecedor->getId()){
-                        echo "<td>{$fornecedor->getNome()}</td>";
-                    }
-                }
+                echo "<td>{$produtoNome}</td>";
                 echo "<td>{$cotacao->getPrecoUnitario()}</td>";
                 echo "<td>{$cotacao->getQuantidade()}</td>";
+                echo "<td>{$fornecedorNome}</td>";
                 echo "<td>{$cotacao->getDataCotacao()}</td>";
+                echo "<td>{$maiorPreco}</td>";
+                echo "<td>{$fornecedorMaiorPreco}</td>";
+                echo "<td>{$menorPreco}</td>";
+                echo "<td>{$fornecedorMenorPreco}</td>";
                 if ($podeGerenciarCotacoes) {
                     echo "<td> <a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'>Editar</a> </td>";
                     echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'>Deletar</a> </td>";
-                }   
+                }
                 echo "</tr>";
             }
-            ?>
+        ?>
         </tbody>
     </table>
 </main>
