@@ -2,17 +2,42 @@
 require_once __DIR__ . "/../../../controller/userController.php";
 $userController = new ControladorUsuarios();
 
-if($_SERVER['METHOD'] == 'POST') {
-    if(isset($_POST['email'])) {
-        $email = $_POST['email'];
-        $usuariosBanco = $userController->listarUsuarios();
-        foreach($usuariosBanco as $usuario){
-            if($usuario->getEmail() == $email){
-                echo $usuario->getPeguntaSeguranca();
-            }
-        }
-    }
-}
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\Exception;
+
+// $mail = new PHPMailer(true); // Cria uma nova instÃ¢ncia do PHPMailer
+// $usuariosBanco = $userController->listarUsuarios();
+// $email = $_POST['email'];
+// foreach($usuariosBanco as $usuario){
+//     $usuario->GetEmail();
+// }
+
+
+// try {
+//     //ConfiguraÃ§Ãµes do servidor
+//     $mail->isSMTP();
+//     $mail->Host = 'smtp.gmail.com'; // Defina o servidor SMTP
+//     $mail->SMTPAuth = true; // Ativar autenticaÃ§Ã£o SMTP
+//     $mail->Username = 'no-reply@apae.com'; // Seu usuÃ¡rio SMTP
+//     $mail->Password = ''; // Sua senha SMTP
+//     $mail->SMTPSecure = 'tls'; // Ativar criptografia TLS
+//     $mail->Port = 587; // Porta TCP a conectar
+
+//     //DestinatÃ¡rios
+//     $mail->setFrom('no-reply@apae.com', 'Apae');
+//     $mail->addAddress('destinatario@exemplo.com', 'Nome do DestinatÃ¡rio'); // Adicione um destinatÃ¡rio
+
+//     //ConteÃºdo
+//     $mail->isHTML(true); // Defina o formato de email como HTML
+//     $mail->Subject = 'Assunto do E-mail';
+//     $mail->Body    = 'Corpo do e-mail em HTML';
+//     $mail->AltBody = 'Corpo do e-mail em texto simples para clientes que nÃ£o suportam HTML';
+
+//     $mail->send();
+//     echo 'E-mail enviado com sucesso!';
+// } catch (Exception $e) {
+//     echo "E-mail nÃ£o pÃ´de ser enviado. Erro: {$mail->ErrorInfo}";
+// }
 ?>
 
 
