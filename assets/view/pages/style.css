@@ -18,7 +18,7 @@ main{
     color: #fff;
     padding: 20px;
     position: fixed; /* Sidebar fixa na lateral esquerda */
-    top: 15%; /* Ajusta a posição com base no conteúdo do header */
+    top: 14%; /* Ajusta a posição com base no conteúdo do header */
     left: 0;
     z-index: 1;
     left: -250px; /* Inicialmente oculta */  

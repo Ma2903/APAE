@@ -2,11 +2,22 @@
 require_once __DIR__ . '/../../../../controller/cotacaoController.php';
 require_once __DIR__ . '/../../../../controller/produtoController.php';
 require_once __DIR__ . '/../../../../controller/fornecedorController.php';
+
 $controladorCotacao = new ControladorCotacao();
 $controladorProduto = new ControladorProdutos();
 $controladorFornecedor = new ControladorFornecedor();
 
-$cotas = $controladorCotacao->verCotas();
+$cotacao = null;
+if (isset($_GET['id'])) {
+    $cotacaoId = $_GET['id'];
+    $cotacoes = $controladorCotacao->verCotas();
+    foreach ($cotacoes as $c) {
+        if ($c->getId() == $cotacaoId) {
+            $cotacao = $c;
+            break;
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -26,32 +37,61 @@ $cotas = $controladorCotacao->verCotas();
         </section>
         <section class="user-info">
             <a href="../../principal.php" class="home-btn">Home</a>
-            <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
             <a href="logout.php" class="logout-btn">Sair</a>
         </section>
     </section>
 </header>
 <main>
-<a href="../listarCotacoes/listarCotacoes.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
+    <a href="../listarCotacoes/listarCotacoes.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h1>Excluir Cotação</h1>
     <h3>Tem certeza que deseja excluir a seguinte cotação?</h3>
-    <form method="POST" action="processaExclusao.php">
+    <form method="POST" action="">
+        <?php if ($cotacao): ?>
             <label for="cotacao_id"><strong>ID:</strong></label>
-            <input type="text" id="cotacao_id" name="cotacao_id" readonly>
+            <input type="text" id="cotacao_id" name="cotacao_id" value="<?php echo $cotacao->getId() ?>" readonly>
             <label for="produto_nome"><strong>Nome do Produto:</strong></label>
-            <input type="text" id="produto_nome" name="produto_nome" readonly>
+            <?php
+            $resultadoProduto= null;
+            $produtos = $controladorProduto->verProdutos();
+            foreach($produtos as $produto) {
+                if ($produto->getId() == $cotacao->getProdutoId()) {
+                   $resultadoProduto = $produto->getNome();
+                    break;
+                }
+            }
+            ?>
+            <input type="text" id="produto_nome" name="produto_nome" value="<?php echo $resultadoProduto ?>" readonly>
             <label for="preco_unitario"><strong>Preço Unitário:</strong></label>
-            <input type="text" id="preco_unitario" name="preco_unitario" readonly>
+            <input type="text" id="preco_unitario" name="preco_unitario" value="<?php echo htmlspecialchars($cotacao->getPrecoUnitario()); ?>" readonly>
             <label for="quantidade"><strong>Quantidade:</strong></label>
-            <input type="text" id="quantidade" name="quantidade" readonly>
+            <input type="text" id="quantidade" name="quantidade" value="<?php echo htmlspecialchars($cotacao->getQuantidade()); ?>" readonly>
             <label for="data_cotacao"><strong>Data da Cotação:</strong></label>
-            <input type="text" id="data_cotacao" name="data_cotacao" readonly>
+            <input type="date" id="data_cotacao" name="data_cotacao" value="<?php echo htmlspecialchars($cotacao->getDataCotacao()); ?>" readonly>
+            <?php
+            $resultadoFornecedor = null;
+            $fornecedores = $controladorFornecedor->verFornecedor();
+            foreach ($fornecedores as $fornecedor) {
+                if ($fornecedor->getId() == $cotacao->getFornecedorId()) {
+                    $resultadoFornecedor = $fornecedor->getNome();
+                    break;
+                }
+            }
+            ?>
             <label for="fornecedor_nome"><strong>Fornecedor:</strong></label>
-            <input type="text" id="fornecedor_nome" name="fornecedor_nome" readonly>
+            <input type="text" id="fornecedor_nome" name="fornecedor_nome" value="<?php echo $resultadoFornecedor ?>" readonly>
+            <input type="hidden" name="cotacao_id" value="<?php echo htmlspecialchars($cotacao->getId()); ?>">
             <button type="submit" name="confirmar">Confirmar Exclusão</button>
-            <button type="submit" name="cancelar">Cancelar</button>
-        </div>
+        <?php else: ?>
+            <p>Cotação não encontrada.</p>
+        <?php endif; ?>
     </form>
+    <?php
+    if (isset($_POST['confirmar'])) {
+        $controladorCotacao->deletarCota($_POST['cotacao_id']);
+        header('Location: ../listarCotacoes/listarCotacoes.php');
+        exit();
+    }
+    ?>
 </main>
 <footer>
     <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
