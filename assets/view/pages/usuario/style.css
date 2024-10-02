@@ -1,10 +1,10 @@
-@import url('../global.css');
+@import url('../global.css');  
 
 h1 {
     color: #2a3e85;
     text-align: center;
     margin-bottom: 20px;
-}
+}  
 
 main {
     display: flex;
@@ -12,134 +12,139 @@ main {
     align-items: center;
     flex-direction: column;
     padding: 20px;
+} 
+
+/* Estilo do formulário */  
+form {  
+    max-width: 1000px; /* Aumentar a largura máxima do formulário */  
+    width: 100%; /* Certifique-se de ocupar 100% da largura disponível */  
+    margin: 20px auto; /* Centraliza o formulário na página */  
+    padding: 20px; /* Padding interno */  
+    background-color: #ffffff; /* Cor de fundo */  
+    border-radius: 8px; /* Bordas arredondadas */  
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */  
+    display: flex; /* Usando flexbox para alinhamento */  
+    flex-direction: column; /* Colocando os elementos em coluna */  
+    align-items: stretch; /* Faz com que os inputs ocupem a largura total */  
+}  
+
+/* Estilo do título principal */  
+ 
+
+/* Alinhamento dos labels */  
+form label {  
+    display: block; /* Faz o label ocupar toda a largura */  
+    font-weight: bold; /* Negrito para destaque */  
+    margin-bottom: 5px; /* Espaçamento abaixo do label */  
+}  
+
+/* Estilo dos inputs e selects */  
+form input, form select {  
+    width: 100%; /* Ocupar toda a largura do formulário */  
+    padding: 10px; /* Espaçamento interno */  
+    border: 1px solid #ccc; /* Borda */  
+    border-radius: 4px; /* Bordas arredondadas */  
+    margin-bottom: 15px; /* Espaçamento abaixo dos campos */  
+    font-size: 16px; /* Tamanho da fonte */  
+    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */  
+}  
+
+/* Estilo dos botões */  
+button {  
+    padding: 10px 20px; /* Espaçamento interno do botão */  
+    border: none; /* Remove borda padrão */  
+    border-radius: 4px; /* Bordas arredondadas */  
+    background-color: #2a3e85; /* Cor de fundo */  
+    color: #ffffff; /* Cor do texto */  
+    font-size: 1rem; /* Tamanho da fonte */  
+    cursor: pointer; /* Muda o cursor ao passar o mouse */  
+    transition: background-color 0.3s ease; /* Transição da cor de fundo */  
+    align-self: flex-end; /* Alinha o botão à direita do formulário */  
+}  
+
+button:hover {  
+    background-color: #3e9bd4; /* Cor ao passar o mouse */  
 }
 
-form label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    width: 100%;
+table {  
+    width: 100%;  
+    border-collapse: collapse;  
+    margin: 20px 0;  
+    font-size: 18px;  
+    text-align: left;  
+}  
+
+table thead tr {  
+    background-color: #2a3e85;  
+    color: #ffffff;  
+    text-align: left;  
+    font-weight: bold;  
+}  
+
+table th, table td {  
+    padding: 12px 15px;  
+    border: 1px solid #dddddd;  
+}  
+
+table tbody tr {  
+    border-bottom: 1px solid #dddddd;  
+}  
+
+table tbody tr:nth-of-type(even) {  
+    background-color: #f3f3f3;  
+}  
+
+table tbody tr:last-of-type {  
+    border-bottom: 2px solid #2a3e85;  
+}  
+
+table tbody tr:hover {  
+    background-color: #e9ecef; /* Efeito hover mais suave */  
+}  
+
+.search {  
+    display: flex; /* Usar Flexbox para o alinhamento */  
+    align-items: baseline; /* Alinha verticalmente ao centro */  
+    justify-content: center; /* Centraliza horizontalmente os elementos */  
+    margin-bottom: 20px;  
+}  
+
+.search input[type="text"] {  
+    flex: 1; /* O input irá ocupar o espaço disponível */  
+    padding: 10px;  
+    margin-right: 10px;  
+    border: 1px solid #ccc;  
+    border-radius: 40px;  
+    max-width: 300px; /* Limita a largura máxima do input */  
+}  
+
+.search button {  
+    padding: 10px 20px;  
+    border: none;  
+    border-radius: 40px;  
+    background-color: #2a3e85;  
+    color: #fff;  
+    font-size: 1rem;  
+    cursor: pointer;  
+    margin: 10px;
+    transition: background-color 0.3s ease;  
+}  
+
+.search button:hover {  
+    background-color: #3e9bd4;  
 }
 
-form input, form select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #2a3e85;
-    color: #fff;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #3e9bd4;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 18px;
-    text-align: left;
-}
-
-table thead tr {
-    background-color: #2a3e85;
-    color: #ffffff;
-    text-align: left;
-    font-weight: bold;
-}
-
-table th, table td {
-    padding: 12px 15px;
-    border: 1px solid #dddddd;
-}
-
-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-
-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-}
-
-table tbody tr:last-of-type {
-    border-bottom: 2px solid #2a3e85;
-}
-
-table tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-.search {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.search input[type="text"] {
-    flex: 1;
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    max-width: 300px;
-}
-
-.search button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #2a3e85;
-    color: #fff;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.search button:hover {
-    background-color: #3e9bd4;
-}
-
-.home-btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #2a3e85;
-    color: #fff;
-    font-size: 1rem;
-    cursor: pointer;
-    text-decoration: none; /* Remove o sublinhado do link */
-    transition: background-color 0.3s ease;
-}
-
-.add-user {
-    margin-top: 20px;
-    text-align: right;
-}
-
-.add-user-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #2a3e85;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.add-user-btn:hover {
-    background-color: #3e9bd4;
-}
+.home-btn, .add-user-btn {  
+    padding: 10px 20px;  
+    border: none;  
+    border-radius: 4px;  
+    background-color: #2a3e85;  
+    color: #fff;  
+    font-size: 1rem;  
+    cursor: pointer;  
+    text-decoration: none; /* Remove o sublinhado do link */  
+    transition: background-color 0.3s ease;  
+}  
 
 .back-btn {
     position: absolute;
@@ -153,16 +158,54 @@ table tbody tr:hover {
     transition: background-color 0.3s ease;
 }
 
-.back-btn:hover {
-    background-color: #3e9bd4;
+.add-user-btn:hover, .home-btn:hover, .back-btn:hover {  
+    background-color: #3e9bd4;  
+}  
+
+.add-user {  
+    margin-top: 20px;  
+    text-align: right;  
+}  
+
+footer {  
+    background-color: #2a3e85;  
+    color: #ffffff;  
+    text-align: center;  
+    padding: 10px 0;  
+    position: fixed;  
+    bottom: 0;  
+    width: 100%;  
+}  
+
+/* Estilo para os botões de ação na tabela */  
+table tbody td a {  
+    padding: 5px 10px;  
+    border-radius: 4px;  
+    color: #2a3e85;  
+    text-decoration: none;  
+    transition: background-color 0.3s ease;  
+}  
+
+table tbody td a:hover {  
+    background-color: #2a3e85; /* Efeito hover para links */  
+    color: #ffffff;
 }
 
-footer {
-    background-color: #2a3e85;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
+/* codigo teste */
+
+button, .add-user-btn, .home-btn {  
+    border-radius: 40px; /* Bordas arredondadas para um visual moderno */  
+    font-weight: bold; /* Destaca os botões */  
+}  
+
+.table-container {  
+    overflow-x: auto; /* Permite rolagem em telas pequenas */  
+}  
+
+footer {  
+    border-top: 2px solid #ccc; /* Delineia visualmente o rodapé */  
+}   
+
+table th {  
+    text-transform: uppercase; /* Letras maiúsculas para cabeçalhos */  
+} 

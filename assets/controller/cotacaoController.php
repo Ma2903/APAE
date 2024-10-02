@@ -9,14 +9,18 @@ class ControladorCotacao {
         $this->bd = new Database();
     }
 
-    public function cadastrarCota($produtoId, $fornecedorId, $precoUnitario, $quantidade, $dataCotacao) {
+    public function cadastrarCota($produtoId, $fornecedorId, $precoUnitario, $quantidade) {
+        date_default_timezone_set('America/Sao_Paulo');
+        $data_criacao = date("Y-m-d H:i:s");
+
         $this->bd->insert("cotas", (object)[
             "produto_id" => $produtoId,
             "fornecedor_id" => $fornecedorId,
             "preco_unitario" => $precoUnitario,
             "quantidade" => $quantidade,
-            "data_cotacao" => $dataCotacao
+            "data_cotacao" => $data_criacao
         ]);
+        header("Location: ./../listarCotacoes/listarCotacoes.php");    
     }
 
     public function verCotas() {

@@ -18,7 +18,7 @@
             <h1 class="system-name">SmartControl</h1>
         </section>
         <section class="user-info">
-            <a href="../../index.php" class="home-btn">Home</a>
+            <a href="../../principal.php" class="home-btn">Home</a>
             <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
             <a href="logout.php" class="logout-btn">Sair</a>
         </section>
@@ -27,8 +27,10 @@
 <main>
     <h1>Listar Produtos</h1>
     <section class="search">
-        <input type="text" name="search" placeholder="Pesquisar produtos...">
-        <button type="submit">Pesquisar</button>
+        <form action="" method="POST">
+            <input type="text" name="search" placeholder="Pesquisar produtos...">
+            <button type="submit">Pesquisar</button>
+        </form>
     </section>
     <section class="add-product">
         <a href="../cadastroProduto/cadProduto.php" class="add-product-btn">Cadastrar Novo Produto</a>
@@ -46,8 +48,16 @@
         </thead>
         <tbody>
             <?php
+            $produtos = $controler->verProdutos();
+            //TERMINAR DEPOIS
+            if ($_SERVER["REQUEST_METHOD"] == "POST"){
+                var_dump($produtos);
+                $like = $search = $_POST['search'];
+                // if($search != ""){
+                    
+                // }
+            }
             if ($controler->verProdutos()) {
-                $produtos = $controler->verProdutos();
                 foreach ($produtos as $produto) {
                     echo "<tr>";
                     echo "<td>{$produto->getId()}</td>";

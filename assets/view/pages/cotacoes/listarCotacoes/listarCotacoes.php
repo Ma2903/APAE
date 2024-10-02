@@ -1,3 +1,13 @@
+<?php
+require_once __DIR__ . '/../../../../controller/cotacaoController.php';
+require_once __DIR__ . '/../../../../controller/produtoController.php';
+require_once __DIR__ . '/../../../../controller/fornecedorController.php';
+$controladorCotacao = new ControladorCotacao();
+$controladorProduto = new ControladorProdutos();
+$controladorFornecedor = new ControladorFornecedor();
+
+$cotas = $controladorCotacao->verCotas();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -14,7 +24,7 @@
             <h1 class="system-name">SmartControl</h1>
         </section>
         <section class="user-info">
-            <a href="../../index.php" class="home-btn">Home</a>
+            <a href="../../principal.php" class="home-btn">Home</a>
             <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
             <a href="logout.php" class="logout-btn">Sair</a>
         </section>
@@ -37,26 +47,32 @@
                 <th>Preço</th>
                 <th>Data</th>
                 <th>Fornecedor</th>
+                <th>DataCotação</th>
                 <th colspan="2">Ações</th>
             </tr>
         </thead>
         <tbody>
-        <?php
-            // Aqui você deve adicionar o código PHP para listar as cotações
-            // Exemplo:
-            // $cotas = obterCotas(); // Função fictícia para obter cotações do banco de dados
-            // foreach ($cotas as $cotacao) {
-            //     echo "<tr>";
-            //     echo "<td>{$cotacao['id']}</td>";
-            //     echo "<td>{$cotacao['produto_nome']}</td>";
-            //     echo "<td>{$cotacao['fornecedor_nome']}</td>";
-            //     echo "<td>{$cotacao['preco_unitario']}</td>";
-            //     echo "<td>{$cotacao['quantidade']}</td>";
-            //     echo "<td>{$cotacao['data_cotacao']}</td>";
-                echo "<td><a href='../editarCotacoes/editCotacoes.php?'>Editar</a></td>";
-                echo "<td><a href='../deletarCotacoes/delCotacoes.php?'>Deletar</a></td>";
-            //     echo "</tr>";
-            // }
+        <?php // Função fictícia para obter cotações do banco de dados
+            foreach ($cotas as $cotacao) {
+                echo "<tr>";
+                echo "<td>{$cotacao->getId()}</td>";
+                foreach ($controladorProduto->verProdutos() as $produto) {
+                    if($cotacao->getProdutoId() == $produto->getId()){
+                        echo "<td>{$produto->getNome()}</td>";
+                    }
+                }
+                foreach ($controladorFornecedor->verFornecedor() as $fornecedor) {
+                    if($cotacao->getFornecedorId() == $fornecedor->getId()){
+                        echo "<td>{$fornecedor->getNome()}</td>";
+                    }
+                }
+                echo "<td>{$cotacao->getPrecoUnitario()}</td>";
+                echo "<td>{$cotacao->getQuantidade()}</td>";
+                echo "<td>{$cotacao->getDataCotacao()}</td>";
+                echo "<td><a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'>Editar</a></td>";
+                echo "<td><a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'>Deletar</a></td>";
+                echo "</tr>";
+            }
             ?>
         </tbody>
     </table>

@@ -16,21 +16,20 @@
 <body>
     <section class="container">
         <section class="left-section">
-            <img src="../../../src/logo0.jpg" alt="Logo" class="logo">
+            <img src="../../../src/logo_sem_fundo.png" alt="Logo" class="logo">
             <h2>Bem Vindo!</h2>
         </section>
         <section class="right-section">
-            <h2>Entrar</h2>
             <form action="" method="POST">
+                <h2>Entrar</h2>
                 <section class="input-container">
                     <label for="email">E-mail:</label>
-                    <input name="email" type="email" id="email" placeholder="exemplo@gmail.com">
+                    <input name="email" type="email" id="email" placeholder="exemplo@gmail.com" autocomplete="email" required>
                 </section>
-                <!-- Campo de Senha -->
                 <section class="input-container">
                     <label for="password">Senha:</label>
-                    <input name="password" type="password" id="password" placeholder="******">
-                    <span id="toggle-password" class="toggle-icon">
+                    <input name="password" type="password" id="password" placeholder="******" autocomplete="current-password" required>
+                    <span id="toggle-password" class="toggle-icon" aria-label="Mostrar senha">
                         <i class="fas fa-eye"></i>
                     </span>
                 </section>
@@ -40,25 +39,22 @@
                 <button type="submit">Entrar</button>
                 <p>Ou continuar com</p>
                 <section class="social-login">
-                    <i class='bx bxl-facebook-circle'> </i>
-                    <i class='bx bxl-google' ></i>
+                    <i class='bx bxl-facebook-circle' aria-label="Login com Facebook"></i>
+                    <i class='bx bxl-google' aria-label="Login com Google"></i>
                 </section>
             </form>
         </section>
     </section>
     <?php
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        if(isset($_POST['email']) && isset($_POST['password'])){
+        if($_POST['email'] !== "" && $_POST['password'] !== ""){
             $email = $_POST['email'];
             $password = $_POST['password'];
             $userController->logarUsuarios($email,$password);
-    
-            header("Location: principal.php");
         }else{
             echo "<script>alert('Usuário ou senha incorretos!')</script>";
         }
     }
-    
     ?>
 </body>
 </html>

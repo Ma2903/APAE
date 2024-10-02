@@ -19,7 +19,7 @@ $controler = new ControladorUsuarios();
             <h1 class="system-name">SmartControl</h1>
         </section>
         <section class="user-info">
-            <a href="../../index.php" class="home-btn">Home</a>
+            <a href="../../principal.php" class="home-btn">Home</a>
             <a href="logout.php" class="logout-btn">Sair</a>
         </section>
     </section>
@@ -29,9 +29,9 @@ $controler = new ControladorUsuarios();
     <section class="search">
         <input type="text" name="search" placeholder="Pesquisar usuários...">
         <button type="submit">Pesquisar</button>
-    </section>
-    <section class="add-user">
-        <a href="../cadastroUsuario/register_user.php" class="add-user-btn">Cadastrar Novo Usuário</a>
+        <section class="add-user">
+            <a href="../cadastroUsuario/register_user.php" class="add-user-btn">Cadastrar Novo Usuário</a>
+        </section>
     </section>
     <table>
         <thead>

@@ -18,7 +18,7 @@ $controler = new ControladorFornecedor();
             <h1 class="system-name">SmartControl</h1>
         </section>
         <section class="user-info">
-            <a href="../../index.php" class="home-btn">Home</a>
+            <a href="../../principal.php" class="home-btn">Home</a>
             <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
             <a href="logout.php" class="logout-btn">Sair</a>
         </section>

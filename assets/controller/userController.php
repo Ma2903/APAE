@@ -13,7 +13,7 @@ class ControladorUsuarios
         $this->banco = new DataBase;
     }
 
-    public function cadastrarUsuarios($nome, $email, $senha)
+    public function cadastrarUsuarios($nome, $cpf,$sobrenome,$datanasc,$endereco,$telefone,$email,$tipo, $senha,$crn)
     {
         $usuarios = $this->banco->read("usuarios");
         $usuarioEncontrado = false;
@@ -25,11 +25,35 @@ class ControladorUsuarios
                 echo "Usuario já cadastrado";
                 break;
             }
+            if($usuarioBanco['cpf'] == $cpf)
+            {
+                $usuarioEncontrado = true;
+                echo "Usuario já cadastrado";
+                break;
+            }
         }
         if(!$usuarioEncontrado)
         {
-            $this->banco->create("usuarios", ['nome' => $nome, 'email' => $email, 'senha' => $senha]);
-            echo "Usuario cadastrado com sucesso";
+            if($crn != ''){
+                $crn;
+            }
+            date_default_timezone_set('America/Sao_Paulo');
+            $data_criacao = date("Y-m-d H:i:s");
+
+            $this->banco->insert("usuarios",(object) [
+                'cpf' => $cpf,
+                'nome' => $nome,
+                'sobrenome' => $sobrenome,
+                'data_nascimento' => $datanasc,
+                'endereco' => $endereco,
+                'telefone' => $telefone,
+                'email' => $email,
+                'senha' => $senha,
+                'tipo_usuario' => $tipo,
+                'crn' => $crn,
+                'data_criacao' => $data_criacao
+            ]);
+            header("Location: ./../listarUsuario/listarUsuario.php");
         }
     }
 
@@ -58,6 +82,7 @@ class ControladorUsuarios
                             $_SESSION['user'] = new Usuario($usuarioBanco['id'], $usuarioBanco['cpf'], $usuarioBanco['nome'], $usuarioBanco['sobrenome'], $usuarioBanco['data_nascimento'], $usuarioBanco['endereco'], $usuarioBanco['telefone'], $usuarioBanco['email'], $usuarioBanco['senha'], $usuarioBanco['tipo_usuario']);
                             break;
                     }
+                    header("Location: principal.php");
                     break;
                 }
                 else {
@@ -68,7 +93,7 @@ class ControladorUsuarios
         }
         if(!$usuarioEncontrado)
         {
-            echo "Usuario não encontrado";
+            echo "<script>alert('Usuario Não Encontrado!')<script>";
         }
 
     }
@@ -88,9 +113,9 @@ class ControladorUsuarios
                 case 'administrador':
                     $usuarios[] = new Administrador($usuario['id'], $usuario['cpf'], $usuario['nome'], $usuario['sobrenome'], $usuario['data_nascimento'], $usuario['endereco'], $usuario['telefone'], $usuario['email'], $usuario['senha'],$usuario['tipo_usuario']);
                     break;
-                default:
-                    $usuarios[] = new Usuario($usuario['id'], $usuario['cpf'], $usuario['nome'], $usuario['sobrenome'], $usuario['data_nascimento'], $usuario['endereco'], $usuario['telefone'], $usuario['email'], $usuario['senha'], $usuario['tipo_usuario']);
-                    break;
+                // default:
+                //     $usuarios[] = new Usuario($usuario['id'], $usuario['cpf'], $usuario['nome'], $usuario['sobrenome'], $usuario['data_nascimento'], $usuario['endereco'], $usuario['telefone'], $usuario['email'], $usuario['senha'], $usuario['tipo_usuario']);
+                //     break;
             }
             
         }
@@ -120,6 +145,88 @@ class ControladorUsuarios
         }
 
     }
-}
+    public function deleteUsuario($id){
+        var_dump($this->banco->delete('usuarios',$id));
+        header('Location: ./../listarUsuario/listarUsuario.php');
+    }
 
+    // CODIGO COM ERRO PARA SER CONSERTADO FUTURAMENTE ANTES DA PROXIMA ENTREGA
+
+    // public function enviarCodigoRedefinicao($email) {
+    //     // Verificar se o e-mail existe no banco de dados
+    //     $query = "SELECT id FROM usuarios WHERE email = :email";
+    //     $stmt = $this->db->prepare($query);
+    //     $stmt->bindParam(':email', $email);
+    //     $stmt->execute();
+    //     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    //     if ($usuario) {
+    //         // Gerar um código de redefinição aleatório
+    //         $codigo = rand(100000, 999999);
+            
+    //         // Salvar o código no banco de dados
+    //         $query = "UPDATE usuarios SET codigo_redefinicao = :codigo WHERE id = :id";
+    //         $stmt = $this->db->prepare($query);
+    //         $stmt->bindParam(':codigo', $codigo);
+    //         $stmt->bindParam(':id', $usuario['id']);
+    //         $stmt->execute();
+
+    //         // Enviar o e-mail com o código de redefinição
+    //         $assunto = "Redefinição de Senha";
+    //         $mensagem = "Seu código para redefinir a senha é: $codigo";
+    //         $headers = "From: no-reply@apae.org";
+
+    //         mail($email, $assunto, $mensagem, $headers);
+            
+    //         return true;
+    //     } else {
+    //         return false; // Usuário não encontrado
+    //     }
+    // }
+    // public function redefinirSenha($email, $codigo, $novaSenha) {
+    //     // Verificar o código de redefinição
+    //     $query = "SELECT id FROM usuarios WHERE email = :email AND codigo_redefinicao = :codigo";
+    //     $stmt = $this->db->prepare($query);
+    //     $stmt->bindParam(':email', $email);
+    //     $stmt->bindParam(':codigo', $codigo);
+    //     $stmt->execute();
+    //     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    //     if ($usuario) {
+    //         // Atualizar a senha do usuário
+    //         $hashSenha = password_hash($novaSenha, PASSWORD_BCRYPT);
+    //         $query = "UPDATE usuarios SET senha = :senha, codigo_redefinicao = NULL WHERE id = :id";
+    //         $stmt = $this->db->prepare($query);
+    //         $stmt->bindParam(':senha', $hashSenha);
+    //         $stmt->bindParam(':id', $usuario['id']);
+    //         $stmt->execute();
+
+    //         return true; // Senha alterada com sucesso
+    //     } else {
+    //         return false; // Código inválido
+    //     }
+    // Array simulado de usuários (substitua isso pela sua lógica de armazenamento real)
+    // Função para obter um usuário pelo e-mail
+
+
+    // CODIGO INCOMPLETO
+    public function getUsuarioPorEmail($email) {
+        $usuario = $this->banco->read("usuarios");
+        if($email == $usuario['email']){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
+    // Função para alterar a senha do usuário
+    public function alterarSenha($email, $novaSenha) {
+        $stmt = $this->banco->prepare("UPDATE usuarios SET senha = :senha WHERE email = :email");
+        $stmt->bindParam(':senha', $novaSenha);
+        $stmt->bindParam(':email', $email);
+    }
+    
+}
 ?>

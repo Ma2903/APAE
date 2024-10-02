@@ -1,3 +1,10 @@
+<?php
+require_once __DIR__ . "/../../../../controller/userController.php";
+require_once __DIR__ . "/../../global.php";
+$controler = new ControladorUsuarios();
+
+
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -14,16 +21,16 @@
             <img src="../../../../../src/logo_sem_fundo.png" alt="Logo do SmartControl" class="logo">
             <h1 class="system-name">SmartControl</h1>
         </section>
-        <section class="user-info">
-            <a href="../../index.php" class="home-btn">Home</a>
-            <a href="logout.php" class="logout-btn">Sair</a>
-        </section>
+        <section class="user-info">  
+        <a href="../../principal.php" class="home-btn">Home</a>  
+        <a href="logout.php" class="logout-btn">Sair</a>  
+    </section>
     </section>
 </header>
 <main>
     <a href="../listarUsuario/listarUsuario.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h1>Cadastrar Usuário</h1>
-    <form action="../controller/UserController.php?action=register" method="post">
+    <form action="" method="post">
             <label for="cpf">CPF:</label>
             <input type="text" id="cpf" name="cpf" placeholder="CPF" required>
          <label for="nome">Nome:</label>
@@ -49,7 +56,12 @@
         <label for="crn">CRN (Somente Nutricionistas):</label>
             <input type="text" id="crn" name="crn" placeholder="CRN">
          <button type="submit">Cadastrar Usuário</button>
-         </form>
+    </form>
+    <?php
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $controler->cadastrarUsuarios($_POST['nome'],$_POST['cpf'],$_POST['sobrenome'],$_POST['data_nascimento'],$_POST['endereco'],$_POST['telefone'],$_POST['email'],$_POST['tipo_usuario'],$_POST['senha'],$_POST['crn']);
+        }
+    ?>
 </main>
 <footer>
     <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
