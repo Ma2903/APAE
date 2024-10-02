@@ -2,56 +2,16 @@
 require_once __DIR__ . "/../../../controller/userController.php";
 $userController = new ControladorUsuarios();
 
-// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//     // Etapa 1: Envio do código
-//     if (isset($_POST['email'])) {
-//         $email = $_POST['email'];
-//         // Aqui, você pode implementar a lógica para enviar um código para o e-mail, se necessário.
-
-//         // Para este exemplo, vamos supor que o código é enviado corretamente.
-//         echo "<script>document.getElementById('email-form').style.display = 'none'; document.getElementById('reset-form').style.display = 'block';</script>";
-//     }
-
-//     // Etapa 2: Verificação da resposta da pergunta de segurança e alteração da senha
-//     if (isset($_POST['resposta-seguranca']) && isset($_POST['password'])) {
-//         $respostaSeguranca = $_POST['resposta-seguranca'];
-//         $novaSenha = $_POST['password'];
-//         $email = $_POST['email']; // Capturando o e-mail do formulário
-
-//         // Verificando a pergunta de segurança
-//         if (verificarSeguranca($email, $respostaSeguranca)) {
-//             // Se a resposta estiver correta, alterar a senha
-//             if (alterarSenha($email, $novaSenha)) {
-//                 echo "<p>Senha alterada com sucesso!</p>";
-//             } else {
-//                 echo "<p>Erro ao alterar a senha. Tente novamente.</p>";
-//             }
-//         } else {
-//             echo "<p>Resposta de segurança incorreta. Tente novamente.</p>";
-//         }
-//     }
-// }
-
-// Função para verificar a resposta da pergunta de segurança
-function verificarSeguranca($email, $respostaSeguranca) {
-    global $userController; // Acesso ao controlador
-
-    // Consultar no banco de dados a pergunta e resposta de segurança do usuário
-    $usuario = $userController->getUsuarioPorEmail();
-    
-    if ($usuario) {
-        return $usuario['pergunta_seguranca'] === $respostaSeguranca; // Comparar com a resposta cadastrada
+if($_SERVER['METHOD'] == 'POST') {
+    if(isset($_POST['email'])) {
+        $email = $_POST['email'];
+        $usuariosBanco = $userController->listarUsuarios();
+        foreach($usuariosBanco as $usuario){
+            if($usuario->getEmail() == $email){
+                echo $usuario->getPeguntaSeguranca();
+            }
+        }
     }
-
-    return false; // Usuário não encontrado
-}
-
-// Função para alterar a senha
-function alterarSenha($email, $novaSenha) {
-    global $userController;
-
-    // Aqui você pode chamar a função do controlador que altera a senha
-    return $userController->alterarSenha($email, password_hash($novaSenha, PASSWORD_DEFAULT)); // Hash da nova senha antes de armazenar
 }
 ?>
 
