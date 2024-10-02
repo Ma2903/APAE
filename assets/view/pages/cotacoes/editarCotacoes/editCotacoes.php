@@ -1,3 +1,11 @@
+<?php
+require_once __DIR__ . '/../../../../controller/cotacaoController.php';
+require_once __DIR__ . '/../../../../controller/produtoController.php';
+require_once __DIR__ . '/../../../../controller/fornecedorController.php';
+
+$controladorCotacao = new ControladorCotacao();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -25,25 +33,36 @@
     <a href="../listarCotacoes/listarCotacoes.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h1>Editar Cotação</h1>
     <form action="processaEdicao.php" method="post">
-            <label for="cotacao_id">Selecione a Cotação:</label>
-            <select id="cotacao_id" name="cotacao_id" required>
-                <!-- Aqui você deve adicionar o código PHP para listar as cotações -->
-            </select>
-            <label for="produto_id">Produto:</label>
-            <select id="produto_id" name="produto_id" required>
-                <!-- Aqui você deve adicionar o código PHP para listar os produtos -->
-            </select>
-            <label for="fornecedor_id">Fornecedor:</label>
-            <select id="fornecedor_id" name="fornecedor_id" required>
-                <!-- Aqui você deve adicionar o código PHP para listar os fornecedores -->
-            </select>
-            <label for="preco_unitario">Preço Unitário:</label>
-            <input type="number" step="0.01" id="preco_unitario" name="preco_unitario" required>
-            <label for="quantidade">Quantidade:</label>
-            <input type="number" step="0.01" id="quantidade" name="quantidade" required>
-            <label for="data_cotacao">Data da Cotação:</label>
-            <input type="date" id="data_cotacao" name="data_cotacao" required>
-            <button type="submit">Salvar Alterações</button>
+        <?php
+
+        $cotacoes = $controladorCotacao->verCotas();
+        foreach($cotacoes as $cotacao){
+            if($cotacao->getId() == $_GET['id']){
+                echo '
+                    <label for="produto_id">Produto:</label>
+                    <select id="produto_id" name="produto_id" required>';
+                    $produtos = $controladorProduto->verProdutos();
+                    foreach($produtos as $produto){
+                        echo '<option value="'.$produto->getId().'"'.
+                        if($produto->getId() == $cotacao->getProdutoId()) echo 'selected';
+                        ''>.$produto->getNome().'</option>';
+                    }
+                    if($cotacao->getProdutoId() )
+                    '</select>
+                    <label for="fornecedor_id">Fornecedor:</label>
+                    <select id="fornecedor_id" name="fornecedor_id" required>
+                        <!-- Aqui você deve adicionar o código PHP para listar os fornecedores -->
+                    </select>
+                    <label for="preco_unitario">Preço Unitário:</label>
+                    <input type="number" step="0.01" id="preco_unitario" name="preco_unitario" required>
+                    <label for="quantidade">Quantidade:</label>
+                    <input type="number" step="0.01" id="quantidade" name="quantidade" required>
+                    <label for="data_cotacao">Data da Cotação:</label>
+                    <input type="date" id="data_cotacao" name="data_cotacao" required>
+                    <button type="submit">Salvar Alterações</button> ';
+            }
+        }
+        ?>
     </form>
 </main>
 <footer>
