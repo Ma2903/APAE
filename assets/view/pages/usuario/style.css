@@ -26,19 +26,14 @@ form {
     display: flex; /* Usando flexbox para alinhamento */  
     flex-direction: column; /* Colocando os elementos em coluna */  
     align-items: stretch; /* Faz com que os inputs ocupem a largura total */  
-}  
+}
 
-/* Estilo do título principal */  
- 
-
-/* Alinhamento dos labels */  
 form label {  
-    display: block; /* Faz o label ocupar toda a largura */  
-    font-weight: bold; /* Negrito para destaque */  
-    margin-bottom: 5px; /* Espaçamento abaixo do label */  
+    display: block; 
+    font-weight: bold; 
+    margin-bottom: 5px;  
 }  
-
-/* Estilo dos inputs e selects */  
+  
 form input, form select {  
     width: 100%; /* Ocupar toda a largura do formulário */  
     padding: 10px; /* Espaçamento interno */  
@@ -49,17 +44,16 @@ form input, form select {
     box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */  
 }  
 
-/* Estilo dos botões */  
-button {  
-    padding: 10px 20px; /* Espaçamento interno do botão */  
-    border: none; /* Remove borda padrão */  
-    border-radius: 4px; /* Bordas arredondadas */  
-    background-color: #2a3e85; /* Cor de fundo */  
-    color: #ffffff; /* Cor do texto */  
-    font-size: 1rem; /* Tamanho da fonte */  
-    cursor: pointer; /* Muda o cursor ao passar o mouse */  
-    transition: background-color 0.3s ease; /* Transição da cor de fundo */  
-    align-self: flex-end; /* Alinha o botão à direita do formulário */  
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2a3e85;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: flex-end;
 }  
 
 button:hover {  
@@ -99,15 +93,15 @@ table tbody tr:last-of-type {
 }  
 
 table tbody tr:hover {  
-    background-color: #e9ecef; /* Efeito hover mais suave */  
+    background-color: #e9ecef; 
 }  
 
-.search {  
-    display: flex; /* Usar Flexbox para o alinhamento */  
-    align-items: baseline; /* Alinha verticalmente ao centro */  
-    justify-content: center; /* Centraliza horizontalmente os elementos */  
-    margin-bottom: 20px;  
-}  
+.search {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin-bottom: 20px;
+} 
 
 .search input[type="text"] {  
     flex: 1; /* O input irá ocupar o espaço disponível */  
@@ -152,7 +146,7 @@ table tbody tr:hover {
     top: 150px; /* Ajuste conforme necessário */
     padding: 10px 20px;
     background-color: #2a3e85;
-    color: white;
+    color: #ffffff;
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
@@ -190,8 +184,6 @@ table tbody td a:hover {
     background-color: #2a3e85; /* Efeito hover para links */  
     color: #ffffff;
 }
-
-/* codigo teste */
 
 button, .add-user-btn, .home-btn {  
     border-radius: 40px; /* Bordas arredondadas para um visual moderno */  

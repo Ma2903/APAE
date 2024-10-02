@@ -47,7 +47,6 @@
     
         <input type="hidden" name="produto_id">
         <button type="submit" name="confirmar">Confirmar Exclusão</button>
-        <button type="submit" name="cancelar">Cancelar</button>
     </form>
     <?php
     if(isset($_POST['confirmar'])){

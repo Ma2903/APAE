@@ -53,7 +53,6 @@
         }
         ?>
         <button type="submit" name="confirmar">Confirmar Exclusão</button>
-        <button type="submit" name="cancelar">Cancelar</button>
     </form>
 
     <?php

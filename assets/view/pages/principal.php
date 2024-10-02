@@ -3,13 +3,12 @@
     require_once __DIR__ . "/../../model/utils.php";
     session_start();
     
-    if(!isset($_SESSION['user'])){
-        header("Location: index.php");
-        exit();
-    }
-
     $user = $_SESSION['user'];
     $tipo_usuario = $user->getTipoUsuario();
+
+    if(!isset($_SESSION['user'])){
+        header("Location: index.php");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -40,27 +39,27 @@
                 <section class="menu">
                     <?php if (verificarPermissao($tipo_usuario, 'gerenciar_usuarios')): ?>
                     <section class="menu-item">
-                        <a href="usuario/listarUsuario/listarUsuario.php">Gerenciar Usuários</a>
+                        <a href="usuario/listarUsuario/listarUsuario.php">Ver Usuários</a>
                     </section>
                     <?php endif; ?>
-                    <?php if (verificarPermissao($tipo_usuario, 'gerenciar_produtos')): ?>
+                    <?php if (verificarPermissao($tipo_usuario, 'gerenciar_produtos') || verificarPermissao($tipo_usuario, 'ver_produtos')): ?>
                     <section class="menu-item">
-                        <a href="produto/listarProduto/listarProduto.php">Gerenciar Produtos</a>
+                        <a href="produto/listarProduto/listarProduto.php">Ver Produtos</a>
                     </section>
                     <?php endif; ?>
                     <?php if (verificarPermissao($tipo_usuario, 'gerenciar_fornecedores')): ?>
                     <section class="menu-item">
-                        <a href="fornecedores/listarFornecedores/listarFornecedores.php">Gerenciar Fornecedores</a>
+                        <a href="fornecedores/listarFornecedores/listarFornecedores.php">Ver Fornecedores</a>
                     </section>
                     <?php endif; ?>
-                    <?php if (verificarPermissao($tipo_usuario, 'gerenciar_cotacoes')): ?>
+                    <?php if (verificarPermissao($tipo_usuario, 'gerenciar_cotacoes') || verificarPermissao($tipo_usuario, 'ver_cotacoes')): ?>
                     <section class="menu-item">
-                        <a href="cotacoes/listarCotacoes/listarCotacoes.php">Gerenciar Cotações</a>
+                        <a href="cotacoes/listarCotacoes/listarCotacoes.php">Ver Cotações</a>
                     </section>
                     <?php endif; ?>
-                    <?php if (verificarPermissao($tipo_usuario, 'gerenciar_cardapios')): ?>
+                    <?php if (verificarPermissao($tipo_usuario, 'gerenciar_cardapios') || verificarPermissao($tipo_usuario, 'ver_cardapios')): ?>
                     <section class="menu-item">
-                        <a href="cardapio/listarCardapio/listarCardapio.php">Gerenciar Cardápios</a>
+                        <a href="cardapio/listarCardapio/listarCardapio.php">Ver Cardápios</a>
                     </section>
                     <?php endif; ?>
                 </section>

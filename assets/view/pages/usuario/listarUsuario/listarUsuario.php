@@ -64,7 +64,7 @@ $controler = new ControladorUsuarios();
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='9'>Nenhum usuário encontrado.</td></tr>";
+                echo "<tr></tr>";
             }
             ?>
         </tbody>

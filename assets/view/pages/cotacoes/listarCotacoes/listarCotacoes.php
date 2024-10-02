@@ -2,11 +2,24 @@
 require_once __DIR__ . '/../../../../controller/cotacaoController.php';
 require_once __DIR__ . '/../../../../controller/produtoController.php';
 require_once __DIR__ . '/../../../../controller/fornecedorController.php';
+require_once __DIR__ . "/../../../../controller/userController.php";
+require_once __DIR__ . "/../../../../model/utils.php";
+session_start();
+
 $controladorCotacao = new ControladorCotacao();
 $controladorProduto = new ControladorProdutos();
 $controladorFornecedor = new ControladorFornecedor();
 
 $cotas = $controladorCotacao->verCotas();
+
+$user = $_SESSION['user'];
+    $tipo_usuario = $user->getTipoUsuario();
+
+    if(!isset($user)){
+        header("Location: index.php");
+    }
+
+    $podeGerenciarCotacoes = verificarPermissao($tipo_usuario, 'gerenciar_cotacoes');
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -25,8 +38,7 @@ $cotas = $controladorCotacao->verCotas();
         </section>
         <section class="user-info">
             <a href="../../principal.php" class="home-btn">Home</a>
-            <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
-            <a href="logout.php" class="logout-btn">Sair</a>
+              <a href="logout.php" class="logout-btn">Sair</a>
         </section>
     </section>
 </header>
@@ -35,9 +47,11 @@ $cotas = $controladorCotacao->verCotas();
         <section class="search">
         <input type="text" name="search" placeholder="Pesquisar cotações...">
         <button type="submit">Pesquisar</button>
-    </section>
-    <section class="add-quote">
-        <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
+        <section class="add-quote">
+        <?php if ($podeGerenciarCotacoes): ?>
+            <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
+        <?php endif; ?>
+        </section>
     </section>
     <table>
         <thead>
@@ -48,7 +62,9 @@ $cotas = $controladorCotacao->verCotas();
                 <th>Data</th>
                 <th>Fornecedor</th>
                 <th>DataCotação</th>
+                <?php if ($podeGerenciarCotacoes): ?>
                 <th colspan="2">Ações</th>
+                <?php endif; ?>
             </tr>
         </thead>
         <tbody>
@@ -69,8 +85,10 @@ $cotas = $controladorCotacao->verCotas();
                 echo "<td>{$cotacao->getPrecoUnitario()}</td>";
                 echo "<td>{$cotacao->getQuantidade()}</td>";
                 echo "<td>{$cotacao->getDataCotacao()}</td>";
-                echo "<td><a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'>Editar</a></td>";
-                echo "<td><a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'>Deletar</a></td>";
+                if ($podeGerenciarCotacoes) {
+                    echo "<td> <a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'>Editar</a> </td>";
+                    echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'>Deletar</a> </td>";
+                }   
                 echo "</tr>";
             }
             ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 02/10/2024 às 05:10
+-- Tempo de geração: 02/10/2024 às 15:16
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -154,17 +154,18 @@ CREATE TABLE `permissoes` (
   `gerenciar_produtos` tinyint(1) NOT NULL DEFAULT 0,
   `ver_produtos` tinyint(1) NOT NULL DEFAULT 0,
   `gerenciar_cotacoes` tinyint(1) NOT NULL DEFAULT 0,
-  `ver_cotacoes` tinyint(1) NOT NULL DEFAULT 0
+  `ver_cotacoes` tinyint(1) NOT NULL DEFAULT 0,
+  `gerenciar_fornecedores` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `permissoes`
 --
 
-INSERT INTO `permissoes` (`id`, `tipo_usuario`, `gerenciar_usuarios`, `gerenciar_cardapios`, `ver_cardapios`, `gerenciar_produtos`, `ver_produtos`, `gerenciar_cotacoes`, `ver_cotacoes`) VALUES
-(1, 'administrador', 1, 1, 1, 1, 1, 1, 1),
-(2, 'funcionario', 0, 0, 0, 1, 1, 1, 1),
-(3, 'nutricionista', 0, 1, 1, 0, 1, 0, 1);
+INSERT INTO `permissoes` (`id`, `tipo_usuario`, `gerenciar_usuarios`, `gerenciar_cardapios`, `ver_cardapios`, `gerenciar_produtos`, `ver_produtos`, `gerenciar_cotacoes`, `ver_cotacoes`, `gerenciar_fornecedores`) VALUES
+(1, 'administrador', 1, 1, 1, 1, 1, 1, 1, 1),
+(2, 'funcionario', 0, 0, 1, 1, 1, 1, 1, 1),
+(3, 'nutricionista', 0, 1, 1, 0, 1, 0, 1, 0);
 
 -- --------------------------------------------------------
 

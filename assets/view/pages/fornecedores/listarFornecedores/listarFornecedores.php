@@ -19,7 +19,6 @@ $controler = new ControladorFornecedor();
         </section>
         <section class="user-info">
             <a href="../../principal.php" class="home-btn">Home</a>
-            <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
             <a href="logout.php" class="logout-btn">Sair</a>
         </section>
     </section>
@@ -29,9 +28,9 @@ $controler = new ControladorFornecedor();
     <section class="search">
         <input type="text" name="search" placeholder="Pesquisar fornecedores...">
         <button type="submit">Pesquisar</button>
-    </section>
-    <section class="add-product">
-        <a href="../cadastroFornecedores/cadFornecedores.php" class="add-product-btn">Cadastrar Novo Fornecedor</a>
+        <section class="add-product">
+            <a href="../cadastroFornecedores/cadFornecedores.php" class="add-product-btn">Cadastrar Novo Fornecedor</a>
+        </section>
     </section>
     <table>
         <thead>
