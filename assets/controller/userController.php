@@ -208,6 +208,21 @@ class ControladorUsuarios
     // Array simulado de usuários (substitua isso pela sua lógica de armazenamento real)
     // Função para obter um usuário pelo e-mail
 
+    public function UpSenha($email, $password, $Verifpassword){
+        $usuarios = $this->banco->read("usuarios");
+        foreach($usuarios as $usuario)
+        {
+            if($usuario['email'] == $email)
+            {
+                if($password == $Verifpassword){
+                    $this->banco->update("usuarios",(object)[
+                        'senha' => $password,
+                    ],$usuario['id']);
+                    break;
+                }
+            }
+        }
+    }
 
     // CODIGO INCOMPLETO
     public function getUsuarioPorEmail($email) {

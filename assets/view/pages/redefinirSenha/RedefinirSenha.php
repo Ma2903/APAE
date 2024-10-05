@@ -2,6 +2,9 @@
 require_once __DIR__ . "/../../../controller/userController.php";
 $userController = new ControladorUsuarios();
 
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $userController->UpSenha($_POST['email'], $_POST['password'], $_POST['Verifpassword']);
+}
 // use PHPMailer\PHPMailer\PHPMailer;
 // use PHPMailer\PHPMailer\Exception;
 
@@ -76,8 +79,8 @@ $userController = new ControladorUsuarios();
             <form action="" method="POST" id="reset-form" style="display:none;">
                 <input type="hidden" name="email" value="" id="hidden-email">
                 <section class="input-container">
-                    <label for="resposta-seguranca">Pergunta de segurança:</label>
-                    <input name="resposta-seguranca" type="text" id="resposta-seguranca" placeholder="Digite sua resposta de segurança" required>
+                    <label for="resposta-seguranca">Mude caso realmente for necessário</label>
+                    <!-- <input name="resposta-seguranca" type="text" id="resposta-seguranca" placeholder="Digite sua resposta de segurança" required> -->
                 </section>
                 
                 <section class="input-container">
@@ -90,7 +93,7 @@ $userController = new ControladorUsuarios();
                 
                 <section class="input-container">
                     <label for="confirm-password">Confirmar Nova Senha:</label>
-                    <input name="password" type="password" id="confirm-password" placeholder="******" required>
+                    <input name="Verifpassword" type="password" id="Verifpassword" placeholder="******" required>
                     <span id="toggle-password" class="toggle-icon">
                         <i class="fas fa-eye"></i>
                     </span>
