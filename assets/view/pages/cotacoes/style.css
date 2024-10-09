@@ -200,4 +200,41 @@ footer {
 
 table th {  
     text-transform: uppercase; /* Letras maiúsculas para cabeçalhos */  
-} 
+}
+
+/* Estilo específico para o formulário de seleção de data */
+.date-filter-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    width: 100%;
+}
+
+.date-filter-form label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.date-filter-form input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.date-filter-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2a3e85;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.date-filter-form button:hover {
+    background-color: #3e9bd4;
+}

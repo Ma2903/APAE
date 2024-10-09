@@ -222,6 +222,7 @@ class ControladorUsuarios
                 }
             }
         }
+        header('Location: ../index.php');
     }
 
     // CODIGO INCOMPLETO

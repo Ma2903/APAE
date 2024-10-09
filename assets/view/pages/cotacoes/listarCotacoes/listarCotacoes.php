@@ -13,15 +13,15 @@ $controladorFornecedor = new ControladorFornecedor();
 $cotas = $controladorCotacao->verCotas();
 
 $user = $_SESSION['user'];
-    $tipo_usuario = $user->getTipoUsuario();
+$tipo_usuario = $user->getTipoUsuario();
 
-    if(!isset($user)){
-        header("Location: index.php");
-    }
+if(!isset($user)){
+    header("Location: index.php");
+}
 
-    $podeGerenciarCotacoes = verificarPermissao($tipo_usuario, 'gerenciar_cotacoes');
+$podeGerenciarCotacoes = verificarPermissao($tipo_usuario, 'gerenciar_cotacoes');
 
-    // Função para calcular maior e menor preço por produto
+// Função para calcular maior e menor preço por produto
 function calcularMaiorMenorPreco($cotas) {
     $resultados = [];
 
@@ -51,7 +51,28 @@ function calcularMaiorMenorPreco($cotas) {
 
     return $resultados;
 }
-$precos = calcularMaiorMenorPreco($cotas);
+
+    $precos = calcularMaiorMenorPreco($cotas);
+
+// Função para filtrar cotações por intervalo de datas
+function filtrarPorData($cotas, $dataInicio, $dataFim) {
+    $filtradas = [];
+
+    foreach ($cotas as $cotacao) {
+        $dataCotacao = $cotacao->getDataCotacao();
+        if ($dataCotacao >= $dataInicio && $dataCotacao <= $dataFim) {
+            $filtradas[] = $cotacao;
+        }
+    }
+
+    return $filtradas;
+}
+
+$dataInicio = isset($_GET['dataInicio']) ? $_GET['dataInicio'] : '';
+$dataFim = isset($_GET['dataFim']) ? $_GET['dataFim'] : '';
+
+$cotasFiltradas = $dataInicio && $dataFim ? filtrarPorData($cotas, $dataInicio, $dataFim) : $cotas;
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -70,20 +91,25 @@ $precos = calcularMaiorMenorPreco($cotas);
         </section>
         <section class="user-info">
             <a href="../../principal.php" class="home-btn">Home</a>
-              <a href="logout.php" class="logout-btn">Sair</a>
+            <a href="logout.php" class="logout-btn">Sair</a>
         </section>
     </section>
 </header>
-    <main>
-        <h1>Listar Cotações</h1>
-        <section class="search">
-        <input type="text" name="search" placeholder="Pesquisar cotações...">
-        <button type="submit">Pesquisar</button>
-        <section class="add-quote">
-        <?php if ($podeGerenciarCotacoes): ?>
-            <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
-        <?php endif; ?>
-        </section>
+<main>
+    <h1>Listar Cotações</h1>
+    <section class="search">
+        <form method="GET" action="" class="date-filter-form">
+            <label for="dataInicio">Data Início:</label>
+            <input type="date" id="dataInicio" name="dataInicio" value="<?= $dataInicio ?>">
+            <label for="dataFim">Data Fim:</label>
+            <input type="date" id="dataFim" name="dataFim" value="<?= $dataFim ?>">
+            <button type="submit">Filtrar</button>
+            <section class="add-quote">
+                <?php if ($podeGerenciarCotacoes): ?>
+                    <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
+                <?php endif; ?>
+            </section>
+        </form>
     </section>
     <table>
         <thead>
@@ -104,8 +130,8 @@ $precos = calcularMaiorMenorPreco($cotas);
             </tr>
         </thead>
         <tbody>
-        <?php
-            foreach ($cotas as $cotacao) {
+            <?php
+            foreach ($cotasFiltradas as $cotacao) {
                 $produtoId = $cotacao->getProdutoId();
                 $fornecedorId = $cotacao->getFornecedorId();
                 $produtoNome = '';
@@ -145,7 +171,7 @@ $precos = calcularMaiorMenorPreco($cotas);
                 }
                 echo "</tr>";
             }
-        ?>
+            ?>
         </tbody>
     </table>
 </main>
