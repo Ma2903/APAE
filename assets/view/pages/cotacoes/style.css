@@ -238,3 +238,11 @@ table th {
 .date-filter-form button:hover {
     background-color: #3e9bd4;
 }
+
+.maior-preco {
+        color: red;
+}
+
+.menor-preco {
+        color: green;
+}

@@ -81,6 +81,7 @@ $cotasFiltradas = $dataInicio && $dataFim ? filtrarPorData($cotas, $dataInicio, 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listar Cotações</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 <header>
@@ -90,8 +91,8 @@ $cotasFiltradas = $dataInicio && $dataFim ? filtrarPorData($cotas, $dataInicio, 
             <h1 class="system-name">SmartControl</h1>
         </section>
         <section class="user-info">
-            <a href="../../principal.php" class="home-btn">Home</a>
-            <a href="logout.php" class="logout-btn">Sair</a>
+        <a href="../../principal.php" class="home-btn"> Home <i class="fas fa-home"></i></a>
+            <a href="logout.php" class="logout-btn"> Sair <i class="fas fa-door-open"></i></a>
         </section>
     </section>
 </header>
@@ -114,16 +115,10 @@ $cotasFiltradas = $dataInicio && $dataFim ? filtrarPorData($cotas, $dataInicio, 
     <table>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nome do Produto</th>
-                <th>Preço</th>
-                <th>Quantidade</th>
-                <th>Fornecedor</th>
                 <th>DataCotação</th>
-                <th>Maior Preço</th>
-                <th>Fornecedor Maior Preço</th>
-                <th>Menor Preço</th>
-                <th>Fornecedor Menor Preço</th>
+                <th>Preços (Maior | Menor)</th>
+                <th>Fornecedores (Maior | Menor)</th>
                 <?php if ($podeGerenciarCotacoes): ?>
                 <th colspan="2">Ações</th>
                 <?php endif; ?>
@@ -154,20 +149,17 @@ $cotasFiltradas = $dataInicio && $dataFim ? filtrarPorData($cotas, $dataInicio, 
                 $fornecedorMaiorPreco = $controladorFornecedor->verFornecedorPorId($precos[$produtoId]['fornecedor_maior'])->getNome();
                 $fornecedorMenorPreco = $controladorFornecedor->verFornecedorPorId($precos[$produtoId]['fornecedor_menor'])->getNome();
 
+                // Formatar a data para o formato brasileiro
+                $dataCotacao = date("d/m/Y", strtotime($cotacao->getDataCotacao()));
+
                 echo "<tr>";
-                echo "<td>{$cotacao->getId()}</td>";
                 echo "<td>{$produtoNome}</td>";
-                echo "<td>{$cotacao->getPrecoUnitario()}</td>";
-                echo "<td>{$cotacao->getQuantidade()}</td>";
-                echo "<td>{$fornecedorNome}</td>";
-                echo "<td>{$cotacao->getDataCotacao()}</td>";
-                echo "<td>{$maiorPreco}</td>";
-                echo "<td>{$fornecedorMaiorPreco}</td>";
-                echo "<td>{$menorPreco}</td>";
-                echo "<td>{$fornecedorMenorPreco}</td>";
+                echo "<td>{$dataCotacao}</td>";
+                echo "<td>R$ <span class='maior-preco'>{$maiorPreco} ↑</span> | R$ <span class='menor-preco'>{$menorPreco} ↓</span></td>";
+                echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
                 if ($podeGerenciarCotacoes) {
-                    echo "<td> <a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'>Editar</a> </td>";
-                    echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'>Deletar</a> </td>";
+                    echo "<td> <a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'><i class='fas fa-pencil-alt'></i></a> </td>";
+                    echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'><i class='fas fa-trash'></i></a> </td>";
                 }
                 echo "</tr>";
             }
