@@ -6,6 +6,13 @@ require_once __DIR__ . '/../model/Usuario.php';
 
 require_once __DIR__ . '/../model/pdo/DataBase.php';
 
+require_once __DIR__ . '/../model/modules/PHPMailer/src/PHPMailer.php';
+require_once __DIR__ . '/../model/modules/PHPMailer/src/SMTP.php';
+require_once __DIR__ . '/../model/modules/PHPMailer/src/Exception.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class ControladorUsuarios
 {
     private $banco;
@@ -121,6 +128,7 @@ class ControladorUsuarios
         }
         return $usuarios;
     }
+
     public function editarUsuario($id, $cpf, $nome, $sobrenome, $data_nascimento, $endereco, $telefone, $email, $senha, $tipo_usuario, $crn)
     {
         $usuarios = $this->banco->read("usuarios");
@@ -145,6 +153,7 @@ class ControladorUsuarios
         }
 
     }
+
     public function deleteUsuario($id){
         var_dump($this->banco->delete('usuarios',$id));
         header('Location: ./../listarUsuario/listarUsuario.php');
@@ -152,61 +161,58 @@ class ControladorUsuarios
 
     // CODIGO COM ERRO PARA SER CONSERTADO FUTURAMENTE ANTES DA PROXIMA ENTREGA
 
-    // public function enviarCodigoRedefinicao($email) {
-    //     // Verificar se o e-mail existe no banco de dados
-    //     $query = "SELECT id FROM usuarios WHERE email = :email";
-    //     $stmt = $this->db->prepare($query);
-    //     $stmt->bindParam(':email', $email);
-    //     $stmt->execute();
-    //     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    public function enviarCodigoRedefinicao($email) {
+        // Verificar se o e-mail existe no banco de dados
+        $banco = $this->banco->read("usuarios");
+        $usuarios = $banco;
+        foreach($usuarios as $usuario){
+            if($usuario['email'] == $email){
+                $usuarioExists = true;
+            }
+        }
 
-    //     if ($usuario) {
-    //         // Gerar um código de redefinição aleatório
-    //         $codigo = rand(100000, 999999);
-            
-    //         // Salvar o código no banco de dados
-    //         $query = "UPDATE usuarios SET codigo_redefinicao = :codigo WHERE id = :id";
-    //         $stmt = $this->db->prepare($query);
-    //         $stmt->bindParam(':codigo', $codigo);
-    //         $stmt->bindParam(':id', $usuario['id']);
-    //         $stmt->execute();
+        if ($usuarioExists) {
+            // Gerar um código de redefinição aleatório
+            $codigo = rand(100000, 999999);
 
-    //         // Enviar o e-mail com o código de redefinição
-    //         $assunto = "Redefinição de Senha";
-    //         $mensagem = "Seu código para redefinir a senha é: $codigo";
-    //         $headers = "From: no-reply@apae.org";
+            // Enviar o e-mail com o código de redefinição
+            $assunto = "Redefinição de Senha";
+            $mensagem = "Seu código para redefinir a senha é: $codigo";
+            $headers = "From: no-reply@apae.org";
 
-    //         mail($email, $assunto, $mensagem, $headers);
-            
-    //         return true;
-    //     } else {
-    //         return false; // Usuário não encontrado
-    //     }
-    // }
-    // public function redefinirSenha($email, $codigo, $novaSenha) {
-    //     // Verificar o código de redefinição
-    //     $query = "SELECT id FROM usuarios WHERE email = :email AND codigo_redefinicao = :codigo";
-    //     $stmt = $this->db->prepare($query);
-    //     $stmt->bindParam(':email', $email);
-    //     $stmt->bindParam(':codigo', $codigo);
-    //     $stmt->execute();
-    //     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->EnviarEmail($email, $assunto, $mensagem, $headers);
 
-    //     if ($usuario) {
-    //         // Atualizar a senha do usuário
-    //         $hashSenha = password_hash($novaSenha, PASSWORD_BCRYPT);
-    //         $query = "UPDATE usuarios SET senha = :senha, codigo_redefinicao = NULL WHERE id = :id";
-    //         $stmt = $this->db->prepare($query);
-    //         $stmt->bindParam(':senha', $hashSenha);
-    //         $stmt->bindParam(':id', $usuario['id']);
-    //         $stmt->execute();
+            return true;
+        } else {
+            return false; // Usuário não encontrado
+        }
+    }
 
-    //         return true; // Senha alterada com sucesso
-    //     } else {
-    //         return false; // Código inválido
-    //     }
-    // Array simulado de usuários (substitua isso pela sua lógica de armazenamento real)
-    // Função para obter um usuário pelo e-mail
+    public function EnviarEmail($email, $assunto, $mensagem, $headers) {
+        $mail = new PHPMailer(true);
+        try {
+            //ConfiguraÃ§Ãµes do servidor
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com'; // Defina o servidor SMTP
+            $mail->SMTPAuth = true; // Ativar autenticaÃ§Ã£o SMTP
+            $mail->Username = 'godlolpro32@gmail.com'; // Seu usuÃ¡rio SMTP
+            $mail->Password = 'bepn wogf bvty gtpb'; // Sua senha SMTP
+            $mail->SMTPSecure = 'tls'; // Ativar criptografia TLS
+            $mail->Port = 587; // Porta TCP a conectar
+        
+            $mail->setFrom('no-reply@apae.com', 'Apae');
+            $mail->addAddress($email, 'Nome do DestinatÃ¡rio'); // Adicione um destinatÃ¡rio
+        
+            $mail->isHTML(true); // Defina o formato de email como HTML
+            $mail->Subject = $assunto;
+            $mail->Body    = $mensagem;
+        
+            $mail->send();
+            echo 'E-mail enviado com sucesso!';
+        } catch (Exception $e) {
+            echo "E-mail nÃ£o pÃ´de ser enviado. Erro: {$mail->ErrorInfo}";
+        }
+    }
 
     public function UpSenha($email, $password, $Verifpassword){
         $usuarios = $this->banco->read("usuarios");

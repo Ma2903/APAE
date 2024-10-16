@@ -2,45 +2,14 @@
 require_once __DIR__ . "/../../../controller/userController.php";
 $userController = new ControladorUsuarios();
 
+
+ // Cria uma nova instÃ¢ncia do PHPMailer
+
+
+
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $userController->UpSenha($_POST['email'], $_POST['password'], $_POST['Verifpassword']);
+    $userController->enviarCodigoRedefinicao($_POST['email']);
 }
-// use PHPMailer\PHPMailer\PHPMailer;
-// use PHPMailer\PHPMailer\Exception;
-
-// $mail = new PHPMailer(true); // Cria uma nova instÃ¢ncia do PHPMailer
-// $usuariosBanco = $userController->listarUsuarios();
-// $email = $_POST['email'];
-// foreach($usuariosBanco as $usuario){
-//     $usuario->GetEmail();
-// }
-
-
-// try {
-//     //ConfiguraÃ§Ãµes do servidor
-//     $mail->isSMTP();
-//     $mail->Host = 'smtp.gmail.com'; // Defina o servidor SMTP
-//     $mail->SMTPAuth = true; // Ativar autenticaÃ§Ã£o SMTP
-//     $mail->Username = 'no-reply@apae.com'; // Seu usuÃ¡rio SMTP
-//     $mail->Password = ''; // Sua senha SMTP
-//     $mail->SMTPSecure = 'tls'; // Ativar criptografia TLS
-//     $mail->Port = 587; // Porta TCP a conectar
-
-//     //DestinatÃ¡rios
-//     $mail->setFrom('no-reply@apae.com', 'Apae');
-//     $mail->addAddress('destinatario@exemplo.com', 'Nome do DestinatÃ¡rio'); // Adicione um destinatÃ¡rio
-
-//     //ConteÃºdo
-//     $mail->isHTML(true); // Defina o formato de email como HTML
-//     $mail->Subject = 'Assunto do E-mail';
-//     $mail->Body    = 'Corpo do e-mail em HTML';
-//     $mail->AltBody = 'Corpo do e-mail em texto simples para clientes que nÃ£o suportam HTML';
-
-//     $mail->send();
-//     echo 'E-mail enviado com sucesso!';
-// } catch (Exception $e) {
-//     echo "E-mail nÃ£o pÃ´de ser enviado. Erro: {$mail->ErrorInfo}";
-// }
 ?>
 
 
@@ -76,45 +45,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
             
             <!-- Etapa 2: Formulário para redefinir senha com o código e resposta de segurança -->
-            <form action="" method="POST" id="reset-form" style="display:none;">
-                <input type="hidden" name="email" value="" id="hidden-email">
-                <section class="input-container">
-                    <label for="resposta-seguranca">Mude caso realmente for necessário</label>
-                    <!-- <input name="resposta-seguranca" type="text" id="resposta-seguranca" placeholder="Digite sua resposta de segurança" required> -->
-                </section>
-                
-                <section class="input-container">
-                    <label for="new-password">Nova Senha:</label>
-                    <input name="password" type="password" id="password" placeholder="******" required>
-                    <span id="toggle-password" class="toggle-icon">
-                        <i class="fas fa-eye"></i>
-                    </span>
-                </section>
-                
-                <section class="input-container">
-                    <label for="confirm-password">Confirmar Nova Senha:</label>
-                    <input name="Verifpassword" type="password" id="Verifpassword" placeholder="******" required>
-                    <span id="toggle-password" class="toggle-icon">
-                        <i class="fas fa-eye"></i>
-                    </span>
-                </section>
-                <button type="submit">Redefinir Senha</button>
-            </form>
         </section>
     </section>
-
-    <script>
-        // Simulação de controle para mostrar o segundo formulário após o envio do código
-        document.getElementById('email-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Lógica para capturar o e-mail e simular envio de código
-            const email = document.getElementById('email').value;
-            document.getElementById('hidden-email').value = email;
-
-            // Exibe o formulário de redefinição de senha
-            document.getElementById('email-form').style.display = 'none';
-            document.getElementById('reset-form').style.display = 'block';
-        });
-    </script>
 </body>
 </html>
