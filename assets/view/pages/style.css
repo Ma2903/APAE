@@ -93,6 +93,11 @@ main{
     padding: 10px 0;
 }
 
+.menu-item a:hover {
+    text-decoration: underline; /* Sublinha o texto ao passar o mouse */
+    color: #ffcc00; /* Muda a cor do link ao passar o mouse */
+}
+
 .menu {
     display: flex;
     justify-content: space-around;
@@ -103,7 +108,7 @@ main{
 .menu-item {
     flex: 1;
     width: 100%;
-    margin: 10px;
+    margin: 15px 0;
     padding: 20px;
     background-color: #3e9bd4; /* Azul claro */
     border-radius: 10px;
@@ -230,6 +235,7 @@ main{
     font-weight: bold; /* Texto em negrito */  
     transition: background-color 0.3s; /* Transição suave ao passar o mouse */  
     font-size: 1.2em; /* Tamanho do texto do botão */  
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adiciona sombra ao botão */
 }  
 
 /* Altera a cor do botão ao passar o mouse */  

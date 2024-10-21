@@ -66,43 +66,33 @@ class ControladorUsuarios
 
     public function logarUsuarios($email, $senha)
     {
-        $usuarios = $this->banco->read("usuarios");
-        $usuarioEncontrado = false;
-        foreach($usuarios as $usuarioBanco)
-        {
-            if($usuarioBanco['email'] == $email)
-            {
-                $usuarioEncontrado = true;
-                if($usuarioBanco['senha'] == $senha){
-                    session_start();
-                    switch ($usuarioBanco['tipo_usuario']) {
-                        case 'nutricionista':
-                            $_SESSION['user'] = new Nutricionista($usuarioBanco['id'], $usuarioBanco['cpf'], $usuarioBanco['crn'], $usuarioBanco['nome'], $usuarioBanco['sobrenome'], $usuarioBanco['data_nascimento'], $usuarioBanco['endereco'], $usuarioBanco['telefone'], $usuarioBanco['email'], $usuarioBanco['senha'],$usuarioBanco['tipo_usuario']);
-                            break;
-                        case 'funcionario':
-                            $_SESSION['user'] = new Funcionario($usuarioBanco['id'], $usuarioBanco['cpf'], $usuarioBanco['nome'], $usuarioBanco['sobrenome'], $usuarioBanco['data_nascimento'], $usuarioBanco['endereco'], $usuarioBanco['telefone'], $usuarioBanco['email'], $usuarioBanco['senha'],$usuarioBanco['tipo_usuario']);
-                            break;
-                        case 'administrador':
-                            $_SESSION['user'] = new Administrador($usuarioBanco['id'], $usuarioBanco['cpf'], $usuarioBanco['nome'], $usuarioBanco['sobrenome'], $usuarioBanco['data_nascimento'], $usuarioBanco['endereco'], $usuarioBanco['telefone'], $usuarioBanco['email'], $usuarioBanco['senha'],$usuarioBanco['tipo_usuario']);
-                            break;
-                        default:
-                            $_SESSION['user'] = new Usuario($usuarioBanco['id'], $usuarioBanco['cpf'], $usuarioBanco['nome'], $usuarioBanco['sobrenome'], $usuarioBanco['data_nascimento'], $usuarioBanco['endereco'], $usuarioBanco['telefone'], $usuarioBanco['email'], $usuarioBanco['senha'], $usuarioBanco['tipo_usuario']);
-                            break;
-                    }
-                    header("Location: principal.php");
-                    break;
+        $usuarioBanco = $this->getUsuarioPorEmail($email);
+        if ($usuarioBanco) {
+            if ($usuarioBanco['senha'] == $senha) {
+                session_start();
+                switch ($usuarioBanco['tipo_usuario']) {
+                    case 'nutricionista':
+                        $_SESSION['user'] = new Nutricionista($usuarioBanco['id'], $usuarioBanco['cpf'], $usuarioBanco['crn'], $usuarioBanco['nome'], $usuarioBanco['sobrenome'], $usuarioBanco['data_nascimento'], $usuarioBanco['endereco'], $usuarioBanco['telefone'], $usuarioBanco['email'], $usuarioBanco['senha'],$usuarioBanco['tipo_usuario']);
+                        break;
+                    case 'funcionario':
+                        $_SESSION['user'] = new Funcionario($usuarioBanco['id'], $usuarioBanco['cpf'], $usuarioBanco['nome'], $usuarioBanco['sobrenome'], $usuarioBanco['data_nascimento'], $usuarioBanco['endereco'], $usuarioBanco['telefone'], $usuarioBanco['email'], $usuarioBanco['senha'],$usuarioBanco['tipo_usuario']);
+                        break;
+                    case 'administrador':
+                        $_SESSION['user'] = new Administrador($usuarioBanco['id'], $usuarioBanco['cpf'], $usuarioBanco['nome'], $usuarioBanco['sobrenome'], $usuarioBanco['data_nascimento'], $usuarioBanco['endereco'], $usuarioBanco['telefone'], $usuarioBanco['email'], $usuarioBanco['senha'],$usuarioBanco['tipo_usuario']);
+                        break;
+                    default:
+                        $_SESSION['user'] = new Usuario($usuarioBanco['id'], $usuarioBanco['cpf'], $usuarioBanco['nome'], $usuarioBanco['sobrenome'], $usuarioBanco['data_nascimento'], $usuarioBanco['endereco'], $usuarioBanco['telefone'], $usuarioBanco['email'], $usuarioBanco['senha'], $usuarioBanco['tipo_usuario']);
+                        break;
                 }
-                else {
-                    echo "Senha Incorreta";
-                    break;
-                }
+                return $_SESSION['user'];
+            } else {
+                echo "Senha Incorreta";
+                return false;
             }
+        } else {
+            echo "<script>alert('Usuario Não Encontrado!')</script>";
+            return false;
         }
-        if(!$usuarioEncontrado)
-        {
-            echo "<script>alert('Usuario Não Encontrado!')<script>";
-        }
-
     }
 
     public function listarUsuarios()
@@ -120,11 +110,7 @@ class ControladorUsuarios
                 case 'administrador':
                     $usuarios[] = new Administrador($usuario['id'], $usuario['cpf'], $usuario['nome'], $usuario['sobrenome'], $usuario['data_nascimento'], $usuario['endereco'], $usuario['telefone'], $usuario['email'], $usuario['senha'],$usuario['tipo_usuario']);
                     break;
-                // default:
-                //     $usuarios[] = new Usuario($usuario['id'], $usuario['cpf'], $usuario['nome'], $usuario['sobrenome'], $usuario['data_nascimento'], $usuario['endereco'], $usuario['telefone'], $usuario['email'], $usuario['senha'], $usuario['tipo_usuario']);
-                //     break;
             }
-            
         }
         return $usuarios;
     }
@@ -151,7 +137,6 @@ class ControladorUsuarios
                 break;
             }
         }
-
     }
 
     public function deleteUsuario($id){
@@ -159,95 +144,70 @@ class ControladorUsuarios
         header('Location: ./../listarUsuario/listarUsuario.php');
     }
 
-    // CODIGO COM ERRO PARA SER CONSERTADO FUTURAMENTE ANTES DA PROXIMA ENTREGA
-
     public function enviarCodigoRedefinicao($email) {
-        // Verificar se o e-mail existe no banco de dados
-        $banco = $this->banco->read("usuarios");
-        $usuarios = $banco;
-        foreach($usuarios as $usuario){
-            if($usuario['email'] == $email){
-                $usuarioExists = true;
-            }
-        }
-
-        if ($usuarioExists) {
-            // Gerar um código de redefinição aleatório
+        $usuario = $this->getUsuarioPorEmail($email);
+        if ($usuario) {
             $codigo = rand(100000, 999999);
-
-            // Enviar o e-mail com o código de redefinição
             $assunto = "Redefinição de Senha";
             $mensagem = "Seu código para redefinir a senha é: $codigo";
             $headers = "From: no-reply@apae.org";
-
             $this->EnviarEmail($email, $assunto, $mensagem, $headers);
-
             return true;
         } else {
-            return false; // Usuário não encontrado
+            return false;
         }
     }
 
     public function EnviarEmail($email, $assunto, $mensagem, $headers) {
         $mail = new PHPMailer(true);
         try {
-            //ConfiguraÃ§Ãµes do servidor
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com'; // Defina o servidor SMTP
-            $mail->SMTPAuth = true; // Ativar autenticaÃ§Ã£o SMTP
-            $mail->Username = 'godlolpro32@gmail.com'; // Seu usuÃ¡rio SMTP
-            $mail->Password = 'bepn wogf bvty gtpb'; // Sua senha SMTP
-            $mail->SMTPSecure = 'tls'; // Ativar criptografia TLS
-            $mail->Port = 587; // Porta TCP a conectar
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'godlolpro32@gmail.com';
+            $mail->Password = 'bepn wogf bvty gtpb';
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
         
             $mail->setFrom('no-reply@apae.com', 'Apae');
-            $mail->addAddress($email, 'Nome do DestinatÃ¡rio'); // Adicione um destinatÃ¡rio
+            $mail->addAddress($email, 'Nome do Destinatário');
         
-            $mail->isHTML(true); // Defina o formato de email como HTML
+            $mail->isHTML(true);
             $mail->Subject = $assunto;
             $mail->Body    = $mensagem;
         
             $mail->send();
             echo 'E-mail enviado com sucesso!';
         } catch (Exception $e) {
-            echo "E-mail nÃ£o pÃ´de ser enviado. Erro: {$mail->ErrorInfo}";
+            echo "E-mail não pôde ser enviado. Erro: {$mail->ErrorInfo}";
         }
     }
 
     public function UpSenha($email, $password, $Verifpassword){
-        $usuarios = $this->banco->read("usuarios");
-        foreach($usuarios as $usuario)
-        {
-            if($usuario['email'] == $email)
-            {
-                if($password == $Verifpassword){
-                    $this->banco->update("usuarios",(object)[
-                        'senha' => $password,
-                    ],$usuario['id']);
-                    break;
-                }
+        $usuario = $this->getUsuarioPorEmail($email);
+        if ($usuario) {
+            if ($password == $Verifpassword) {
+                $this->banco->update("usuarios", (object)[
+                    'senha' => $password,
+                ], $usuario['id']);
             }
         }
         header('Location: ../index.php');
     }
 
-    // CODIGO INCOMPLETO
     public function getUsuarioPorEmail($email) {
-        $usuario = $this->banco->read("usuarios");
-        if($email == $usuario['email']){
-            return true;
-        }
-        else{
-            return false;
-        }
-
+        $sql = "SELECT * FROM usuarios WHERE email = :email";
+        $stmt = $this->banco->conn->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Função para alterar a senha do usuário
     public function alterarSenha($email, $novaSenha) {
-        $stmt = $this->banco->prepare("UPDATE usuarios SET senha = :senha WHERE email = :email");
+        $stmt = $this->banco->conn->prepare("UPDATE usuarios SET senha = :senha WHERE email = :email");
         $stmt->bindParam(':senha', $novaSenha);
         $stmt->bindParam(':email', $email);
+        $stmt->execute();
     }
     
     public function obterPermissoes($tipo_usuario) {

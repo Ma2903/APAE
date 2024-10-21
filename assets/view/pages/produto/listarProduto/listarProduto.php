@@ -71,8 +71,8 @@
                     echo "<td>{$produto->getUn()}</td>";
                     echo "<td>{$produto->getDtCriacao()}</td>";
                     if ($podeGerenciarProdutos) {
-                        echo "<td> <a href='../editarProduto/editProduto.php?id={$produto->getId()}'>Editar</a> </td>";
-                        echo "<td> <a href='../deleteProduto/delProduto.php?id={$produto->getId()}'>Deletar</a> </td>";
+                        echo "<td> <a href='../editarProduto/editProduto.php?id={$produto->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar</a> </td>";
+                        echo "<td> <a href='../deleteProduto/delProduto.php?id={$produto->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar</a> </td>";
                     }
                     echo "</tr>";
                 }

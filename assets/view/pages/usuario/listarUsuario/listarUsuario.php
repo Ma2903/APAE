@@ -38,11 +38,23 @@ $controler = new ControladorUsuarios();
             </tr>
         </thead>
         <tbody>
-                    <?php
+            <?php
             $usuarios = $controler->listarUsuarios();
             if ($usuarios) {
                 foreach ($usuarios as $usuario) {
-                    echo "<tr>";
+                    $classeUsuario = '';
+                    switch ($usuario->getTipoUsuario()) {
+                        case 'administrador':
+                            $classeUsuario = 'usuario-administrador';
+                            break;
+                        case 'funcionario':
+                            $classeUsuario = 'usuario-funcionario';
+                            break;
+                        case 'nutricionista':
+                            $classeUsuario = 'usuario-nutricionista';
+                            break;
+                    }
+                    echo "<tr class='{$classeUsuario}'>";
                     echo "<td>{$usuario->getId()}</td>";
                     echo "<td>{$usuario->getCpf()}</td>";
                     echo "<td>{$usuario->getNome()}</td>";
@@ -50,12 +62,12 @@ $controler = new ControladorUsuarios();
                     echo "<td>".converterDataParaBR($usuario->getDataNasc())."</td>";
                     echo "<td>{$usuario->getEmail()}</td>";
                     echo "<td>{$usuario->getTipoUsuario()}</td>";
-                    echo "<td><a href='../editarUsuario/editUsuario.php?id={$usuario->getId()}'>Editar</a></td>";
-                    echo "<td><a href='../deleteUsuario/delUsuario.php?id={$usuario->getId()}'>Deletar</a></td>";
+                    echo "<td><a href='../editarUsuario/editUsuario.php?id={$usuario->getId()}' class='acao-editar'><i class='fas fa-edit'></i> Editar</a></td>";
+                    echo "<td><a href='../deleteUsuario/delUsuario.php?id={$usuario->getId()}' class='acao-deletar'><i class='fas fa-trash'></i> Deletar</a></td>";
                     echo "</tr>";
                 }
             } else {
-                echo "<tr></tr>";
+                echo "<tr><td colspan='9'>Nenhum usuário encontrado.</td></tr>";
             }
             ?>
         </tbody>

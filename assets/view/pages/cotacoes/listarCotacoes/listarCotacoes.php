@@ -148,8 +148,8 @@ $cotasFiltradas = $dataInicio && $dataFim ? filtrarPorData($cotas, $dataInicio, 
                 echo "<td>R$ <span class='maior-preco'>{$maiorPreco} ↑</span> | R$ <span class='menor-preco'>{$menorPreco} ↓</span></td>";
                 echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
                 if ($podeGerenciarCotacoes) {
-                    echo "<td> <a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'><i class='fas fa-pencil-alt'></i></a> </td>";
-                    echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'><i class='fas fa-trash'></i></a> </td>";
+                    echo "<td> <a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
+                    echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
                 }
                 echo "</tr>";
             }

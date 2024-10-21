@@ -64,7 +64,7 @@ header {
 
 .logout-btn {
     background-color: #d9534f; /* Vermelho */
-    color: white;
+    color: #ffffff;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
@@ -184,7 +184,7 @@ header {
 
 /* Estilos gerais dos formulários */
 form {
-    background-color: white;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -269,30 +269,44 @@ button:hover {
     color: #3e9bd4;
 }
 
-/* Estilos para os ícones de login social */
-.social-icons, .social-login {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.social-login i , .social-icons i {
-    margin: 0 10px;
-    font-size: 2em;
-    color: #2a3e85;
-    text-decoration: none;
-}
-
-.social-login i:hover, .social-icons i:hover {
-    color: #3e9bd4;
-    transform: scale(1.2);
-}
-
 .error {
     color: red;
-    font-size: 0.875rem;
-    margin-top: 0.5rem;
-    display: none;
+    font-size: 14px;
+    margin-top: 5px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.error.show {
+    opacity: 1;
+}
+
+/* Estilização básica do campo "Lembrar-me" */
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #000000; /* Cor do texto */
+}
+
+.remember-me input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.remember-me label {
+    cursor: pointer;
+    width: 80%;
+    color: #000000; /* Ajuste a cor conforme a paleta do site */
+}
+
+/* Estilização adicional para quando o checkbox for clicado */
+.remember-me input[type="checkbox"]:checked {
+    accent-color: #007BFF; /* Cor para o checkbox selecionado (substitua pela cor que preferir) */
 }
 
 input:focus{
@@ -309,4 +323,14 @@ footer {
     width: 100%;
     position: fixed;
     bottom: 0;
+}
+
+/* Ícones para ações */
+.acao-editar {
+    color: #007bff;
+    margin-right: 10px;
+}
+
+.acao-deletar {
+    color: #dc3545;
 }

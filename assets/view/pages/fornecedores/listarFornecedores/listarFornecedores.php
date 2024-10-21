@@ -49,8 +49,8 @@ $controler = new ControladorFornecedor();
                     echo "<td>{$fornecedor->getWhatsapp()}</td>";
                     echo "<td>{$fornecedor->getEmail()}</td>";
                     echo "<td>{$fornecedor->getRamo()}</td>";
-                    echo "<td><a href='../editarFornecedores/editFornecedores.php?id={$fornecedor->getId()}'>Editar</a></td>";
-                    echo "<td><a href='../deleteFornecedores/delFornecedores.php?id={$fornecedor->getId()}'>Deletar</a></td>";
+                    echo "<td><a href='../editarFornecedores/editFornecedores.php?id={$fornecedor->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar</a></td>";
+                    echo "<td><a href='../deleteFornecedores/delFornecedores.php?id={$fornecedor->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar</a></td>";
                     echo "</tr>";
                 }
             }

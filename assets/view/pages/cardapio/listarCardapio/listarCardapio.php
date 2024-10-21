@@ -23,6 +23,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listar Cardápios</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -72,8 +73,8 @@
                          echo "<td>{$cardapio['data_fim']}</td>";
                          echo "<td>{$cardapio['descricao']}</td>";
                         if ($podeGerenciarCardapios) {
-                            echo "<td><a href='../editarCardapio/editarCardapio.php?id={$cardapio['id']}'>Editar</a></td>";
-                            echo "<td><a href='../deleteCardapio/delCardapio.php?id={$cardapio['id']}'>Excluir</a></td>";
+                            echo "<td><a href='../editarCardapio/editarCardapio.php?id={$cardapio['id']}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
+                            echo "<td><a href='../deleteCardapio/delCardapio.php?id={$cardapio['id']}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
                         }
                         echo "</tr>";
                     }

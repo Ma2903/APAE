@@ -200,4 +200,17 @@ footer {
 
 table th {  
     text-transform: uppercase; /* Letras maiúsculas para cabeçalhos */  
-} 
+}
+
+/* Estilo para os diferentes tipos de usuários */
+.usuario-administrador {
+    background-color: lightgray; /* Cor de fundo para administradores */
+}
+
+.usuario-funcionario {
+    background-color: lightblue; /* Cor de fundo para funcionários */
+}
+
+.usuario-nutricionista {
+    background-color: lightgreen; /* Cor de fundo para nutricionistas */
+}
