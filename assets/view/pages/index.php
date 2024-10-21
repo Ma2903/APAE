@@ -20,11 +20,12 @@
             <h2>Bem Vindo!</h2>
         </section>
         <section class="right-section">
-            <form action="" method="POST">
+            <form id="login-form" action="" method="POST">
                 <h2>Entrar</h2>
                 <section class="input-container">
                     <label for="email">E-mail:</label>
                     <input name="email" type="email" id="email" placeholder="exemplo@gmail.com" autocomplete="email" required>
+                    <section id="email-error" class="error">Por favor, insira um e-mail válido.</section>
                 </section>
                 <section class="input-container">
                     <label for="password">Senha:</label>
@@ -32,6 +33,7 @@
                     <span id="toggle-password" class="toggle-icon" aria-label="Mostrar senha">
                         <i class="fas fa-eye"></i>
                     </span>
+                    <section id="password-error" class="error">A senha deve ter pelo menos 4 caracteres.</section>
                 </section>
 
                 <a href="redefinirSenha/RedefinirSenha.php" class="forgot-password">Esqueceu a Senha?</a>
@@ -52,7 +54,7 @@
             $password = $_POST['password'];
             $userController->logarUsuarios($email,$password);
         }else{
-            echo "<script>alert('Usuário ou senha incorretos!')</script>";
+            echo "";
         }
     }
     ?>

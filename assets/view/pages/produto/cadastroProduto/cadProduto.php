@@ -1,5 +1,6 @@
 <?php
     require_once __DIR__ . "/../../../../controller/produtoController.php";
+    require_once __DIR__ . "/../../../../controller/pageController.php";
     $controler = new ControladorProdutos();
 ?>
 <!DOCTYPE html>
@@ -11,19 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../style.css">
 </head>
-<header>
-        <section class="header-container">
-            <section class="logo-container">
-            <img src="../../../../../src/logo_sem_fundo.png" alt="Logo do SmartControl" class="logo">
-                <h1 class="system-name">SmartControl</h1>
-            </section>
-            <section class="user-info">
-            <a href="../../principal.php" class="home-btn">Home</a>
-            <!-- <span><?php echo htmlspecialchars($user['nome']); ?></span> -->
-            <a href="logout.php" class="logout-btn">Sair</a>
-        </section>
-        </section>
-    </header>
+<?php renderHeader(); ?>
 <body>
     <main>
     <a href="../listarProduto/listarProduto.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
@@ -76,8 +65,6 @@
             </section>
         </form>
     </main>
-    <footer>
-        <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
-    </footer>
+    <?php renderFooter(); ?>
 </body>
 </html>

@@ -285,6 +285,14 @@ button:hover {
 
 .social-login i:hover, .social-icons i:hover {
     color: #3e9bd4;
+    transform: scale(1.2);
+}
+
+.error {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    display: none;
 }
 
 input:focus{

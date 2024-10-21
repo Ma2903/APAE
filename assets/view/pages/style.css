@@ -302,3 +302,7 @@ main{
     transition: background-color 0.3s; /* Transição suave */  
     z-index: 2; /* Para ter certeza de que o botão está acima de outros elementos */  
 }
+
+.menu-btn:hover {  
+    background-color: #2a80b9; /* Tom mais escuro ao passar o mouse */  
+}

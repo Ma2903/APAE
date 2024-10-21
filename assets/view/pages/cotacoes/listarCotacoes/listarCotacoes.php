@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../../../controller/cotacaoController.php';
 require_once __DIR__ . '/../../../../controller/produtoController.php';
 require_once __DIR__ . '/../../../../controller/fornecedorController.php';
+require_once __DIR__ . "/../../../../controller/pageController.php";
 require_once __DIR__ . "/../../../../controller/userController.php";
 require_once __DIR__ . "/../../../../model/utils.php";
 session_start();
@@ -84,18 +85,7 @@ $cotasFiltradas = $dataInicio && $dataFim ? filtrarPorData($cotas, $dataInicio, 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-<header>
-    <section class="header-container">
-        <section class="logo-container">
-            <img src="../../../../../src/logo_sem_fundo.png" alt="Logo do SmartControl" class="logo">
-            <h1 class="system-name">SmartControl</h1>
-        </section>
-        <section class="user-info">
-        <a href="../../principal.php" class="home-btn"> Home <i class="fas fa-home"></i></a>
-            <a href="logout.php" class="logout-btn"> Sair <i class="fas fa-door-open"></i></a>
-        </section>
-    </section>
-</header>
+<?php renderHeader(); ?>
 <main>
     <h1>Listar Cotações</h1>
     <section class="search">
@@ -167,8 +157,6 @@ $cotasFiltradas = $dataInicio && $dataFim ? filtrarPorData($cotas, $dataInicio, 
         </tbody>
     </table>
 </main>
-<footer>
-    <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
-</footer>
+<?php renderFooter(); ?>
 </body>
 </html>
