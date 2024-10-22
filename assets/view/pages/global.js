@@ -14,35 +14,74 @@ document.getElementById('toggle-password').addEventListener('click', function ()
     }
 });
 
-document.getElementById('login-form').addEventListener('submit', function(event) {
-    let email = document.getElementById('email');
-    let password = document.getElementById('password');
-    let isValid = true;
-
-    // Validação de e-mail
-    if (!email.value || !email.value.includes('@')) {
+function validateEmail() {
+    const email = document.getElementById('email').value;
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    const iconCheck = document.querySelector('#email ~ .icon-check');
+    const iconTimes = document.querySelector('#email ~ .icon-times');
+    if (!emailPattern.test(email)) {
         document.getElementById('email-error').style.display = 'block';
-        email.setAttribute('aria-invalid', 'true');
-        isValid = false;
+        document.getElementById('email').classList.add('invalid');
+        document.getElementById('email').classList.remove('valid');
+        iconCheck.style.display = 'none';
+        iconTimes.style.display = 'block';
+        return false;
     } else {
+        document.getElementById('email').classList.add('valid');
+        document.getElementById('email').classList.remove('invalid');
         document.getElementById('email-error').style.display = 'none';
-        email.setAttribute('aria-invalid', 'false');
+        iconCheck.style.display = 'block';
+        iconTimes.style.display = 'none';
+        return true;
     }
+}
 
-    // Validação de senha
-    if (!password.value || password.value.length < 4) {
+function validatePassword() {
+    const password = document.getElementById('password').value;
+    const iconCheck = document.querySelector('#password ~ .icon-check');
+    const iconTimes = document.querySelector('#password ~ .icon-times');
+    if (password.length < 4) {
         document.getElementById('password-error').style.display = 'block';
-        password.setAttribute('aria-invalid', 'true');
-        isValid = false;
+        document.getElementById('password').classList.add('invalid');
+        document.getElementById('password').classList.remove('valid');
+        iconCheck.style.display = 'none';
+        iconTimes.style.display = 'block';
+        return false;
     } else {
+        document.getElementById('password').classList.add('valid');
+        document.getElementById('password').classList.remove('invalid');
         document.getElementById('password-error').style.display = 'none';
-        password.setAttribute('aria-invalid', 'false');
+        iconCheck.style.display = 'block';
+        iconTimes.style.display = 'none';
+        return true;
+    }
+}
+
+document.getElementById('email').addEventListener('focus', function() {
+    document.querySelector('#email ~ .icon-check').style.display = 'none';
+    document.querySelector('#email ~ .icon-times').style.display = 'none';
+});
+
+document.getElementById('password').addEventListener('focus', function() {
+    document.querySelector('#password ~ .icon-check').style.display = 'none';
+    document.querySelector('#password ~ .icon-times').style.display = 'none';
+});
+
+document.getElementById('email').addEventListener('blur', validateEmail);
+document.getElementById('password').addEventListener('blur', validatePassword);
+
+document.getElementById('login-form').addEventListener('submit', function(event) {
+    let valid = true;
+
+    if (!validateEmail()) {
+        valid = false;
     }
 
-    // Impedir submissão se houver erros
-    if (!isValid) {
+    if (!validatePassword()) {
+        valid = false;
+    }
+
+    if (!valid) {
         event.preventDefault();
     }
 });
-
-document.getElementById('email-error').classList.add('show');

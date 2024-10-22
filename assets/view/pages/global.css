@@ -201,9 +201,9 @@ label {
 }
 
 input, select {
-    width: 86%;
+    width: 100%;
     padding: 8px;
-    border: none;
+    border: 1px solid #eaeaea;
     border-radius: 10px;
     background-color: #f3f3f3;
     font-size: 1rem;
@@ -213,6 +213,7 @@ input, select {
 
 input:focus, select:focus {
     background-color: #eaeaea;
+    outline: none;
 }
 
 /* Estilos para containers de input */
@@ -267,14 +268,13 @@ button:hover {
 
 .forgot-password:hover{
     color: #3e9bd4;
+    text-decoration: underline;
 }
 
 .error {
     color: red;
-    font-size: 14px;
-    margin-top: 5px;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    font-size: 0.875rem;
+    display: none;
 }
 
 .error.show {
@@ -333,4 +333,40 @@ footer {
 
 .acao-deletar {
     color: #dc3545;
+}
+
+.icon-check {
+    color: #28a745;
+}
+
+.icon-times {
+    color: #dc3545;
+}
+
+.input-container .valid {
+    border-color: #28a745;
+}
+
+.input-container .valid + .icon {
+    color: #28a745;
+    display: block;
+}
+
+.input-container .invalid {
+    border-color: #dc3545;
+    width: 100%;
+}
+
+.input-container .invalid + .icon {
+    color: #dc3545;
+    display: block;
+}
+
+.icon {
+    position: absolute;
+    right: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    display: none;
 }

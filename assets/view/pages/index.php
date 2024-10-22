@@ -40,7 +40,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - APAE</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script defer src="global.js"></script>
@@ -49,7 +49,7 @@
     <section class="container" role="main">
         <section class="left-section">
             <img src="../../../src/logo_sem_fundo.png" alt="Logo APAE" class="logo">
-            <h2>Bem-vindo á SmartControl!</h2>
+            <h2>Bem-vindo à SmartControl!</h2>
             <p>Acesse sua conta para continuar.</p>
         </section>
         <section class="right-section">
@@ -69,6 +69,8 @@
                         aria-invalid="false"
                         value="<?php echo htmlspecialchars($savedEmail); ?>"
                     >
+                    <i class="fas fa-check icon icon-check" style="display: none;"></i>
+                    <i class="fas fa-times icon icon-times" style="display: none;"></i>
                     <section id="email-error" class="error" role="alert" aria-live="assertive" style="display:none;">
                         Por favor, insira um e-mail válido.
                     </section>
@@ -91,6 +93,8 @@
                     <span id="toggle-password" class="toggle-icon" aria-label="Mostrar senha">
                         <i class="fas fa-eye" aria-hidden="true"></i>
                     </span>
+                    <i class="fas fa-check icon icon-check" style="display: none;"></i>
+                    <i class="fas fa-times icon icon-times" style="display: none;"></i>
                     <section id="password-error" class="error" role="alert" aria-live="assertive" style="display:none;">
                         A senha deve ter pelo menos 4 caracteres.
                     </section>
