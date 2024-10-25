@@ -82,7 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </span>
                 </section>
     
-                <a href="redefinirSenha/RedefinirSenha.php" class="forgot-password">Esqueceu a senha?</a>
+                <a href="redefinirSenha/RedefinirSenha.php" class="forgot-password">
+                    <i class="fas fa-unlock-alt"></i> Esqueceu a senha?
+                </a>
     
                 <button type="submit" aria-label="Entrar na sua conta">Entrar</button>
                 
