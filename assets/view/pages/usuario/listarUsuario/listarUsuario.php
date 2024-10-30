@@ -47,8 +47,8 @@ $controler = new ControladorUsuarios();
                         case 'administrador':
                             $classeUsuario = 'usuario-administrador';
                             break;
-                        case 'funcionario':
-                            $classeUsuario = 'usuario-funcionario';
+                        case 'contador':
+                            $classeUsuario = 'usuario-contador';
                             break;
                         case 'nutricionista':
                             $classeUsuario = 'usuario-nutricionista';
