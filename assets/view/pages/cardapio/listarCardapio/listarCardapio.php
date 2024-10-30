@@ -45,7 +45,7 @@
             <button type="submit">Pesquisar</button>
         <section class="add-user">
         <?php if ($podeGerenciarCardapios): ?>
-            <a href="cadastrarCardapio.php" class="add-user-btn">Cadastrar Cardápio</a>
+            <a href="../cadastrarCardapio/cadCardapio.php" class="add-user-btn">Cadastrar Cardápio</a>
             <?php endif; ?>
             </section>
         </section>
@@ -73,7 +73,7 @@
                          echo "<td>{$cardapio['data_fim']}</td>";
                          echo "<td>{$cardapio['descricao']}</td>";
                         if ($podeGerenciarCardapios) {
-                            echo "<td><a href='../editarCardapio/editarCardapio.php?id={$cardapio['id']}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
+                            echo "<td><a href='../editarCardapio/editCardapio.php?id={$cardapio['id']}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
                             echo "<td><a href='../deleteCardapio/delCardapio.php?id={$cardapio['id']}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
                         }
                         echo "</tr>";
