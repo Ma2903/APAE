@@ -90,17 +90,20 @@ $cotasFiltradas = $dataInicio && $dataFim ? filtrarPorData($cotas, $dataInicio, 
     <h1>Listar Cotações</h1>
     <section class="search">
         <form method="GET" action="" class="date-filter-form">
-            <label for="dataInicio">Data Início:</label>
-            <input type="date" id="dataInicio" name="dataInicio" value="<?= $dataInicio ?>">
-            <label for="dataFim">Data Fim:</label>
-            <input type="date" id="dataFim" name="dataFim" value="<?= $dataFim ?>">
-            <button type="submit">Filtrar</button>
-            <section class="add-quote">
-                <?php if ($podeGerenciarCotacoes): ?>
-                    <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
-                <?php endif; ?>
-            </section>
+            <div class="input-div">
+                <label for="dataInicio">Data Início:</label>
+                <input type="date" id="dataInicio" name="dataInicio" value="<?= $dataInicio ?>">
+            </div>
+            <div class="input-div">
+                <label for="dataFim">Data Fim:</label>
+                <input type="date" id="dataFim" name="dataFim" value="<?= $dataFim ?>">
+            </div>
         </form>
+        <section class="add-quote">
+            <?php if ($podeGerenciarCotacoes): ?>
+                <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
+            <?php endif; ?>
+        </section>
     </section>
     <table>
         <thead>

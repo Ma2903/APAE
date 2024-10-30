@@ -183,32 +183,11 @@ header {
 }
 
 /* Estilos gerais dos formulários */
-form {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-}
 
 label {
     margin: 10px;
     font-size: 1rem;
     width: 10%;
-}
-
-input, select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #eaeaea;
-    border-radius: 10px;
-    background-color: #f3f3f3;
-    font-size: 1rem;
-    outline: none;
-    transition: background-color 0.3s ease;
 }
 
 input:focus, select:focus {
@@ -249,18 +228,6 @@ input:focus, select:focus {
 }
 
 /* Estilos para botões */
-button {
-    padding: 15px;
-    border: none;
-    border-radius: 10px;
-    background-color: #2a3e85;
-    color: #ffffff;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
-}
 
 button:hover {
     background-color:  #3e9bd4;
