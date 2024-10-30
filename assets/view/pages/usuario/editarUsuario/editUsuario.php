@@ -41,7 +41,7 @@
                     <label for="tipo_usuario">Tipo de Usuário:</label>
                     <select id="tipo_usuario" name="tipo_usuario" required>
                     <option value="administrador"'; if($usuario->getTipoUsuario() == 'administrador') echo 'selected'; echo '>Administrador</option>
-                    <option value="funcionario"'; if($usuario->getTipoUsuario() == 'funcionario') echo 'selected'; echo '>Funcionário</option>
+                    <option value="contador"'; if($usuario->getTipoUsuario() == 'contador') echo 'selected'; echo '>Funcionário</option>
                     <option value="nutricionista"'; if($usuario->getTipoUsuario() == 'nutricionista') echo 'selected'; echo '>Nutricionista</option>
                     </select>';
                     if($usuario->getTipoUsuario() == 'nutricionista'){
