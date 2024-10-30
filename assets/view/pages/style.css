@@ -1,314 +1,164 @@
 @import url('global.css');
 
-main{
-    overflow: hidden;
+body {
+    background-color: #f4f6f8;
+    color: #333;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header-container {
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #2a3e85;
+    color: #fff;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.menu-btn:hover {
+    color: #3e9bd4;
 }
 
 .container {
     display: flex;
     width: 100%;
-    min-height: calc(100vh - 100px); /* Garante que o container ocupe o espaço total da tela, considerando o header */
-    margin: 0;
-    padding: 0;
+    max-width: 1200px;
+    padding: 20px;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 .sidebar {
     width: 250px;
-    background-color: #2a3e85;
+    background-color: #324a89;
     color: #fff;
     padding: 20px;
-    position: fixed; /* Sidebar fixa na lateral esquerda */
-    top: 14%; /* Ajusta a posição com base no conteúdo do header */
-    left: 0;
-    z-index: 1;
-    left: -250px; /* Inicialmente oculta */  
-    transition: left 0.3s; /* Transição suave ao abrir/fechar */   
-    height: 100%; /* Altura total */  
+    border-radius: 8px;
+    display: none; /* Hidden by default */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
 }
 
-.sidebar.active {  
-    left: 0; /* Mostra a sidebar quando ativa */  
-} 
-
-.user-info {  
-    display: flex;  
-    justify-content: space-between;  
-    align-items: center;  
-    background-color: #3e9bd4; /* Cor de fundo */  
-    padding: 15px 25px; /* Aumentar o padding para um espaço mais confortável */  
-    border-radius: 10px; /* Bordas mais arredondadas */  
-    color: #fff; /* Cor do texto */  
-    position: relative;  
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Sombra para destaque */  
-    transition: background-color 0.3s; /* Transição para efeitos de hover */  
-}  
-
-.user-info:hover {  
-    background-color: #348ab5; /* Tom mais escuro ao passar o mouse */  
-}  
-
-.user-info span {  
-    font-size: 18px; /* Tamanho da fonte */  
-    font-weight: bold; /* Negrito */  
-    margin-right: 20px; /* Espaço entre o texto e o botão de logout */  
-}  
-
-.logout-btn {  
-    background-color: #c93b3b; /* Cor de fundo do botão de logout */  
-    color: #fff; /* Cor do texto */  
-    padding: 8px 15px; /* Padding do botão */  
-    border: none; /* Sem borda */  
-    border-radius: 5px; /* Bordas arredondadas */  
-    font-size: 16px; /* Tamanho da fonte */  
-    cursor: pointer; /* Muda o cursor ao passar sobre o botão */  
-    transition: background-color 0.3s; /* Transição suave para a cor do hover */  
-}  
-
-.logout-btn:hover {  
-    background-color: #a63030; /* Tom mais escuro ao passar o mouse */  
-}
-
-.user-info .notification {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    background-color: #ffcc00;
-    border-radius: 50%;
-    color: #000;
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.user-info .username{
-    width: 100px;
-    height: 100%;
-    background: #2a3e85;
-}
-
-.sidebar .menu-item a {
-    text-decoration: none;
+.sidebar.active {
     display: block;
-    padding: 10px 0;
-}
-
-.menu-item a:hover {
-    text-decoration: underline; /* Sublinha o texto ao passar o mouse */
-    color: #ffcc00; /* Muda a cor do link ao passar o mouse */
-}
-
-.menu {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.menu-item {
-    flex: 1;
-    width: 100%;
-    margin: 15px 0;
-    padding: 20px;
-    background-color: #3e9bd4; /* Azul claro */
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s;
-}
-
-@media (max-width: 768px) {
-    .menu {
-        flex-direction: column;
-    }
+    transform: translateX(0);
+    opacity: 1;
 }
 
 .menu-item a {
+    display: block;
+    padding: 10px;
+    color: #fff;
     text-decoration: none;
-    color: #ffffff; /* Cor do texto do menu */
-    font-weight: bold;
+    border-radius: 4px;
+    transition: background 0.3s, transform 0.3s;
 }
 
-.menu-item:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Branco transparente suave */
+.menu-item a:hover {
+    background-color: #465b99;
+    transform: translateX(5px);
 }
 
 .welcome-banner {
-    flex: 1; /* Faz com que o banner ocupe o restante do espaço ao lado da sidebar */
+    flex-grow: 1;
+    padding: 20px;
+    text-align: center;
+    background-color: #e8eef7;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-banner h1 {
+    font-size: 2.5rem;
+    color: #2a3e85;
+}
+
+.welcome-banner p {
+    font-size: 1rem;
+    color: #333;
+    margin-top: 10px;
+}
+
+.description {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.icon-container {
+    margin-top: 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    gap: 15px;
+}
+
+.icon {
+    font-size: 2rem;
+}
+
+.btn-primary {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
     background-color: #2a3e85;
-    color: white;
-    text-align: center;
-    background-image: url('assets/images/banner-bg.jpg'); /* Insira sua imagem de fundo */
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    padding: 20px;
-    z-index: 0;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s;
+    cursor: pointer;
 }
-
-.welcome-banner::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Sombra para destacar o texto */
-}
-
-.banner-content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-}
-
-.banner-content h1 {
-    font-size: 48px;
-    margin-bottom: 20px;
-}
-
-.banner-content p {
-    font-size: 20px;
-    margin-bottom: 30px;
-}
-
-/* Seção do banner de boas-vindas */  
-.welcome-banner {  
-    background: linear-gradient(to right, #003366, #007BFF); /* Gradiente de azul */  
-    color: #ffffff; /* Texto branco */  
-    padding: 120px 20px; /* Espaçamento interno maior */  
-    text-align: center; /* Centraliza o conteúdo */  
-    border-radius: 10px; /* Bordas arredondadas */  
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2); /* Sombra mais intensa para profundidade */  
-    position: relative; /* Para posicionar elementos internos */  
-    min-height: 900px; /* Altura mínima para o banner */  
-    display: flex; /* Usar flexbox para centralizar */  
-    flex-direction: column; /* Alinha os itens em coluna */  
-    justify-content: center; /* Centraliza verticalmente */  
-    align-items: center; /* Centraliza horizontalmente */  
-}  
-
-/* Ícone container */  
-.icon-container {  
-    margin-bottom: 30px; /* Espaço abaixo dos ícones */  
-}  
-
-/* Resto do CSS permanece igual... */  
-.icon {  
-    font-size: 50px; /* Tamanho dos ícones */  
-    color: #ffffff; /* Cor dos ícones */  
-    margin: 10px; /* Espaçamento entre ícones */  
-}
-
-/* Título do banner */  
-.welcome-banner h1 {  
-    font-size: 3.5em; /* Tamanho maior para o título */  
-    margin-bottom: 10px; /* Espaçamento abaixo do título */  
-    font-weight: bold; /* Negrito */  
-}  
-
-/* Texto do banner */  
-.welcome-banner p {  
-    font-size: 1.5em; /* Tamanho do texto maior */  
-    margin-bottom: 30px; /* Espaçamento abaixo do texto */  
-}  
-
-/* Descrição adicional */  
-.welcome-banner .description {  
-    font-size: 1.1em; /* Tamanho do texto da descrição */  
-    max-width: 800px; /* Largura máxima */  
-    margin: 0 auto; /* Centraliza a descrição */  
-    margin-bottom: 40px; /* Espaçamento abaixo da descrição */  
-}  
-
-/* Botão primário */  
-.btn-primary {  
-    background-color: #5A8DEE; /* Azul vibrante */  
-    color: white; /* Texto do botão em branco */  
-    padding: 15px 40px; /* Espaçamento interno */  
-    border: none; /* Remove borda padrão */  
-    border-radius: 5px; /* Bordas arredondadas */  
-    text-decoration: none; /* Remove sublinhado */  
-    font-weight: bold; /* Texto em negrito */  
-    transition: background-color 0.3s; /* Transição suave ao passar o mouse */  
-    font-size: 1.2em; /* Tamanho do texto do botão */  
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adiciona sombra ao botão */
-}  
-
-/* Altera a cor do botão ao passar o mouse */  
-.btn-primary:hover {  
-    background-color: #003366; /* Azul escuro ao passar o mouse */  
-}  
-
-/* Adicionando uma imagem de fundo opcional */  
-.welcome-banner::before {  
-    content: '';  
-    background-image: url('sua-imagem-de-fundo.jpg'); /* Substitua pelo caminho da sua imagem */  
-    background-size: cover; /* Cobre toda a área */  
-    background-position: center; /* Centraliza a imagem */  
-    opacity: 0.1; /* Torna a imagem mais suave */  
-    position: absolute; /* Posiciona a imagem */  
-    top: 0; /* Alinha ao topo */  
-    left: 0; /* Alinha à esquerda */  
-    right: 0; /* Alinha à direita */  
-    bottom: 0; /* Alinha à parte inferior */  
-    z-index: 0; /* Coloca a imagem atrás do conteúdo */  
-}  
-
-.welcome-banner h1,  
-.welcome-banner p,  
-.welcome-banner .description,  
-.btn-primary {  
-    position: relative; /* Para que o texto fique acima da imagem de fundo */  
-    z-index: 1; /* Coloca o texto acima da imagem */  
-}  
-
-.btn-primary {  
-    background-color: #2a3e85; /* Cor do botão */  
-    color: white; /* Cor do texto do botão */  
-    padding: 10px 20px; /* Espaçamento interno */  
-    border: none; /* Remove borda padrão */  
-    border-radius: 5px; /* Bordas arredondadas */  
-    text-decoration: none; /* Remove sublinhado */  
-    font-weight: bold; /* Texto em negrito */  
-}  
 
 .btn-primary:hover {
-    background-color: #3498db;
+    background-color: #3e9bd4;
+    transform: scale(1.05);
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #2a3e85;
+    color: #fff;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
 }
 
 @media (max-width: 768px) {
     .container {
-        flex-direction: column; /* Em telas menores, a sidebar e o banner serão empilhados */
+        flex-direction: column;
+        align-items: center;
     }
 
     .sidebar {
-        position: relative;
         width: 100%;
-        height: auto;
-        top: 0;
-    }
-
-    .welcome-banner {
-        height: auto;
     }
 }
 
-.menu-btn {  
-    background-color: #3498db; /* Cor de fundo */  
-    color: white; /* Cor do texto */  
-    border: none; /* Sem borda */  
-    border-radius: 5px; /* Bordas arredondadas */  
-    padding: 10px 15px; /* Espaçamento interno */  
-    font-size: 16px; /* Tamanho do texto */  
-    cursor: pointer; /* Muda o cursor ao passar sobre o botão */  
-    transition: background-color 0.3s; /* Transição suave */  
-    z-index: 2; /* Para ter certeza de que o botão está acima de outros elementos */  
-}
+@media (max-width: 480px) {
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+    }
 
-.menu-btn:hover {  
-    background-color: #2a80b9; /* Tom mais escuro ao passar o mouse */  
+    .menu-btn {
+        font-size: 1.2rem;
+    }
+
+    .welcome-banner h1 {
+        font-size: 2rem;
+    }
 }
