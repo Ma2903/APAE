@@ -1,24 +1,26 @@
-/* Reset de margens e paddings */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Arial', sans-serif;
 }
-
-/* Estilos gerais do body */
-body {
-   background-color: #ffffff;
-    height: 100vh;
-    display: flex;
-    flex-direction: column; /* Layout flexível na vertical */
-    min-height: 100vh;
-    line-height: 1.6; 
+:root{
+    --yellow : #fbde04;
+    --lightgray : #bebcaf;
+    --orange : #fdb813;
+    --darkblue : #2a3e85;
+    --green : #65b560;
+    --lightblue : #3e9bd4;
+    --red : #f05a28;
+    --darkred : #c9302c;
+    --white : #ffffff;
+    --black : #000000;
+    --gray : #333333;
 }
 
 header {
-    background-color: #2a3e85;
-    color: #fff;
+    background-color: var(--darkblue);
+    color: var(--white);
     padding: 10px 20px;
     height: 15%;
     width: 100%;
@@ -31,16 +33,16 @@ header {
     align-items: center;
 }
 
-.logo {
-    height: 100px;
-    width: auto;
-    margin-right: 10px; /* Espaço entre a logo e o nome do sistema */
+.logo{
+   height: 100px;
+   width: auto;
+   margin-right: 10px;
 }
 
 .system-name {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: bold;
-    color: #ffffff; /* Cor do nome do sistema */
+    color: var(--white);
 }
 
 .user-info {
@@ -48,292 +50,22 @@ header {
     align-items: center;
 }
 
-.user-info span {
+.user-info span{
     margin-right: 15px;
     font-size: 1.2rem;
-    color: #fff;
-}
-
-.header-container {
-    width: 100%;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    color: var(--white);
 }
 
 .logout-btn {
-    background-color: #d9534f; /* Vermelho */
-    color: #ffffff;
+    background-color: var(--red);
+    color: var(--white);
     padding: 10px 20px;
-    text-decoration: none;
     border-radius: 5px;
+    text-decoration: none;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease;
 }
 
 .logout-btn:hover {
-    background-color: #c9302c; /* Vermelho mais escuro */
-}
-
-/* Container principal para ambas as páginas */
-.container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    padding: 0 250px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Seções à esquerda */
-.left-section {  
-    flex: 1;  
-    padding: 50px; /* Adjust as needed */  
-    display: flex;  
-    flex-direction: column;  
-    justify-content: center;  
-    align-items: center; /* Center items horizontally */  
-}  
-
-.left-section .logo {  
-    width: 20%; /* Adjust size as needed */  
-    margin-bottom: 20px; /* Space below the logo */  
-}  
-
-.left-section h2 {  
-    font-size: 2.5em; /* Adjust size as needed */  
-    font-weight: bold;  
-    color: #000;  
-    text-align: center; /* Center the heading */  
-}
-
-.left-section p {
-    font-size: 1.2em;
-    color: #000;
-    margin-bottom: 10px;
-}
-
-.left-section a {
-    color: #2a3e85;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 1em;
-}
-
-.left-section .login-link {
-    color: #2a3e85;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 1em;
-}
-
-.left-section a:hover , .left-section .login-link:hover {
-    color: #3e9bd4;
-}
-
-/* Seção à direita */
-.right-section {  
-    width: 50%;  
-    height: 50%;  
-    display: flex;  
-    flex-direction: column;  
-    justify-content: center;  
-    align-items: center; /* Centraliza os itens horizontalmente */  
-    padding: 40px; /* Ajuste conforme necessário */     
-}  
-
-.right-section h2 {  
-    font-size: 2.5em; /* Aumente o tamanho da fonte */  
-    margin-bottom: 20px;  
-    text-align: center; /* Centraliza o título */  
-    font-weight: bold;  
-    color: #000;  
-}  
-
-.right-section p {  
-    color: #bebcaf;  
-    font-size: 1.2em; /* Aumente o tamanho da fonte */  
-    text-align: center; /* Centraliza o texto */  
-    margin-top: 15px;  
-}
-
-.forgot-password{
-    text-align: right;
-    color: #2a3e85;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 1em;
-}
-
-.right-section h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-    text-align: center;
-    font-weight: bold;
-    color: #000;
-}
-
-.right-section p {
-    color: #bebcaf;
-    font-size: 1em;
-    text-align: center;
-    margin-top: 15px;
-}
-
-/* Estilos gerais dos formulários */
-
-label {
-    margin: 10px;
-    font-size: 1rem;
-    width: 10%;
-}
-
-input:focus, select:focus {
-    background-color: #eaeaea;
-    outline: none;
-}
-
-/* Estilos para containers de input */
-.input-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.toggle-password {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-}
-
-/* Estilo para o ícone de alternância */
-.toggle-icon {
-    position: absolute;
-    right: 15px;
-    cursor: pointer;
-    font-size: 18px;
-    color: #666;
-}
-
-.toggle-icon i {
-    transition: color 0.3s;
-}
-
-.toggle-icon:hover i {
-    color: #000;
-}
-
-/* Estilos para botões */
-
-button:hover {
-    background-color:  #3e9bd4;
-}
-
-.forgot-password:hover{
-    color: #3e9bd4;
-    text-decoration: underline;
-}
-
-.error {
-    color: red;
-    font-size: 0.875rem;
-    display: none;
-}
-
-.error.show {
-    opacity: 1;
-}
-
-/* Estilização básica do campo "Lembrar-me" */
-.remember-me {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    font-size: 14px;
-    color: #000000; /* Cor do texto */
-}
-
-.remember-me input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-.remember-me label {
-    cursor: pointer;
-    width: 80%;
-    color: #000000; /* Ajuste a cor conforme a paleta do site */
-}
-
-/* Estilização adicional para quando o checkbox for clicado */
-.remember-me input[type="checkbox"]:checked {
-    accent-color: #007BFF; /* Cor para o checkbox selecionado (substitua pela cor que preferir) */
-}
-
-input:focus{
-    border-color: #2a3e85; /* Cor da borda ao focar */
-    box-shadow: 0 0 5px rgba(42, 62, 133, 0.5); /* Sombra ao focar */
-    outline: none; /* Remove o contorno padrão */
-}
-
-footer {
-    text-align: center;
-    padding: 20px; /* Aumenta a altura do footer */
-    background-color: #2a3e85; /* Cor azul */
-    color: #fff; /* Cor do texto branco para contraste */
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-}
-
-/* Ícones para ações */
-.acao-editar {
-    color: #007bff;
-    margin-right: 10px;
-}
-
-.acao-deletar {
-    color: #dc3545;
-}
-
-.icon-check {
-    color: #28a745;
-}
-
-.icon-times {
-    color: #dc3545;
-}
-
-.input-container .valid {
-    border-color: #28a745;
-}
-
-.input-container .valid + .icon {
-    color: #28a745;
-    display: block;
-}
-
-.input-container .invalid {
-    border-color: #dc3545;
-    width: 100%;
-}
-
-.input-container .invalid + .icon {
-    color: #dc3545;
-    display: block;
-}
-
-.icon {
-    position: absolute;
-    right: -25px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1rem;
-    display: none;
+    background-color: var(--darkred);
 }
