@@ -1,5 +1,6 @@
 <?php
     require_once __DIR__ . "/../../../controller/userController.php";
+    require_once __DIR__ . "/../../../controller/pageController.php";
     require_once __DIR__ . "/../../../model/utils.php";
     session_start();
     
@@ -7,7 +8,7 @@
     $tipo_usuario = $user->getTipoUsuario();
 
     if(!isset($_SESSION['user'])){
-        header("Location: index.php");
+        header("Location: ../login/");
     }
 ?>
 <!DOCTYPE html>
@@ -17,6 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartControl - Menu Principal</title>
     <link rel="stylesheet" href="style.css">
+    <script src="../global.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -27,9 +29,12 @@
                 <h1 class="system-name">SmartControl</h1>
             </section>
             <section class="user-info">
-                <span><?php echo get_class($user) .'|'. $user->getNome()?></span>
-                <a href="logout.php" class="logout-btn"> Sair <i class="fas fa-door-open"></i></a>
+                <span class="greeting">Olá, <span class="user-role"><?php echo get_class($user); ?></span> <span class="user-name"><?php echo $user->getNome(); ?></span></span>
             </section>
+            <a href="../logout.php" class="logout-btn">
+                Sair <i class="fas fa-door-open"></i>
+            </a>
+        </section>
             <button class="menu-btn" onclick="toggleSidebar()">☰</button> <!-- Botão Menu -->  
         </section>
     </header>
@@ -65,24 +70,18 @@
                     <?php endif; ?>
                 </section>
             </section>
-            <section class="welcome-banner">  
-            <h1>Bem-vindo ao SmartControl!</h1>  
-            <p>Gerencie suas cotações e fornecedores de maneira simples e eficiente.</p>  
-            <section class="description">
-                <p>Com o SmartControl, você pode monitorar processos, otimizar custos e ter uma visão clara de suas operações. Acelere sua gestão e melhore seus resultados!</p>  
-            </section>  
-            <section class="icon-container">  
-                <span class="icon">📊</span>  
-                <span class="icon">✉️</span>  
-                <span class="icon">🔒</span>  
-                <span class="icon">⚙️</span>  
-            </section>  
-            <a class="btn-primary" onclick="toggleSidebar()">Comece Agora</a>  
-        </section>
+            <section class="welcome-banner" style="background-image: url('../../../../src/banner-background.jpg');">
+                <section class="banner-overlay">
+                    <h1>Bem-vindo ao SmartControl!</h1>
+                    <p>Gerencie suas cotações e fornecedores de maneira simples e eficiente.</p>
+                    <section class="description">
+                        <p>Com o SmartControl, você pode monitorar processos, otimizar custos e ter uma visão clara de suas operações. Acelere sua gestão e melhore seus resultados!</p>
+                    </section>
+                    <a class="btn-primary" onclick="toggleSidebar()">Comece Agora</a>
+                    </section>
+            </section>
     </main>
-    <footer>
-        <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
-    </footer>
+    <?php renderFooter(); ?>
     <script>  
         function toggleSidebar() {  
             const sidebar = document.querySelector('.sidebar');  

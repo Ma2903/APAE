@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../../controller/userController.php";
+require_once __DIR__ . "/../../../controller/userController.php";
 $userController = new ControladorUsuarios();
 
 // Verificar se o cookie de "Lembrar-me" está presente
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 setcookie('remember_me_email', '', time() - 3600, "/"); // Expira o cookie
                 setcookie('remember_me_password', '', time() - 3600, "/"); // Expira o cookie
             }
-            header("Location: principal.php");
+            header("Location: ../principal/principal.php");
             exit();
         } else {
             $loginError = "Usuário ou senha incorretos!";
@@ -43,11 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script defer src="global.js"></script>
+    <script defer src="../global.js"></script>
 </head>
 <body>
     <section class="container" role="main">
-        <img src="../../../src/logo0.jpg" alt="Logo APAE" class="logo">
+        <img src="../../../../src/logo0.jpg" alt="Logo APAE" class="logo">
         <section class="left">
             <form id="login-form" action="" method="POST">
                 <h2>Entrar</h2>
@@ -96,14 +96,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </section>
         <section class="right">
             <h2>Bem-Vindo à 
-                <br> SmartControl!</h2> <br>
+            <br> SmartControl!</h2> <br>
             <p>Acesse sua conta
-                <br> para continuar!</p>
+            <br> para continuar!</p>
         </section>
     </section>
 
-    <?php if (isset($loginError)): ?>
+    <!-- <?php if (isset($loginError)): ?>
         <section class="alert"><?php echo $loginError; ?></section>
-    <?php endif; ?>
+    <?php endif; ?> -->
 </body>
 </html>
