@@ -1,9 +1,11 @@
 @import url('../global.css');  
 
 h1 {
+    width: 100%;
     color: #2a3e85;
     text-align: center;
     margin-bottom: 20px;
+    font-size: 42px;
 }  
 
 main {
@@ -29,7 +31,7 @@ button:hover {
 table {  
     width: 100%;  
     border-collapse: collapse;  
-    margin: 0px 20px 0px 20px;  
+    margin: 20px; 
     font-size: 18px;  
     text-align: left;
 }
@@ -39,6 +41,7 @@ table thead tr {
     color: #ffffff;  
     text-align: left;  
     font-weight: bold;
+    border-left: 5px solid #2a3e85;
 }  
 
 table th, table td {  
@@ -48,6 +51,7 @@ table th, table td {
 
 table tbody tr {  
     border-bottom: 1px solid #dddddd;  
+    border-left: 5px solid #2a3e85;
 }  
 
 table tbody tr:nth-of-type(even) {  
@@ -68,15 +72,11 @@ table tbody tr:hover {
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
-} 
-.search form{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    padding: 10px;
 }
-.search form .input-div {
+.search > *{
+    width: 20% !important;
+}
+.search .input-div {
     width: 20%;
     margin: 10px;
     padding: 15px;
@@ -87,20 +87,20 @@ table tbody tr:hover {
     align-items: center;
     color: #fff;
 }
-.search form .input-div input{
+.search .input-div input{
     width: 100%;
     padding: 5px;
     margin: 5px;
     border: none;
     border-radius: 5px;
 }
-.search form .input-div label{
+.search .input-div label{
     width: 100%;
 }
-.search form button{
+.search button{
     width: 30%;
 }
-.search form button{
+.search button{
     padding: 10px;
     background: #2a3e85;
     color: #fff;
@@ -145,7 +145,7 @@ footer {
     color: #ffffff;  
     text-align: center;  
     padding: 10px 0;  
-    position: fixed;  
+    /* position: fixed;   */
     bottom: 0;  
     width: 100%;  
 }  

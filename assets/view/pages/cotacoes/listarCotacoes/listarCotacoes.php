@@ -55,7 +55,85 @@ function calcularMaiorMenorPreco($cotas) {
 
 $precos = calcularMaiorMenorPreco($cotas);
 
-$cotasFiltradas = $cotas;
+if(isset($_GET['dataInicio']) && isset($_GET['dataFim'])){
+    foreach($cotas as $cota){
+        $dataDaCota = new DateTime($cota->getDataCotacao());
+        $dataInicio = new DateTime($_GET['dataInicio']);
+        $dataFim = new DateTime($_GET['dataFim']);
+
+        if($dataDaCota >= $dataInicio && $dataDaCota <= $dataFim){
+            $cotasFiltradas[] = $cota;
+            unset($cotas[array_search($cota, $cotas)]);
+        }
+    }
+} else {
+    $cotasFiltradas = $cotas;
+}
+
+if($_GET['comSem'] && $_GET['fimSem']){
+    foreach($cotas as $cota){
+        $dataDaCota = new DateTime($cota->getDataCotacao());
+        $dataInicio = new DateTime($_GET['comSem']);
+        $dataFim = new DateTime($_GET['fimSem']);
+
+        if($dataDaCota >= $dataInicio && $dataDaCota <= $dataFim){
+            $cotasAtuais[] = $cota;
+            unset($cotas[array_search($cota, $cotas)]);
+        }
+    }
+};
+
+function construirTabelas($cotas) {
+    $semanas = [];
+
+    foreach ($cotas as $cota) {
+        $dataCotacao = new DateTime($cota->getDataCotacao());
+        $semanaInicio = clone $dataCotacao;
+        $semanaInicio->modify('monday this week');
+        $semanaFim = clone $semanaInicio;
+        $semanaFim->modify('sunday this week');
+
+        $semana = $semanaInicio->format("d/m/Y") . " a " . $semanaFim->format("d/m/Y");
+
+        if (!isset($semanas[$semana])) {
+            $semanas[$semana] = [];
+        }
+
+        $semanas[$semana][] = $cota;
+    }
+
+    foreach ($semanas as $semana => $cotasDaSemana) {
+        echo "<h2>Semana: $semana</h2>";
+        echo "<table border='1'>";
+        echo '
+        <thead>
+            <tr>
+                <th>Nome do Produto</th>
+                <th>DataCotação</th>
+                <th>Preços (Maior | Menor)</th>
+                <th>Fornecedores (Maior | Menor)</th>
+                <?php if ($podeGerenciarCotacoes): ?>
+                <th colspan="2">Ações</th>
+                <?php endif; ?>
+            </tr>
+        </thead>';
+        foreach ($cotasDaSemana as $cotacao) {
+            var_dump($cotacao);
+            echo "<tr>";
+            echo "<td>{$cota->getId()}</td>";
+            echo "<td>{$cota->getProdutoId()}</td>";
+            echo "<td>{$cota->getFornecedorId()}</td>";
+            echo "<td>{$cota->getPrecoUnitario()}</td>";
+            echo "<td>{$cota->getQuantidade()}</td>";
+            echo "<td>{$cota->getDataCotacao()}</td>";
+            echo "</tr>";
+        }
+
+        echo "</table>";
+    }
+}
+
+$precosFiltrados = calcularMaiorMenorPreco($cotasAtuais);
 
 ?>
 <!DOCTYPE html>
@@ -72,7 +150,14 @@ $cotasFiltradas = $cotas;
 <main>
     <h1>Listar Cotações</h1>
     <section class="search">
-        <form method="GET" action="" class="date-filter-form">
+        <section class="add-quote">
+            <?php if ($podeGerenciarCotacoes): ?>
+                <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
+                <?php endif; ?>
+            </section>
+            <section class="add-quote">
+                <a href="./listarCotacoes.php?old=1">Visualizar Cotações Antigas</a>
+            </section>
             <div class="input-div">
                 <label for="dataInicio">Data Início:</label>
                 <input type="date" id="dataInicio" name="dataInicio">
@@ -81,20 +166,11 @@ $cotasFiltradas = $cotas;
                 <label for="dataFim">Data Fim:</label>
                 <input type="date" id="dataFim" name="dataFim">
             </div>
-        </form>
-        <section class="add-quote">
-            <?php if ($podeGerenciarCotacoes): ?>
-                <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
-            <?php endif; ?>
-        </section>
-        <section class="add-quote">
-            <a href="./listarCotacoes.php?old=1">Visualizar Cotações Antigas</a>
-        </section>
     </section>
     <table>
         <thead>
             <h1 class="table-title">Semana Atual</h1>
-            <!-- <tr>
+            <tr>
                 <th>Nome do Produto</th>
                 <th>DataCotação</th>
                 <th>Preços (Maior | Menor)</th>
@@ -102,11 +178,57 @@ $cotasFiltradas = $cotas;
                 <?php if ($podeGerenciarCotacoes): ?>
                 <th colspan="2">Ações</th>
                 <?php endif; ?>
-            </tr> -->
+            </tr>
         </thead>
         <tbody>
             <?php
-            foreach ($cotasFiltradas as $cotacao) {
+            foreach ($cotasAtuais as $cotacao) {
+                $produtoId = $cotacao->getProdutoId();
+                $fornecedorId = $cotacao->getFornecedorId();
+                $produtoNome = '';
+                $fornecedorNome = '';
+
+                foreach ($controladorProduto->verProdutos() as $produto) {
+                    if ($produtoId == $produto->getId()) {
+                        $produtoNome = $produto->getNome();
+                    }
+                }
+
+                foreach ($controladorFornecedor->verFornecedor() as $fornecedor) {
+                    if ($fornecedorId == $fornecedor->getId()) {
+                        $fornecedorNome = $fornecedor->getNome();
+                    }
+                }
+
+                $maiorPreco = $precosFiltrados[$produtoId]['maior_preco'];
+                $menorPreco = $precosFiltrados[$produtoId]['menor_preco'];
+                $fornecedorMaiorPreco = $controladorFornecedor->verFornecedorPorId($precosFiltrados[$produtoId]['fornecedor_maior'])->getNome();
+                $fornecedorMenorPreco = $controladorFornecedor->verFornecedorPorId($precosFiltrados[$produtoId]['fornecedor_menor'])->getNome();
+
+                // Formatar a data para o formato brasileiro
+                $dataCotacao = date("d/m/Y", strtotime($cotacao->getDataCotacao()));
+
+                echo "<tr>";
+                echo "<td>{$produtoNome}</td>";
+                echo "<td>{$dataCotacao}</td>";
+                echo "<td>R$ <span class='maior-preco'>{$maiorPreco} ↑</span> | R$ <span class='menor-preco'>{$menorPreco} ↓</span></td>";
+                echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
+                if ($podeGerenciarCotacoes) {
+                    echo "<td> <a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
+                    echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
+                }
+                echo "</tr>";
+            }
+            ?>
+        </tbody>
+    </table>
+    <?php
+     construirTabelas($cotas);
+     var_dump($cotacao);
+    ?>
+        <!-- <tbody>
+            <?php
+            foreach ($cotas  as $cotacao) {
                 $produtoId = $cotacao->getProdutoId();
                 $fornecedorId = $cotacao->getFornecedorId();
                 $produtoNome = '';
@@ -143,25 +265,76 @@ $cotasFiltradas = $cotas;
                 }
                 echo "</tr>";
             }
-            ?>
+            ?> -->
         </tbody>
     </table>
-    <h1 class="table-title">Antigas Cotações</h1>
 </main>
 <?php renderFooter(); ?>
 <script>
-    document.querySelector("#dataFim").addEventListener("change",(e)=>{
-        alert('oi')
-    })
-    document.querySelector("#dataInicio").addEventListener("change",(e)=>{
-        alert('oi')
-    })
+    document.querySelector("#dataFim").addEventListener("change",FilterData)
+    document.querySelector("#dataInicio").addEventListener("change",FilterData)
+
+    function getQueryParams() {
+        let params = {};
+        let queryString = window.location.search.substring(1);
+        let regex = /([^&=]+)=([^&]*)/g;
+        let m;
+        while (m = regex.exec(queryString)) {
+            params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+        }
+        return params;
+    }
+
+    let params = getQueryParams();
+
+    if (params.dataInicio) {
+        document.querySelector("#dataInicio").value = params.dataInicio;
+    }
+    if (params.dataFim) {
+        document.querySelector("#dataFim").value = params.dataFim;
+    }
+
+    if(!params.comSem && !params.fimSem){
+        const week = getStartAndEndOfWeek();
+        window.location.href = `./listarCotacoes.php?comSem=${week.start}&fimSem=${week.end}`
+    }
+    function getStartAndEndOfWeek() {
+        const today = new Date();
+        
+        // Obter o dia da semana (0 = Domingo, 1 = Segunda, ..., 6 = Sábado)
+        const dayOfWeek = today.getDay();
+        
+        // Calcular a data do início da semana (Segunda-feira)
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - dayOfWeek + 1);
+        
+        // Calcular a data do final da semana (Domingo)
+        const endOfWeek = new Date(today);
+        endOfWeek.setDate(today.getDate() - dayOfWeek + 7);
+        
+        // Formatar as datas no formato YYYY-MM-DD
+        const formatDate = (date) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        };
+
+        return {
+            start: formatDate(startOfWeek),
+            end: formatDate(endOfWeek)
+        };
+    }
 
     setTimeout(()=>{
-        window.location.reload()
+        // window.location.reload()
     }, 1000)
 
-    // function Filter
+    function FilterData(){
+        let dataInicio = document.querySelector("#dataInicio").value
+        let dataFim = document.querySelector("#dataFim").value
+        window.location.href = `./listarCotacoes.php?dataInicio=${dataInicio}&dataFim=${dataFim}`
+    }
 </script>
 </body>
 </html>
