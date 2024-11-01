@@ -53,26 +53,9 @@ function calcularMaiorMenorPreco($cotas) {
     return $resultados;
 }
 
-    $precos = calcularMaiorMenorPreco($cotas);
+$precos = calcularMaiorMenorPreco($cotas);
 
-// Função para filtrar cotações por intervalo de datas
-function filtrarPorData($cotas, $dataInicio, $dataFim) {
-    $filtradas = [];
-
-    foreach ($cotas as $cotacao) {
-        $dataCotacao = $cotacao->getDataCotacao();
-        if ($dataCotacao >= $dataInicio && $dataCotacao <= $dataFim) {
-            $filtradas[] = $cotacao;
-        }
-    }
-
-    return $filtradas;
-}
-
-$dataInicio = isset($_GET['dataInicio']) ? $_GET['dataInicio'] : '';
-$dataFim = isset($_GET['dataFim']) ? $_GET['dataFim'] : '';
-
-$cotasFiltradas = $dataInicio && $dataFim ? filtrarPorData($cotas, $dataInicio, $dataFim) : $cotas;
+$cotasFiltradas = $cotas;
 
 ?>
 <!DOCTYPE html>
@@ -92,11 +75,11 @@ $cotasFiltradas = $dataInicio && $dataFim ? filtrarPorData($cotas, $dataInicio, 
         <form method="GET" action="" class="date-filter-form">
             <div class="input-div">
                 <label for="dataInicio">Data Início:</label>
-                <input type="date" id="dataInicio" name="dataInicio" value="<?= $dataInicio ?>">
+                <input type="date" id="dataInicio" name="dataInicio">
             </div>
             <div class="input-div">
                 <label for="dataFim">Data Fim:</label>
-                <input type="date" id="dataFim" name="dataFim" value="<?= $dataFim ?>">
+                <input type="date" id="dataFim" name="dataFim">
             </div>
         </form>
         <section class="add-quote">
@@ -104,10 +87,14 @@ $cotasFiltradas = $dataInicio && $dataFim ? filtrarPorData($cotas, $dataInicio, 
                 <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
             <?php endif; ?>
         </section>
+        <section class="add-quote">
+            <a href="./listarCotacoes.php?old=1">Visualizar Cotações Antigas</a>
+        </section>
     </section>
     <table>
         <thead>
-            <tr>
+            <h1 class="table-title">Semana Atual</h1>
+            <!-- <tr>
                 <th>Nome do Produto</th>
                 <th>DataCotação</th>
                 <th>Preços (Maior | Menor)</th>
@@ -115,7 +102,7 @@ $cotasFiltradas = $dataInicio && $dataFim ? filtrarPorData($cotas, $dataInicio, 
                 <?php if ($podeGerenciarCotacoes): ?>
                 <th colspan="2">Ações</th>
                 <?php endif; ?>
-            </tr>
+            </tr> -->
         </thead>
         <tbody>
             <?php
@@ -159,7 +146,22 @@ $cotasFiltradas = $dataInicio && $dataFim ? filtrarPorData($cotas, $dataInicio, 
             ?>
         </tbody>
     </table>
+    <h1 class="table-title">Antigas Cotações</h1>
 </main>
 <?php renderFooter(); ?>
+<script>
+    document.querySelector("#dataFim").addEventListener("change",(e)=>{
+        alert('oi')
+    })
+    document.querySelector("#dataInicio").addEventListener("change",(e)=>{
+        alert('oi')
+    })
+
+    setTimeout(()=>{
+        window.location.reload()
+    }, 1000)
+
+    // function Filter
+</script>
 </body>
 </html>
