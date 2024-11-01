@@ -31,3 +31,133 @@ body {
 .menu-btn:hover {
     color: var(--lightblue);
 }
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    width: 100%;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.sidebar {
+    width: 250px;
+    background-color: var(--darkblue); /* Use '--darkblue' com '--' para referência correta */
+    color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    display: none; /* Oculta por padrão */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    position: absolute; /* Para facilitar o posicionamento */
+    left: 0; /* Posicione à esquerda */
+    top: 60px; /* Ajuste conforme necessário */
+    height: calc(100% - 60px); /* Para ocupar a altura restante */
+}
+
+.sidebar.active {
+    display: flex; /* Mostra a sidebar como flex */
+    opacity: 1; /* Define a opacidade para 1 */
+    transform: translateX(0); /* Sem deslocamento ao ativar */
+}
+
+.menu-item a {
+    display: block;
+    padding: 10px;
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.3s, transform 0.3s;
+}
+.menu-item a:hover {
+    background-color: var(--lightblue);
+    transform: translateX(5px);
+}
+
+.welcome-banner {
+    position: relative;
+    height: 600px; 
+    background-size: cover;
+    background-position: center;
+    color: var(--white);
+    text-align: center;
+    overflow: hidden; 
+}
+
+.banner-overlay {
+    background: var(--darkblue);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.5s ease-out; /* Animação de entrada */
+}
+
+.welcome-banner h1 {
+    font-size: 3rem; /* Aumentando o tamanho do título */
+    margin-bottom: 15px;
+    animation: fadeIn 1s;
+}
+
+.welcome-banner p {
+    font-size: 1.4rem; /* Aumentando o tamanho do parágrafo */
+    margin-bottom: 20px;
+}
+
+.fun-icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px; /* Espaço acima dos ícones */
+}
+
+.icon {
+    font-size: 2.5rem; /* Tamanho maior para os ícones */
+    transition: transform 0.3s;
+}
+
+.icon:hover {
+    transform: scale(1.2); /* Efeito de zoom ao passar o mouse */
+}
+
+.btn-primary {
+    background: var(--lightblue);
+    color: var(--white);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-primary:hover {
+    background: var(--yellow);
+    transform: scale(1.05); /* Efeito de zoom no botão */
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}

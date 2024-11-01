@@ -4,18 +4,22 @@
     box-sizing: border-box;
     font-family: 'Arial', sans-serif;
 }
-:root{
-    --yellow : #fbde04;
-    --lightgray : #bebcaf;
-    --orange : #fdb813;
-    --darkblue : #2a3e85;
-    --green : #65b560;
-    --lightblue : #3e9bd4;
-    --red : #f05a28;
-    --darkred : #c9302c;
-    --white : #ffffff;
-    --black : #000000;
-    --gray : #333333;
+
+:root {
+    --yellow: #fbde04;
+    --lightgray: #bebcaf;
+    --orange: #fdb813;
+    --darkblue: #2a3e85;
+    --green: #65b560;
+    --lightblue: #3e9bd4;
+    --red: #f05a28;
+    --darkred: #c9302c;
+    --white: #ffffff;
+    --black: #000000;
+    --darkgray: #333333;
+    --lightwhite:#e8eef7;
+    --superdarkblue: #324a89;
+    --gray: #555555;
 }
 
 header {
@@ -26,6 +30,7 @@ header {
     width: 100%;
     align-items: center;
     display: flex;
+    justify-content: space-between; /* Adiciona espaço entre logo e user-info */
 }
 
 .logo-container {
@@ -33,10 +38,10 @@ header {
     align-items: center;
 }
 
-.logo{
-   height: 100px;
-   width: auto;
-   margin-right: 10px;
+.logo {
+    height: 100px;
+    width: auto;
+    margin-right: 10px;
 }
 
 .system-name {
@@ -48,12 +53,24 @@ header {
 .user-info {
     display: flex;
     align-items: center;
+    padding: 0; /* Remove o padding */
+    background-color: transparent; /* Torna o fundo transparente */
+    /* Remover border-radius e box-shadow */
 }
 
-.user-info span{
-    margin-right: 15px;
-    font-size: 1.2rem;
+.greeting {
+    font-size: 1.5rem; /* Tamanho maior para a saudação */
     color: var(--white);
+    margin-right: 20px; /* Espaço à direita da saudação */
+}
+
+.user-role {
+    font-weight: bold; /* Negrito para o cargo */
+    color: var(--yellow); /* Cor diferente para o cargo, se desejar */
+}
+
+.user-name {
+    font-weight: bold; /* Negrito para o nome */
 }
 
 .logout-btn {
@@ -63,9 +80,57 @@ header {
     border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .logout-btn:hover {
     background-color: var(--darkred);
+    transform: scale(1.05);
 }
+
+footer {
+    text-align: center;
+    padding: 20px; 
+    background-color: var(--darkblue); 
+    color: var(--white);
+    width: 100%;
+    bottom: 0;
+}
+
+/* Implementações Futuras 
+
+.acao-editar {
+    color: #007bff;
+    margin-right: 10px;
+}
+
+.acao-deletar {
+    color: #dc3545;
+}
+
+label {
+    margin: 10px;
+    font-size: 1rem;
+    width: 10%;
+}
+
+input:focus, select:focus {
+    background-color: #eaeaea;
+    outline: none;
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 250px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+} */
