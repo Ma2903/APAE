@@ -1,6 +1,6 @@
 <?php
-    require_once __DIR__ . "/../../controller/userController.php";
-    require_once __DIR__ . "/../../model/utils.php";
+    require_once __DIR__ . "/../../../controller/userController.php";
+    require_once __DIR__ . "/../../../model/utils.php";
     session_start();
     
     $user = $_SESSION['user'];
@@ -17,17 +17,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartControl - Menu Principal</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
         <section class="header-container">
             <section class="logo-container">
-                <img src="../../../src/logo_sem_fundo.png" alt="Logo do SmartControl" class="logo">
+                <img src="../../../../src/logo_sem_fundo.png" alt="Logo do SmartControl" class="logo">
                 <h1 class="system-name">SmartControl</h1>
             </section>
             <section class="user-info">
                 <span><?php echo get_class($user) .'|'. $user->getNome()?></span>
-                <a href="logout.php" class="logout-btn">Sair</a>
+                <a href="logout.php" class="logout-btn"> Sair <i class="fas fa-door-open"></i></a>
             </section>
             <button class="menu-btn" onclick="toggleSidebar()">☰</button> <!-- Botão Menu -->  
         </section>
