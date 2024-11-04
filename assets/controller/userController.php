@@ -219,5 +219,17 @@ class ControladorUsuarios
         $permissoes = $stmt->fetch(PDO::FETCH_ASSOC);
         return $permissoes;
     }
+
+    public function filtrarNutricionistas() {
+        $usuarioBanco = $this->banco->read("usuarios");
+        foreach($usuarioBanco as $usuario)
+        {
+            switch ($usuario['tipo_usuario']) {
+                case 'nutricionista':
+                    echo "<option>" . $usuario['nome'] . "</option>";
+                    break;
+            }
+        }
+    }
 }
 ?>

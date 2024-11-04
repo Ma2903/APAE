@@ -27,7 +27,8 @@ $controladorNutricionista = new ControladorUsuarios();
         <div>
             <label for="nutricionista_id">Nutricionista:</label>
             <select id="nutricionista_id" name="nutricionista_id" required>
-                <!-- Aqui você deve adicionar o código PHP para listar os nutricionistas -->
+                <option value="nenhum">Nenhum</option>
+                <?php $controladorNutricionista->filtrarNutricionistas(); ?>
             </select>
         </div>
         <div>
@@ -37,6 +38,16 @@ $controladorNutricionista = new ControladorUsuarios();
         <div>
             <label for="data_fim">Data Fim:</label>
             <input type="date" id="data_fim" name="data_fim" required>
+        </div>
+        <div>
+            <div>
+                <label for="manha">Manhã</label>
+                <input type="checkbox" id="manha" name="manha">
+            </div>
+            <div>
+                <label for="tarde">Tarde</label>
+                <input type="checkbox" id="tarde" name="tarde">
+            </div>
         </div>
         <div>
             <label for="descricao">Descrição:</label>
