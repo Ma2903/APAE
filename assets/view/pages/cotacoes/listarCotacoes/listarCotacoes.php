@@ -16,12 +16,12 @@ $cotasAtuais;
 
 $user = $_SESSION['user'];
 $tipo_usuario = $user->getTipoUsuario();
+$podeGerenciarCotacoes = verificarPermissao($tipo_usuario, 'gerenciar_cotacoes');
 
 if(!isset($user)){
     header("Location: index.php");
 }
 
-$podeGerenciarCotacoes = verificarPermissao($tipo_usuario, 'gerenciar_cotacoes');
 
 // Função para calcular maior e menor preço por produto
 function calcularMaiorMenorPreco($cotas) {
@@ -64,15 +64,11 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim'])){
 
         if($dataDaCota >= $dataInicio && $dataDaCota <= $dataFim){
             $cotasFiltradas[] = $cota;
-            unset($cotas[array_search($cota, $cotas)]);
         }
     }
-} else {
-    $cotasFiltradas = $cotas;
 }
 
 if($_GET['comSem'] && $_GET['fimSem']){
-    echo $_GET['comSem'];
     foreach($cotas as $cota){
         $dataDaCota = new DateTime($cota->getDataCotacao());
         $dataInicio = new DateTime($_GET['comSem']);
@@ -120,14 +116,50 @@ function construirTabelas($cotas) {
             </tr>
         </thead>';
         foreach ($cotasDaSemana as $cotacao) {
-            var_dump($cotacao);
+            $produtoId = $cotacao->getProdutoId();
+            $fornecedorId = $cotacao->getFornecedorId();
+
+            $controladorProduto = new ControladorProdutos();
+            $controladorFornecedor = new ControladorFornecedor();
+
+            $produtoNome = '';
+            $fornecedorNome = '';
+
+            $user = $_SESSION['user'];
+            $tipo_usuario = $user->getTipoUsuario();
+            $podeGerenciarCotacoes = verificarPermissao($tipo_usuario, 'gerenciar_cotacoes');
+
+            $precosFiltrados = calcularMaiorMenorPreco($cotasDaSemana);
+
+            $maiorPreco = $precosFiltrados[$produtoId]['maior_preco'];
+            $menorPreco = $precosFiltrados[$produtoId]['menor_preco'];
+            $fornecedorMaiorPreco = $controladorFornecedor->verFornecedorPorId($precosFiltrados[$produtoId]['fornecedor_maior'])->getNome();
+            $fornecedorMenorPreco = $controladorFornecedor->verFornecedorPorId($precosFiltrados[$produtoId]['fornecedor_menor'])->getNome();
+
+            foreach ($controladorProduto->verProdutos() as $produto) {
+                if ($produtoId == $produto->getId()) {
+                    $produtoNome = $produto->getNome();
+                }
+            }
+
+            foreach ($controladorFornecedor->verFornecedor() as $fornecedor) {
+                if ($fornecedorId == $fornecedor->getId()) {
+                    $fornecedorNome = $fornecedor->getNome();
+                }
+            }
+
+            // Formatar a data para o formato brasileiro
+            $dataCotacao = date("d/m/Y", strtotime($cotacao->getDataCotacao()));
+
             echo "<tr>";
-            echo "<td>{$cota->getId()}</td>";
-            echo "<td>{$cota->getProdutoId()}</td>";
-            echo "<td>{$cota->getFornecedorId()}</td>";
-            echo "<td>{$cota->getPrecoUnitario()}</td>";
-            echo "<td>{$cota->getQuantidade()}</td>";
-            echo "<td>{$cota->getDataCotacao()}</td>";
+            echo "<td>{$produtoNome}</td>";
+            echo "<td>{$dataCotacao}</td>";
+            echo "<td>R$ <span class='maior-preco'>{$maiorPreco} ↑</span> | R$ <span class='menor-preco'>{$menorPreco} ↓</span></td>";
+            echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
+            if ($podeGerenciarCotacoes) {
+                echo "<td> <a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
+                echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
+            }
             echo "</tr>";
         }
 
@@ -136,6 +168,9 @@ function construirTabelas($cotas) {
 }
 
 $precosFiltrados = calcularMaiorMenorPreco($cotasAtuais);
+if(isset($cotasFiltradas)){
+    $precosFiltradosFiltro = calcularMaiorMenorPreco($cotasFiltradas);
+}
 
 ?>
 <!DOCTYPE html>
@@ -157,9 +192,6 @@ $precosFiltrados = calcularMaiorMenorPreco($cotasAtuais);
                 <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
                 <?php endif; ?>
             </section>
-            <section class="add-quote">
-                <a href="./listarCotacoes.php?old=1">Visualizar Cotações Antigas</a>
-            </section>
             <div class="input-div">
                 <label for="dataInicio">Data Início:</label>
                 <input type="date" id="dataInicio" name="dataInicio">
@@ -171,7 +203,12 @@ $precosFiltrados = calcularMaiorMenorPreco($cotasAtuais);
     </section>
     <table>
         <thead>
-            <h1 class="table-title">Semana Atual</h1>
+            <?php if (isset($cotasFiltradas)): ?>
+                <h1 class="table-title">Cotas Filtradas</h1>
+            <?php endif; ?> 
+            <?php if (!isset($cotasFiltradas)): ?>
+                <h1 class="table-title">Semana Atual</h1>
+            <?php endif; ?>
             <tr>
                 <th>Nome do Produto</th>
                 <th>DataCotação</th>
@@ -184,49 +221,90 @@ $precosFiltrados = calcularMaiorMenorPreco($cotasAtuais);
         </thead>
         <tbody>
             <?php
-            foreach ($cotasAtuais as $cotacao) {
-                $produtoId = $cotacao->getProdutoId();
-                $fornecedorId = $cotacao->getFornecedorId();
-                $produtoNome = '';
-                $fornecedorNome = '';
-
-                foreach ($controladorProduto->verProdutos() as $produto) {
-                    if ($produtoId == $produto->getId()) {
-                        $produtoNome = $produto->getNome();
+            if(isset($cotasFiltradas)){
+                foreach ($cotasFiltradas as $cotacao) {
+                    $produtoId = $cotacao->getProdutoId();
+                    $fornecedorId = $cotacao->getFornecedorId();
+                    $produtoNome = '';
+                    $fornecedorNome = '';
+    
+                    foreach ($controladorProduto->verProdutos() as $produto) {
+                        if ($produtoId == $produto->getId()) {
+                            $produtoNome = $produto->getNome();
+                        }
                     }
-                }
-
-                foreach ($controladorFornecedor->verFornecedor() as $fornecedor) {
-                    if ($fornecedorId == $fornecedor->getId()) {
-                        $fornecedorNome = $fornecedor->getNome();
+    
+                    foreach ($controladorFornecedor->verFornecedor() as $fornecedor) {
+                        if ($fornecedorId == $fornecedor->getId()) {
+                            $fornecedorNome = $fornecedor->getNome();
+                        }
                     }
+    
+                    $maiorPreco = $precosFiltradosFiltro[$produtoId]['maior_preco'];
+                    $menorPreco = $precosFiltradosFiltro[$produtoId]['menor_preco'];
+                    $fornecedorMaiorPreco = $controladorFornecedor->verFornecedorPorId($precosFiltradosFiltro[$produtoId]['fornecedor_maior'])->getNome();
+                    $fornecedorMenorPreco = $controladorFornecedor->verFornecedorPorId($precosFiltradosFiltro[$produtoId]['fornecedor_menor'])->getNome();
+    
+                    // Formatar a data para o formato brasileiro
+                    $dataCotacao = date("d/m/Y", strtotime($cotacao->getDataCotacao()));
+    
+                    echo "<tr>";
+                    echo "<td>{$produtoNome}</td>";
+                    echo "<td>{$dataCotacao}</td>";
+                    echo "<td>R$ <span class='maior-preco'>{$maiorPreco} ↑</span> | R$ <span class='menor-preco'>{$menorPreco} ↓</span></td>";
+                    echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
+                    if ($podeGerenciarCotacoes) {
+                        echo "<td> <a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
+                        echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
+                    }
+                    echo "</tr>";
                 }
-
-                $maiorPreco = $precosFiltrados[$produtoId]['maior_preco'];
-                $menorPreco = $precosFiltrados[$produtoId]['menor_preco'];
-                $fornecedorMaiorPreco = $controladorFornecedor->verFornecedorPorId($precosFiltrados[$produtoId]['fornecedor_maior'])->getNome();
-                $fornecedorMenorPreco = $controladorFornecedor->verFornecedorPorId($precosFiltrados[$produtoId]['fornecedor_menor'])->getNome();
-
-                // Formatar a data para o formato brasileiro
-                $dataCotacao = date("d/m/Y", strtotime($cotacao->getDataCotacao()));
-
-                echo "<tr>";
-                echo "<td>{$produtoNome}</td>";
-                echo "<td>{$dataCotacao}</td>";
-                echo "<td>R$ <span class='maior-preco'>{$maiorPreco} ↑</span> | R$ <span class='menor-preco'>{$menorPreco} ↓</span></td>";
-                echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
-                if ($podeGerenciarCotacoes) {
-                    echo "<td> <a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
-                    echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
+            }else{
+                foreach ($cotasAtuais as $cotacao) {
+                    $produtoId = $cotacao->getProdutoId();
+                    $fornecedorId = $cotacao->getFornecedorId();
+                    $produtoNome = '';
+                    $fornecedorNome = '';
+    
+                    foreach ($controladorProduto->verProdutos() as $produto) {
+                        if ($produtoId == $produto->getId()) {
+                            $produtoNome = $produto->getNome();
+                        }
+                    }
+    
+                    foreach ($controladorFornecedor->verFornecedor() as $fornecedor) {
+                        if ($fornecedorId == $fornecedor->getId()) {
+                            $fornecedorNome = $fornecedor->getNome();
+                        }
+                    }
+    
+                    $maiorPreco = $precosFiltrados[$produtoId]['maior_preco'];
+                    $menorPreco = $precosFiltrados[$produtoId]['menor_preco'];
+                    $fornecedorMaiorPreco = $controladorFornecedor->verFornecedorPorId($precosFiltrados[$produtoId]['fornecedor_maior'])->getNome();
+                    $fornecedorMenorPreco = $controladorFornecedor->verFornecedorPorId($precosFiltrados[$produtoId]['fornecedor_menor'])->getNome();
+    
+                    // Formatar a data para o formato brasileiro
+                    $dataCotacao = date("d/m/Y", strtotime($cotacao->getDataCotacao()));
+    
+                    echo "<tr>";
+                    echo "<td>{$produtoNome}</td>";
+                    echo "<td>{$dataCotacao}</td>";
+                    echo "<td>R$ <span class='maior-preco'>{$maiorPreco} ↑</span> | R$ <span class='menor-preco'>{$menorPreco} ↓</span></td>";
+                    echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
+                    if ($podeGerenciarCotacoes) {
+                        echo "<td> <a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
+                        echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
+                    }
+                    echo "</tr>";
                 }
-                echo "</tr>";
             }
             ?>
         </tbody>
     </table>
     <?php
-     construirTabelas($cotas);
-     var_dump($cotacao);
+        if(!isset($cotasFiltradas)){
+            construirTabelas($cotas);
+        }
     ?>
         <!-- <tbody>
             <?php
@@ -333,9 +411,11 @@ $precosFiltrados = calcularMaiorMenorPreco($cotasAtuais);
     }, 1000)
 
     function FilterData(){
+        let params = getQueryParams();
+
         let dataInicio = document.querySelector("#dataInicio").value
         let dataFim = document.querySelector("#dataFim").value
-        window.location.href = `./listarCotacoes.php?dataInicio=${dataInicio}&dataFim=${dataFim}`
+        window.location.href = `./listarCotacoes.php?comSem=${params.comSem}&fimSem=${params.fimSem}&dataInicio=${dataInicio}&dataFim=${dataFim}`
     }
 </script>
 </body>
