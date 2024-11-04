@@ -8,8 +8,8 @@ function renderHeader() {
             <h1 class="system-name">SmartControl</h1>
         </section>
         <section class="user-info">
-        <a href="../../principal.php" class="home-btn"> Home <i class="fas fa-home"></i></a>
-            <a href="logout.php" class="logout-btn"> Sair <i class="fas fa-door-open"></i></a>
+        <a href="../../principal/principal.php" class="home-btn"> Home <i class="fas fa-home"></i></a>
+            <a href="../../logout.php" class="logout-btn"> Sair <i class="fas fa-door-open"></i></a>
         </section>
     </section>
 </header>

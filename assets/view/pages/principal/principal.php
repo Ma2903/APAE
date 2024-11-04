@@ -3,13 +3,14 @@
     require_once __DIR__ . "/../../../controller/pageController.php";
     require_once __DIR__ . "/../../../model/utils.php";
     session_start();
-    
+
+    if (!isset($_SESSION['user'])) {
+        header("Location: ../login/");
+        exit();
+    }
+
     $user = $_SESSION['user'];
     $tipo_usuario = $user->getTipoUsuario();
-
-    if(!isset($_SESSION['user'])){
-        header("Location: ../login/");
-    }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -18,7 +19,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartControl - Menu Principal</title>
     <link rel="stylesheet" href="style.css">
-    <script src="../global.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -31,45 +31,44 @@
             <section class="user-info">
                 <span class="greeting">Olá, <span class="user-role"><?php echo get_class($user); ?></span> <span class="user-name"><?php echo $user->getNome(); ?></span></span>
             </section>
-            <a href="../logout.php" class="logout-btn">
-                Sair <i class="fas fa-door-open"></i>
-            </a>
+            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
         </section>
-            <button class="menu-btn" onclick="toggleSidebar()">☰</button> <!-- Botão Menu -->  
-        </section>
+        <a href="../logout.php" class="logout-btn">
+            Sair <i class="fas fa-door-open"></i>
+        </a>
     </header>
     <main>
         <section class="container">
-            <section class="sidebar">
+            <nav class="sidebar">
                 <h2>Menu</h2>
                 <section class="menu">
                     <?php if (verificarPermissao($tipo_usuario, 'gerenciar_usuarios')): ?>
                     <section class="menu-item">
-                        <a href="usuario/listarUsuario/listarUsuario.php">Ver Usuários</a>
+                        <a href="../usuario/listarUsuario/listarUsuario.php">Ver Usuários</a>
                     </section>
                     <?php endif; ?>
                     <?php if (verificarPermissao($tipo_usuario, 'gerenciar_produtos') || verificarPermissao($tipo_usuario, 'ver_produtos')): ?>
                     <section class="menu-item">
-                        <a href="produto/listarProduto/listarProduto.php">Ver Produtos</a>
+                        <a href="../produto/listarProduto/listarProduto.php">Ver Produtos</a>
                     </section>
                     <?php endif; ?>
                     <?php if (verificarPermissao($tipo_usuario, 'gerenciar_fornecedores')): ?>
                     <section class="menu-item">
-                        <a href="fornecedores/listarFornecedores/listarFornecedores.php">Ver Fornecedores</a>
+                        <a href="../fornecedores/listarFornecedores/listarFornecedores.php">Ver Fornecedores</a>
                     </section>
                     <?php endif; ?>
                     <?php if (verificarPermissao($tipo_usuario, 'gerenciar_cotacoes') || verificarPermissao($tipo_usuario, 'ver_cotacoes')): ?>
                     <section class="menu-item">
-                        <a href="cotacoes/listarCotacoes/listarCotacoes.php">Ver Cotações</a>
+                        <a href="../cotacoes/listarCotacoes/listarCotacoes.php">Ver Cotações</a>
                     </section>
                     <?php endif; ?>
                     <?php if (verificarPermissao($tipo_usuario, 'gerenciar_cardapios') || verificarPermissao($tipo_usuario, 'ver_cardapios')): ?>
                     <section class="menu-item">
-                        <a href="cardapio/listarCardapio/listarCardapio.php">Ver Cardápios</a>
+                        <a href="../cardapio/listarCardapio/listarCardapio.php">Ver Cardápios</a>
                     </section>
                     <?php endif; ?>
                 </section>
-            </section>
+            </nav>
             <section class="welcome-banner" style="background-image: url('../../../../src/banner-background.jpg');">
                 <section class="banner-overlay">
                     <h1>Bem-vindo ao SmartControl!</h1>
@@ -78,15 +77,16 @@
                         <p>Com o SmartControl, você pode monitorar processos, otimizar custos e ter uma visão clara de suas operações. Acelere sua gestão e melhore seus resultados!</p>
                     </section>
                     <a class="btn-primary" onclick="toggleSidebar()">Comece Agora</a>
-                    </section>
+                </section>
             </section>
     </main>
     <?php renderFooter(); ?>
-    <script>  
-        function toggleSidebar() {  
-            const sidebar = document.querySelector('.sidebar');  
-            sidebar.classList.toggle('active');  
-        }  
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('active');
+            sidebar.classList.toggle('inactive');
+        }
     </script>
 </body>
 </html>

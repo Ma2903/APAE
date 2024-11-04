@@ -130,8 +130,6 @@ table tbody tr:hover {
 
 .home-btn, .add-user-btn {  
     padding: 10px 20px;  
-    border: none;  
-    border-radius: 4px;  
     background-color: #2a3e85;  
     color: #fff;  
     font-size: 1rem;  
@@ -148,7 +146,6 @@ table tbody tr:hover {
     background-color: #2a3e85;
     color: #ffffff;
     text-decoration: none;
-    border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
@@ -159,16 +156,6 @@ table tbody tr:hover {
 .add-user {  
     margin-top: 20px;  
     text-align: right;  
-}  
-
-footer {  
-    background-color: #2a3e85;  
-    color: #ffffff;  
-    text-align: center;  
-    padding: 10px 0;  
-    position: fixed;  
-    bottom: 0;  
-    width: 100%;  
 }  
 
 /* Estilo para os botões de ação na tabela */  
@@ -185,7 +172,7 @@ table tbody td a:hover {
     color: #ffffff;
 }
 
-button, .add-user-btn, .home-btn {  
+button, .add-user-btn {  
     border-radius: 40px; /* Bordas arredondadas para um visual moderno */  
     font-weight: bold; /* Destaca os botões */  
 }  
@@ -213,4 +200,64 @@ table th {
 
 .usuario-nutricionista {
     background-color: lightgreen; /* Cor de fundo para nutricionistas */
+}
+
+.usuario-contador {
+    background-color: lightcoral; /* Cor de fundo para contadores */
+}
+
+.usuario-fornecedor {
+    background-color: lightgoldenrodyellow; /* Cor de fundo para fornecedores */
+}
+
+/* Estilos para o filtro */
+.filter {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.filter-btn {
+    background: var(--lightblue);
+    color: var(--white);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.filter-btn:hover {
+    background: var(--yellow);
+    transform: scale(1.05);
+}
+
+.filter-menu {
+    display: none;
+    position: absolute;
+    background-color: var(--white);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.filter-menu.show {
+    display: block;
+}
+
+.filter-menu button {
+    background: none;
+    border: none;
+    color: var(--black);
+    padding: 10px 20px;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.filter-menu button:hover {
+    background-color: var(--lightblue);
+    color: var (--white);
 }

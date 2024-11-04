@@ -19,7 +19,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redefinir Senha - APAE</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../login/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script defer src="../global.js"></script>
@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             <img src="../../../../src/logo0.jpg" alt="Logo" class="logo">
             <h2>Redefinir Senha</h2>
             <p>Digite sua nova senha abaixo para redefini-la.</p>
-            <a href="../index.php" class="back-link">Voltar para o Login</a>
+            <a href="../login/" class="back-link">Voltar para o Login</a>
         </section>
         <section class="right-section">
             <h2>Redefinir Senha</h2>

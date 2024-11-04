@@ -26,11 +26,20 @@ header {
     background-color: var(--darkblue);
     color: var(--white);
     padding: 10px 20px;
-    height: 15%;
+    height: 12%;
     width: 100%;
     align-items: center;
     display: flex;
     justify-content: space-between; /* Adiciona espaço entre logo e user-info */
+}
+
+.header-container {
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--white);
 }
 
 .logo-container {
@@ -39,7 +48,7 @@ header {
 }
 
 .logo {
-    height: 100px;
+    height: 80px;
     width: auto;
     margin-right: 10px;
 }
@@ -55,7 +64,6 @@ header {
     align-items: center;
     padding: 0; /* Remove o padding */
     background-color: transparent; /* Torna o fundo transparente */
-    /* Remover border-radius e box-shadow */
 }
 
 .greeting {
@@ -67,6 +75,11 @@ header {
 .user-role {
     font-weight: bold; /* Negrito para o cargo */
     color: var(--yellow); /* Cor diferente para o cargo, se desejar */
+    transition: color 0.3s ease;
+}
+
+.user-role:hover {
+    text-decoration: underline;
 }
 
 .user-name {
@@ -74,6 +87,7 @@ header {
 }
 
 .logout-btn {
+    display: flex;
     background-color: var(--red);
     color: var(--white);
     padding: 10px 20px;
@@ -83,14 +97,33 @@ header {
     transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
+.logout-btn i{
+    margin-left: 10px;
+}
+
 .logout-btn:hover {
     background-color: var(--darkred);
     transform: scale(1.05);
 }
 
+.home-btn {  
+    padding: 10px 20px;  
+    background-color: #2a3e85;  
+    color: #fff;  
+    font-size: 1rem;  
+    cursor: pointer;  
+    text-decoration: none; /* Remove o sublinhado do link */  
+    transition: background-color 0.3s ease;  
+} 
+
 footer {
     text-align: center;
     padding: 20px; 
+    height: 8%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     background-color: var(--darkblue); 
     color: var(--white);
     width: 100%;
@@ -124,13 +157,3 @@ input:focus, select:focus {
     display: flex;
     align-items: center;
 }
-
-.container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    padding: 0 250px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-} */

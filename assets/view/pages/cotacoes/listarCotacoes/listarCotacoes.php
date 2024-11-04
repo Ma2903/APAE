@@ -12,6 +12,7 @@ $controladorProduto = new ControladorProdutos();
 $controladorFornecedor = new ControladorFornecedor();
 
 $cotas = $controladorCotacao->verCotas();
+$cotasAtuais;
 
 $user = $_SESSION['user'];
 $tipo_usuario = $user->getTipoUsuario();
@@ -71,6 +72,7 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim'])){
 }
 
 if($_GET['comSem'] && $_GET['fimSem']){
+    echo $_GET['comSem'];
     foreach($cotas as $cota){
         $dataDaCota = new DateTime($cota->getDataCotacao());
         $dataInicio = new DateTime($_GET['comSem']);
