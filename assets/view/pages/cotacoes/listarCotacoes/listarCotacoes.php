@@ -5,6 +5,7 @@ require_once __DIR__ . '/../../../../controller/fornecedorController.php';
 require_once __DIR__ . "/../../../../controller/pageController.php";
 require_once __DIR__ . "/../../../../controller/userController.php";
 require_once __DIR__ . "/../../../../model/utils.php";
+error_reporting(0);
 session_start();
 
 $controladorCotacao = new ControladorCotacao();
@@ -12,7 +13,6 @@ $controladorProduto = new ControladorProdutos();
 $controladorFornecedor = new ControladorFornecedor();
 
 $cotas = $controladorCotacao->verCotas();
-$cotasAtuais;
 
 $user = $_SESSION['user'];
 $tipo_usuario = $user->getTipoUsuario();
@@ -21,7 +21,6 @@ $podeGerenciarCotacoes = verificarPermissao($tipo_usuario, 'gerenciar_cotacoes')
 if(!isset($user)){
     header("Location: index.php");
 }
-
 
 // Função para calcular maior e menor preço por produto
 function calcularMaiorMenorPreco($cotas) {
@@ -172,6 +171,10 @@ if(isset($cotasFiltradas)){
     $precosFiltradosFiltro = calcularMaiorMenorPreco($cotasFiltradas);
 }
 
+if(!isset($cotasAtuais)){
+    echo "<script>const naoexistecotasatuais = true</script>";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -219,7 +222,7 @@ if(isset($cotasFiltradas)){
                 <?php endif; ?>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="tablecotacaoatual">
             <?php
             if(isset($cotasFiltradas)){
                 foreach ($cotasFiltradas as $cotacao) {
@@ -353,6 +356,12 @@ if(isset($cotasFiltradas)){
 <script>
     document.querySelector("#dataFim").addEventListener("change",FilterData)
     document.querySelector("#dataInicio").addEventListener("change",FilterData)
+    if(naoexistecotasatuais){
+        document.querySelector(".tablecotacaoatual").innerHTML = `
+        <tr>
+            <td colspan="5" class='warning'>Não Realizado</td>
+        </tr>`
+    }
 
     function getQueryParams() {
         let params = {};

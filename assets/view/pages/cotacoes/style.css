@@ -184,3 +184,8 @@ table th {
 .menor-preco {
         color: green;
 }
+.warning{
+    width: 100%;
+    text-align: center;
+    color: red;
+}
