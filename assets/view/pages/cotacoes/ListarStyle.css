@@ -62,7 +62,7 @@ table tbody tr:last-of-type {
 }
 
 table tbody tr:hover {
-    background-color: var(--superlightblue);
+    background-color: var(--lightyellow);
 }
 
 .search {
