@@ -209,7 +209,10 @@ if(!isset($cotasAtuais)){
     <table>
         <thead>
             <?php if (isset($cotasFiltradas)): ?>
-                <h1 class="table-title">Cotas Filtradas</h1>
+                <div class="div-cotasfiltradas">
+                    <h1 class="table-title">Cotas Filtradas</h1>
+                    <button onclick="limparfiltros()">Limpar Filtro</button>
+                </div>
             <?php endif; ?> 
             <?php if (!isset($cotasFiltradas)): ?>
                 <h1 class="table-title">Semana Atual</h1>
@@ -423,6 +426,10 @@ if(!isset($cotasAtuais)){
     setTimeout(()=>{
         // window.location.reload()
     }, 1000)
+
+    function limparfiltros(){
+        window.location.href = `./listarCotacoes.php?comSem=${params.comSem}&fimSem=${params.fimSem}`
+    }
 
     function FilterData(){
         let params = getQueryParams();

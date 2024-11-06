@@ -115,6 +115,19 @@ table tbody tr:hover {
     align-items: center;
     color: var(--white);
 }
+.div-cotasfiltradas{
+    width: 100%;
+    display: flex;
+}
+button{
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    padding: 0px 10px 0px 10px;
+    background: var(--darkblue);
+    text-align: center;
+    color: var(--white);
+}
 
 .add-quote-btn, .add-product-btn {
     padding: 10px 10px;
