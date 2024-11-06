@@ -29,6 +29,7 @@ main {
     align-items: center;
     padding: 20px;
     width: 40%;
+    min-height: 80vh;
 }
 
 form {
