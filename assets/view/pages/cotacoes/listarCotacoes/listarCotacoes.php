@@ -172,7 +172,7 @@ if(isset($cotasFiltradas)){
 }
 
 if(!isset($cotasAtuais)){
-    echo "<script>const naoexistecotasatuais = true</script>";
+    echo "<script>function updatenaoexiste(){naoexistecotasatuais = true}</script>";
 }
 
 ?>
@@ -190,11 +190,11 @@ if(!isset($cotasAtuais)){
 <main>
     <h1>Listar Cotações</h1>
     <section class="search">
-        <section class="add-quote">
-            <?php if ($podeGerenciarCotacoes): ?>
+        <?php if ($podeGerenciarCotacoes): ?>
+            <section class="add-quote">
                 <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
-                <?php endif; ?>
             </section>
+                <?php endif; ?>
             <section class="input-filter-date">
                 <label for="dataInicio">Data Início:</label>
                 <input type="date" id="dataInicio" name="dataInicio">
@@ -354,8 +354,11 @@ if(!isset($cotasAtuais)){
 </main>
 <?php renderFooter(); ?>
 <script>
+    let naoexistecotasatuais = false
     document.querySelector("#dataFim").addEventListener("change",FilterData)
     document.querySelector("#dataInicio").addEventListener("change",FilterData)
+
+    updatenaoexiste()
     if(naoexistecotasatuais){
         document.querySelector(".tablecotacaoatual").innerHTML = `
         <tr>
@@ -424,7 +427,15 @@ if(!isset($cotasAtuais)){
 
         let dataInicio = document.querySelector("#dataInicio").value
         let dataFim = document.querySelector("#dataFim").value
-        window.location.href = `./listarCotacoes.php?comSem=${params.comSem}&fimSem=${params.fimSem}&dataInicio=${dataInicio}&dataFim=${dataFim}`
+
+        if(dataInicio !== ""){
+            window.location.href = `./listarCotacoes.php?comSem=${params.comSem}&fimSem=${params.fimSem}&dataInicio=${dataInicio}`
+        }
+
+        if(dataInicio !== "" && dataFim !== ""){
+            window.location.href = `./listarCotacoes.php?comSem=${params.comSem}&fimSem=${params.fimSem}&dataInicio=${dataInicio}&dataFim=${dataFim}`
+        }
+
     }
 </script>
 </body>
