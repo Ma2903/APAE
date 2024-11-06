@@ -12,7 +12,8 @@
     --darkblue: #2a3e85;
     --green: #65b560;
     --lightblue: #3e9bd4;
-    --red: #f05a28;
+    --superlightblue: #d0e1f9;
+    --red: #ff0000;
     --darkred: #c9302c;
     --white: #ffffff;
     --black: #000000;
@@ -88,7 +89,7 @@ header {
 
 .logout-btn {
     display: flex;
-    background-color: var(--red);
+    background-color: var(--darkred);
     color: var(--white);
     padding: 10px 20px;
     border-radius: 5px;
@@ -102,14 +103,14 @@ header {
 }
 
 .logout-btn:hover {
-    background-color: var(--darkred);
+    background-color: var(--red);
     transform: scale(1.05);
 }
 
 .home-btn {  
     padding: 10px 20px;  
-    background-color: #2a3e85;  
-    color: #fff;  
+    background-color: var(--darkblue);  
+    color: var(--white);  
     font-size: 1rem;  
     cursor: pointer;  
     text-decoration: none; /* Remove o sublinhado do link */  
@@ -128,32 +129,4 @@ footer {
     color: var(--white);
     width: 100%;
     bottom: 0;
-}
-
-/* Implementações Futuras 
-
-.acao-editar {
-    color: #007bff;
-    margin-right: 10px;
-}
-
-.acao-deletar {
-    color: #dc3545;
-}
-
-label {
-    margin: 10px;
-    font-size: 1rem;
-    width: 10%;
-}
-
-input:focus, select:focus {
-    background-color: #eaeaea;
-    outline: none;
-}
-
-.input-container {
-    position: relative;
-    display: flex;
-    align-items: center;
 }

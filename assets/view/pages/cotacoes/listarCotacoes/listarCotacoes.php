@@ -182,7 +182,7 @@ if(!isset($cotasAtuais)){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listar Cotações</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../ListarStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -195,14 +195,14 @@ if(!isset($cotasAtuais)){
                 <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
                 <?php endif; ?>
             </section>
-            <div class="input-div">
+            <section class="input-filter-date">
                 <label for="dataInicio">Data Início:</label>
                 <input type="date" id="dataInicio" name="dataInicio">
-            </div>
-            <div class="input-div">
+            </section>
+            <section class="input-filter-date">
                 <label for="dataFim">Data Fim:</label>
                 <input type="date" id="dataFim" name="dataFim">
-            </div>
+            </section>
     </section>
     <table>
         <thead>

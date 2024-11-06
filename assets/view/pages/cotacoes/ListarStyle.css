@@ -1,0 +1,164 @@
+@import url('../global.css');
+
+h1 {
+    width: 100%;
+    color: var(--darkblue);
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 42px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    min-height: 80vh;
+}
+
+.table-title {
+    width: 100%;
+    text-align: left !important;
+    margin: 0;
+}
+
+button:hover {
+    background-color: var(--lightblue);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px;
+    font-size: 18px;
+    text-align: left;
+}
+
+table thead tr {
+    background-color: var(--darkblue);
+    color: var(--white);
+    text-align: left;
+    font-weight: bold;
+    border-left: 5px solid var(--darkblue);
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid var(--darkblue);
+}
+
+table tbody tr {
+    border-bottom: 1px solid var(--darkblue);
+    border-left: 5px solid var(--darkblue);
+}
+
+table tbody tr:nth-of-type(even) {
+    background-color: var(--lightwhite);
+}
+
+table tbody tr:last-of-type {
+    border-bottom: 2px solid var(--darkblue);
+}
+
+table tbody tr:hover {
+    background-color: var(--superlightblue);
+}
+
+.search {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search .input-filter-date {
+    width: 20%;
+    margin: 10px;
+    padding: 15px;
+    background: var(--darkblue);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--white);
+}
+
+.search .input-filter-date input {
+    width: 100%;
+    padding: 5px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+}
+
+.add-quote {
+    width: 20%;
+    margin: 10px;
+    padding: 15px;
+    background: var(--darkblue);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--white);
+}
+
+.add-quote-btn {
+    padding: 10px 20px;
+    background: var(--darkblue);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.back-btn {
+    position: absolute;
+    left: 30px;
+    top: 150px;
+    padding: 10px 20px;
+    background-color: var(--darkblue);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: var(--lightblue);
+}
+
+table tbody td a {
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: var(--darkblue);
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+table tbody td a:hover {
+    background-color: var(--darkblue);
+    color: var(--white);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.maior-preco {
+    color: var(--red);
+}
+
+.menor-preco {
+    color: var(--green);
+}
+
+.warning {
+    width: 100%;
+    text-align: center;
+    color: var(--red);
+}
