@@ -13,6 +13,7 @@ $controladorProduto = new ControladorProdutos();
 $controladorFornecedor = new ControladorFornecedor();
 
 $cotas = $controladorCotacao->verCotas();
+// $cotasFiltradas = [];
 
 $user = $_SESSION['user'];
 $tipo_usuario = $user->getTipoUsuario();
@@ -167,8 +168,13 @@ function construirTabelas($cotas) {
 }
 
 $precosFiltrados = calcularMaiorMenorPreco($cotasAtuais);
+
 if(isset($cotasFiltradas)){
     $precosFiltradosFiltro = calcularMaiorMenorPreco($cotasFiltradas);
+}
+
+if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == null){
+    echo "<script>function updatefiltros(){filtrosnulos = true}</script>";
 }
 
 if(!isset($cotasAtuais)){
@@ -360,6 +366,8 @@ if(!isset($cotasAtuais)){
 <?php renderFooter(); ?>
 <script>
     let naoexistecotasatuais = false
+    let filtrosnulos = 0
+
     document.querySelector("#dataFim").addEventListener("change",FilterData)
     document.querySelector("#dataInicio").addEventListener("change",FilterData)
 
@@ -370,6 +378,8 @@ if(!isset($cotasAtuais)){
             <td colspan="5" class='warning'>Não Realizado</td>
         </tr>`
     }
+
+    try {updatefiltros()} catch (error) {console.log(error)}
 
     function getQueryParams() {
         let params = {};
@@ -434,8 +444,25 @@ if(!isset($cotasAtuais)){
     function FilterData(){
         let params = getQueryParams();
 
-        let dataInicio = document.querySelector("#dataInicio").value
-        let dataFim = document.querySelector("#dataFim").value
+        let dataInicio = new Date(document.querySelector("#dataInicio").value);
+        let dataFim = new Date(document.querySelector("#dataFim").value);
+        let today = new Date();
+
+        if (dataInicio > today) {
+            alert("A data de início não pode ser maior que a data atual.");
+            document.querySelector("#dataInicio").value = "";
+            return;
+        }
+
+        if(dataInicio > dataFim){
+            alert("A data de início não pode ser maior que a data final.");
+            document.querySelector("#dataInicio").value = "";
+            document.querySelector("#dataFim").value = "";
+            return;
+        }
+
+        dataInicio = document.querySelector("#dataInicio").value
+        dataFim = document.querySelector("#dataFim").value
 
         if(dataInicio !== ""){
             window.location.href = `./listarCotacoes.php?comSem=${params.comSem}&fimSem=${params.fimSem}&dataInicio=${dataInicio}`
@@ -445,6 +472,24 @@ if(!isset($cotasAtuais)){
             window.location.href = `./listarCotacoes.php?comSem=${params.comSem}&fimSem=${params.fimSem}&dataInicio=${dataInicio}&dataFim=${dataFim}`
         }
 
+    }
+
+    if(filtrosnulos){
+        let titletable = document.querySelector(".table-title")
+        let noFilteredQuotesMessage = document.createElement("button");
+
+        noFilteredQuotesMessage.innerHTML = "Não há cotações filtradas";
+        noFilteredQuotesMessage.classList = "buttonLimpar";
+        noFilteredQuotesMessage.style.textAlign = "center";
+        noFilteredQuotesMessage.setAttribute("onclick", "limparfiltros()")
+        titletable.parentNode.insertBefore(noFilteredQuotesMessage, titletable.nextSibling);
+
+        document.querySelectorAll("table , h2").forEach((element)=>{
+            element.style.display = "none"
+        })
+
+        titletable.innerHTML = "Não Há Cotas Filtradas"
+        titletable.style.textAlign = "center"
     }
 </script>
 </body>
