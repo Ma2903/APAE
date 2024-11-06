@@ -76,15 +76,19 @@ table tbody tr:hover {
     margin-bottom: 20px;
 }
 
-.search input[type="text"], .search button {  
-    flex: 1; /* O input irá ocupar o espaço disponível */  
+.search input[type="text"], .search button, .filter{  
+    flex: 1;  
     padding: 10px;  
     margin-right: 10px;  
     border: 1px solid var(--darkblue);  
     background-color: var(--darkblue);
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
     color: var(--white);
-    border-radius: 40px;  
-    max-width: 300px; /* Limita a largura máxima do input */  
+    border-radius: 10px;  
+    max-width: 150px;  
 }  
 
 .search .input-filter-date {
@@ -190,26 +194,18 @@ table tbody td a:hover {
 
 #usuario-nutricionista {
     background-color: #c8e6c9; /* Verde claro */
-    color: #2e7d32; /* Verde escuro */
 }
 
 #usuario-contador {
-    background-color: #ffcdd2; /* Vermelho claro */
-    color: #c62828; /* Vermelho escuro */
+    background-color: #f9f1cc;
 }
 
 #usuario-administrador {
     background-color: #bbdefb; /* Azul claro */
-    color: #1565c0; /* Azul escuro */
 }
 
 
 /* Estilos para o filtro */
-.filter {
-    position: relative;
-    display: inline-block;
-    margin-left: 10px;
-}
 
 .filter-btn {
     background: var(--lightblue);
@@ -254,4 +250,35 @@ table tbody td a:hover {
 .filter-menu button:hover {
     background-color: var(--lightblue);
     color: var (--white);
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    border-radius: 50%;
+}
+
+.legend-nutricionista {
+    background-color: #c8e6c9; /* Verde claro */
+}
+
+.legend-contador {
+    background-color: #f9f1cc; /* Amarelo claro */
+}
+
+.legend-administrador {
+    background-color: #bbdefb; /* Azul claro */
 }

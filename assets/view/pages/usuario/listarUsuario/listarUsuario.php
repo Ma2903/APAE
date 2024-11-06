@@ -37,7 +37,6 @@ $controler = new ControladorUsuarios();
     <table>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>CPF</th>
                 <th>Nome</th>
                 <th>Sobrenome</th>
@@ -76,7 +75,6 @@ $controler = new ControladorUsuarios();
                     }
                     
                     echo "<tr class='{$classeUsuario}' id='{$idUsuario}'>"; // Usando id e class
-                    echo "<td>{$usuario->getId()}</td>";
                     echo "<td>{$usuario->getCpf()}</td>";
                     echo "<td>{$usuario->getNome()}</td>";
                     echo "<td>{$usuario->getSobrenome()}</td>";
@@ -93,6 +91,21 @@ $controler = new ControladorUsuarios();
         ?>
         </tbody>
     </table>
+    <section class="legend">
+        <span>Legenda: </span>
+    <section class="legend-item">
+        <section class="legend-color legend-nutricionista"></div>
+        <span>Nutricionista</span>
+        </section>
+    <section class="legend-item">
+        <section class="legend-color legend-contador"></div>
+        <span>Contador</span>
+        </section>
+    <section class="legend-item">
+        <section class="legend-color legend-administrador"></div>
+        <span>Administrador</span>
+        </section>
+        </section>
 </main>
 <?php renderFooter(); ?>
 <script>
