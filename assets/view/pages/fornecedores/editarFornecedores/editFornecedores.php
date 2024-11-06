@@ -22,7 +22,9 @@
             $fornecedores = $controler->verFornecedor();
             foreach($fornecedores as $fornecedor){
                 if($fornecedor->getId() == $_GET['id']){
-                echo ' <section>
+                echo ' 
+                <input type="hidden" name="id" value="'.$fornecedor->getId().'">
+                <section>
                 <label for="nome">Nome:</label>
                 <input type="text" name="nome" value="'.$fornecedor->getNome().'" required>
                 </section>

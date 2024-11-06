@@ -17,10 +17,20 @@ $controler = new ControladorFornecedor();
 <main>
     <h1>Lista de Fornecedores</h1>
     <section class="search">
-        <input type="text" name="search" placeholder="Pesquisar fornecedores...">
-        <button type="submit">Pesquisar</button>
+        <input type="text" id="search-input" name="search" placeholder="Pesquisar fornecedores..." onkeyup="searchSuppliers()">
         <section class="add-product">
             <a href="../cadastroFornecedores/cadFornecedores.php" class="add-product-btn">Cadastrar Novo Fornecedor</a>
+        </section>
+        <section class="filter">
+            <button class="filter-btn" onclick="toggleFilterMenu()">
+                <i class="fas fa-filter"></i> Filtrar
+            </button>
+            <section class="filter-menu" id="filter-menu">
+                <button onclick="filterSuppliers('ramo1')">Ramo 1</button>
+                <button onclick="filterSuppliers('ramo2')">Ramo 2</button>
+                <button onclick="filterSuppliers('ramo3')">Ramo 3</button>
+                <button class="close-filter" onclick="clearFilter()"><i class="fas fa-times"></i></button>
+            </section>
         </section>
     </section>
     <table>
@@ -35,10 +45,15 @@ $controler = new ControladorFornecedor();
                 <th colspan="2">Ações</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="supplier-table-body">
             <?php
-            if ($controler->verFornecedor()) {
-                $fornecedores = $controler->verFornecedor();
+            $fornecedores = $controler->verFornecedor();
+            // Ordenar fornecedores em ordem alfabética pelo nome
+            usort($fornecedores, function($a, $b) {
+                return strcmp($a->getNome(), $b->getNome());
+            });
+
+            if ($fornecedores) {
                 foreach ($fornecedores as $fornecedor) {
                     echo "<tr>";
                     echo "<td>{$fornecedor->getNome()}</td>";
@@ -51,11 +66,53 @@ $controler = new ControladorFornecedor();
                     echo "<td><a href='../deleteFornecedores/delFornecedores.php?id={$fornecedor->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar</a></td>";
                     echo "</tr>";
                 }
+            } else {
+                echo "<tr><td colspan='7'>Nenhum fornecedor encontrado.</td></tr>";
             }
             ?>
         </tbody>
     </table>
 </main>
 <?php renderFooter(); ?>
+<script>
+    function toggleFilterMenu() {
+        const filterMenu = document.getElementById('filter-menu');
+        filterMenu.classList.toggle('show');
+    }
+
+    function filterSuppliers(ramo) {
+        const rows = document.querySelectorAll('#supplier-table-body tr');
+        rows.forEach(row => {
+            const supplierRamo = row.querySelector('td:nth-child(6)').textContent.toLowerCase();
+            if (supplierRamo.includes(ramo)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    function clearFilter() {
+        const rows = document.querySelectorAll('#supplier-table-body tr');
+        rows.forEach(row => {
+            row.style.display = '';
+        });
+        toggleFilterMenu(); // Fechar o menu de filtro
+    }
+
+    function searchSuppliers() {
+        const input = document.getElementById('search-input');
+        const filter = input.value.toLowerCase();
+        const rows = document.querySelectorAll('#supplier-table-body tr');
+        rows.forEach(row => {
+            const supplierName = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+            if (supplierName.startsWith(filter)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
 </body>
 </html>

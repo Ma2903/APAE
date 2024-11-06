@@ -10,7 +10,7 @@ $controler = new ControladorUsuarios();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listar Usuários</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../styles/ListarStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -28,7 +28,6 @@ $controler = new ControladorUsuarios();
             </button>
             <section class="filter-menu" id="filter-menu">
                 <button onclick="filterUsers('contador')">Contadores</button>
-                <button onclick="filterUsers('fornecedor')">Fornecedores</button>
                 <button onclick="filterUsers('nutricionista')">Nutricionistas</button>
                 <button onclick="filterUsers('administrador')">Administradores</button>
                 <button class="close-filter" onclick="clearFilter()"><i class="fas fa-times"></i></button>
@@ -49,26 +48,34 @@ $controler = new ControladorUsuarios();
             </tr>
         </thead>
         <tbody id="user-table-body">
-            <?php
+        <?php
             $usuarios = $controler->listarUsuarios();
+            // Ordenar usuários em ordem alfabética pelo nome
+            usort($usuarios, function($a, $b) {
+                return strcmp($a->getNome(), $b->getNome());
+            });
+
             if ($usuarios) {
                 foreach ($usuarios as $usuario) {
                     $classeUsuario = '';
+                    $idUsuario = '';
+                    
                     switch ($usuario->getTipoUsuario()) {
                         case 'administrador':
-                            $classeUsuario = 'usuario-administrador';
+                            $classeUsuario = 'administrador';
+                            $idUsuario = 'usuario-administrador';
                             break;
                         case 'nutricionista':
-                            $classeUsuario = 'usuario-nutricionista';
+                            $classeUsuario = 'nutricionista';
+                            $idUsuario = 'usuario-nutricionista';
                             break;
                         case 'contador':
-                            $classeUsuario = 'usuario-contador';
-                            break;
-                        case 'fornecedor':
-                            $classeUsuario = 'usuario-fornecedor';
+                            $classeUsuario = 'contador';
+                            $idUsuario = 'usuario-contador';
                             break;
                     }
-                    echo "<tr class='{$classeUsuario}'>";
+                    
+                    echo "<tr class='{$classeUsuario}' id='{$idUsuario}'>"; // Usando id e class
                     echo "<td>{$usuario->getId()}</td>";
                     echo "<td>{$usuario->getCpf()}</td>";
                     echo "<td>{$usuario->getNome()}</td>";
@@ -81,9 +88,9 @@ $controler = new ControladorUsuarios();
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='9'>Nenhum usuário encontrado.</td></tr>";
+                echo "<tr><td colspan='8'>Nenhum usuário cadastrado</td></tr>";
             }
-            ?>
+        ?>
         </tbody>
     </table>
 </main>

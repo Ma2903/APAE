@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Usuário</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../styles/EditStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -22,28 +22,46 @@
             $usuarios = $controler->listarUsuarios();
             foreach ($usuarios as $usuario) {
                 if($usuario->getId() == $_GET['id']){
-                    echo '  <label for="cpf">CPF:</label>
+                    echo ' <section>  
+                    <label for="cpf">CPF:</label>
                     <input type="text" id="cpf" name="cpf" value="'.$usuario->getCpf().'" required>
+                    </section>
+                    <section>
                     <label for="nome">Nome:</label>
                     <input type="text" id="nome" name="nome" value="'.$usuario->getNome().'" required>
+                    </section>
+                    <section>
                     <label for="sobrenome">Sobrenome:</label>
                     <input type="text" id="sobrenome" name="sobrenome" value="'.$usuario->getSobrenome().'" required>
+                    </section>
+                    <section>
                     <label for="data_nascimento">Data de Nascimento:</label>
                     <input type="date" id="data_nascimento" name="data_nascimento" value="'.$usuario->getDataNasc().'" required>
+                    </section>
+                    <section>
                     <label for="endereco">Endereço:</label>
                     <input type="text" id="endereco" name="endereco" value="'.$usuario->getEndereco().'">
+                    </section>
+                    <section>
                     <label for="telefone">Telefone:</label>
                     <input type="tel" id="telefone" name="telefone" value="'.$usuario->getTelefone().'">
+                    </section>
+                    <section>
                     <label for="email">E-mail:</label>
                     <input type="email" id="email" name="email" value="'.$usuario->getEmail().'" required>
+                    </section>
+                    <section>
                     <label for="senha">Senha:</label>
-                    <input type="password" id="senha" name="senha" placeholder="******" required>
+                    <input type="text" id="senha" name="senha"  value="'.$usuario->getSenha().'" required>
+                    </section>
+                    <section>
                     <label for="tipo_usuario">Tipo de Usuário:</label>
                     <select id="tipo_usuario" name="tipo_usuario" required>
                     <option value="administrador"'; if($usuario->getTipoUsuario() == 'administrador') echo 'selected'; echo '>Administrador</option>
                     <option value="contador"'; if($usuario->getTipoUsuario() == 'contador') echo 'selected'; echo '>Funcionário</option>
                     <option value="nutricionista"'; if($usuario->getTipoUsuario() == 'nutricionista') echo 'selected'; echo '>Nutricionista</option>
-                    </select>';
+                    </select>
+                    </section>';
                     if($usuario->getTipoUsuario() == 'nutricionista'){
                         
                         echo '<label for="CRN">CRN</label> <input type="text" name="crn" value="'.$usuario->getCrn().'">';

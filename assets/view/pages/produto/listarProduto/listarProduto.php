@@ -30,13 +30,23 @@
 <main>
     <h1>Listar Produtos</h1>
         <section class="search">
-            <input type="text" name="search" placeholder="Pesquisar produtos...">
-            <button type="submit">Pesquisar</button>
+        <input type="text" id="search-input" name="search" placeholder="Pesquisar Produtos..." onkeyup="searchUsers()">
             <section class="add-product">
             <?php if ($podeGerenciarProdutos): ?>
                 <a href="../cadastroProduto/cadProduto.php" class="add-product-btn">Cadastrar Novo Produto</a>
                 <?php endif; ?>
             </section>
+            <section class="filter">
+            <button class="filter-btn" onclick="toggleFilterMenu()">
+                <i class="fas fa-filter"></i> Filtrar
+            </button>
+            <section class="filter-menu" id="filter-menu">
+                <button onclick="filterUsers('contador')">Contadores</button>
+                <button onclick="filterUsers('nutricionista')">Nutricionistas</button>
+                <button onclick="filterUsers('administrador')">Administradores</button>
+                <button class="close-filter" onclick="clearFilter()"><i class="fas fa-times"></i></button>
+            </section>
+        </section>
     </section>
     <table>
         <thead>

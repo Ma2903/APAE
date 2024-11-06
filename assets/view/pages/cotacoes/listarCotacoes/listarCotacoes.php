@@ -209,10 +209,10 @@ if(!isset($cotasAtuais)){
     <table>
         <thead>
             <?php if (isset($cotasFiltradas)): ?>
-                <div class="div-cotasfiltradas">
+                <section class="section-cotasfiltradas">
                     <h1 class="table-title">Cotas Filtradas</h1>
                     <button onclick="limparfiltros()">Limpar Filtro</button>
-                </div>
+                </section>
             <?php endif; ?> 
             <?php if (!isset($cotasFiltradas)): ?>
                 <h1 class="table-title">Semana Atual</h1>

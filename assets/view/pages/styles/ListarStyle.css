@@ -81,7 +81,8 @@ table tbody tr:hover {
     padding: 10px;  
     margin-right: 10px;  
     border: 1px solid var(--darkblue);  
-    background-color: var(--lightwhite);
+    background-color: var(--darkblue);
+    color: var(--white);
     border-radius: 40px;  
     max-width: 300px; /* Limita a largura máxima do input */  
 }  
@@ -105,7 +106,7 @@ table tbody tr:hover {
     border-radius: 5px;
 }
 
-.add-quote, .add-product {
+.add-quote, .add-product, .add-user {
     width: 15%;
     padding: 10px;
     background: var(--darkblue);
@@ -115,7 +116,7 @@ table tbody tr:hover {
     align-items: center;
     color: var(--white);
 }
-.div-cotasfiltradas{
+.section-cotasfiltradas{
     width: 100%;
     display: flex;
 }
@@ -129,7 +130,7 @@ button{
     color: var(--white);
 }
 
-.add-quote-btn, .add-product-btn {
+.add-quote-btn, .add-product-btn, .add-user-btn {
     padding: 10px 10px;
     background: var(--darkblue);
     color: var(--white);
@@ -185,4 +186,72 @@ table tbody td a:hover {
     width: 100%;
     text-align: center;
     color: var(--red);
+}
+
+#usuario-nutricionista {
+    background-color: #c8e6c9; /* Verde claro */
+    color: #2e7d32; /* Verde escuro */
+}
+
+#usuario-contador {
+    background-color: #ffcdd2; /* Vermelho claro */
+    color: #c62828; /* Vermelho escuro */
+}
+
+#usuario-administrador {
+    background-color: #bbdefb; /* Azul claro */
+    color: #1565c0; /* Azul escuro */
+}
+
+
+/* Estilos para o filtro */
+.filter {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.filter-btn {
+    background: var(--lightblue);
+    color: var(--white);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.filter-btn:hover {
+    background: var(--yellow);
+    transform: scale(1.05);
+}
+
+.filter-menu {
+    display: none;
+    position: absolute;
+    background-color: var(--white);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.filter-menu.show {
+    display: block;
+}
+
+.filter-menu button {
+    background: none;
+    border: none;
+    color: var(--black);
+    padding: 10px 20px;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.filter-menu button:hover {
+    background-color: var(--lightblue);
+    color: var (--white);
 }

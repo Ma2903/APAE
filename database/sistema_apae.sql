@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 02/10/2024 às 15:16
+-- Tempo de geração: 06/11/2024 às 14:37
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -89,9 +89,10 @@ INSERT INTO `cotas` (`id`, `produto_id`, `fornecedor_id`, `preco_unitario`, `qua
 (3, 2, 2, 10.90, 20.00, '2024-09-15'),
 (4, 3, 3, 15.00, 10.00, '2024-09-15'),
 (5, 1, 1, 4.50, 50.00, '2024-09-15'),
-(6, 1, 2, 5.00, 50.00, '2024-09-15'),
 (7, 2, 2, 10.90, 20.00, '2024-09-15'),
-(8, 3, 3, 15.00, 10.00, '2024-09-15');
+(8, 3, 3, 15.00, 10.00, '2024-09-15'),
+(9, 1, 2, 4.00, 50.00, '2024-10-20'),
+(10, 2, 2, 20.00, 50.00, '2024-11-05');
 
 -- --------------------------------------------------------
 
@@ -117,7 +118,8 @@ CREATE TABLE `fornecedores` (
 INSERT INTO `fornecedores` (`id`, `nome`, `endereco`, `telefone`, `whatsapp`, `email`, `ramo_atuacao`, `data_criacao`) VALUES
 (1, 'Ceasa', 'Rua dos Alimentos, 123', '(18) 3333-3333', '(18) 99999-0000', 'ceasa@alimentos.com', 'Frutas e Verduras', '2024-09-18 01:39:19'),
 (2, 'Supermercado Bom Preço', 'Av. Central, 456', '(18) 3444-4444', '(18) 98888-1111', 'contato@bompreco.com', 'Açougue', '2024-09-18 01:39:19'),
-(3, 'Distribuidora Higiene', 'Rua Higiene, 321', '(18) 3555-5555', '(18) 97777-2222', 'vendas@higiene.com', 'Produtos de Limpeza', '2024-09-18 01:39:19');
+(3, 'Distribuidora Higiene', 'Rua Higiene, 321', '(18) 3555-5555', '(18) 97777-2222', 'vendas@higiene.com', 'Produtos de Limpeza', '2024-09-18 01:39:19'),
+(6, 'Supermercado Estrela', 'Avenida Brasil, 35', '(18) 3226-0671', '(18) 3226-0671', 'Estrela@mercados.com', 'Alimenticio', '2024-11-06 11:59:07');
 
 -- --------------------------------------------------------
 
@@ -131,13 +133,6 @@ CREATE TABLE `notificacoes` (
   `mensagem` text DEFAULT NULL,
   `data_notificacao` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `notificacoes`
---
-
-INSERT INTO `notificacoes` (`id`, `usuario_id`, `mensagem`, `data_notificacao`) VALUES
-(1, 2, 'A cotação de preços para a semana está atrasada. Por favor, faça a cotação.', '2024-09-18 01:40:06');
 
 -- --------------------------------------------------------
 
@@ -188,7 +183,15 @@ CREATE TABLE `produtos` (
 INSERT INTO `produtos` (`id`, `nome`, `categoria`, `unidade_medida`, `data_criacao`) VALUES
 (1, 'Maçã', 'Verduras', 'KG', '2024-09-18 01:39:26'),
 (2, 'Frango', 'Carnes', 'KG', '2024-09-18 01:39:26'),
-(3, 'Sabão em Pó', 'Limpeza', 'CX', '2024-09-18 01:39:26');
+(3, 'Sabão em Pó', 'Limpeza', 'CX', '2024-09-18 01:39:26'),
+(7, 'Absorvente', 'Higiene Pessoal', 'UN', '2024-11-06 11:37:29'),
+(8, 'Achocolatado em pó', 'Alimenticios', 'UN', '2024-11-06 11:42:20'),
+(9, 'Creme Dental', 'Higiene Pessoal', 'UN', '2024-11-06 11:43:36'),
+(10, 'Detergente', 'Limpeza', 'UN', '2024-11-06 11:44:02'),
+(11, 'Farinha de Trigo', 'Alimenticios', 'UN', '2024-11-06 11:44:20'),
+(12, 'Mussarela', 'Frios', 'KG', '2024-11-06 11:44:47'),
+(13, 'Pães Frances', 'Outros', 'UN', '2024-11-06 11:45:33'),
+(14, 'Banana', 'Frutas', 'KG', '2024-11-06 11:46:58');
 
 -- --------------------------------------------------------
 
@@ -206,7 +209,7 @@ CREATE TABLE `usuarios` (
   `telefone` varchar(15) DEFAULT NULL,
   `email` varchar(100) NOT NULL,
   `senha` varchar(255) NOT NULL,
-  `tipo_usuario` enum('administrador','funcionario','nutricionista') NOT NULL,
+  `tipo_usuario` enum('administrador','contador','nutricionista') NOT NULL,
   `crn` varchar(20) DEFAULT NULL,
   `data_criacao` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -217,9 +220,10 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `cpf`, `nome`, `sobrenome`, `data_nascimento`, `endereco`, `telefone`, `email`, `senha`, `tipo_usuario`, `crn`, `data_criacao`) VALUES
 (1, '12345678901', 'Carlos', 'Silva', '1980-05-14', 'Rua das Flores, 123', '(18) 99999-9999', 'carlos@apae.org', 'admin123', 'administrador', NULL, '2024-09-18 01:39:03'),
-(2, '98765432100', 'Maria', 'Oliveira', '1985-03-22', 'Av. Brasil, 456', '(18) 98888-8888', 'maria@apae.org', 'funcionario123', 'funcionario', NULL, '2024-09-18 01:39:03'),
 (3, '11122233344', 'Ana', 'Santos', '1990-07-10', 'Rua da Saúde, 789', '(18) 97777-7777', 'ana@apae.org', 'nutri123', 'nutricionista', 'CRN-12345', '2024-09-18 01:39:03'),
-(4, '487.677.598', 'MANOELA', 'DA SILVA', '2006-03-29', 'Rua Ângelo Salvatore, 125', '18996816585', 'manoela2903@outlook.com', '0401', 'administrador', '', '2024-10-02 02:58:40');
+(4, '487.677.598', 'Manoela', 'Pinheiro da Silva', '2006-03-29', 'Rua Ângelo Salvatore, 125', '(18) 99681-6585', 'manoela2903@outlook.com', '0401', 'administrador', NULL, '2024-10-02 02:58:40'),
+(5, '456.765.098', 'Renata', 'Costa', '1992-05-12', 'Rua ABC N 12', '(18) 99215-9875', 'CostaRenata@apae.org', 'cont123', 'contador', '', '2024-11-06 12:28:24'),
+(6, '0987654321', 'Antônio', 'Santos', '1982-09-25', 'Rua XYZ N14', '(18) 1234-8756', 'SantosAntonio@apae.org', 'cont987', 'contador', '', '2024-11-06 12:35:48');
 
 --
 -- Índices para tabelas despejadas
@@ -301,13 +305,13 @@ ALTER TABLE `cardapio_produtos`
 -- AUTO_INCREMENT de tabela `cotas`
 --
 ALTER TABLE `cotas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `fornecedores`
 --
 ALTER TABLE `fornecedores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes`
@@ -325,13 +329,13 @@ ALTER TABLE `permissoes`
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restrições para tabelas despejadas
