@@ -76,6 +76,16 @@ table tbody tr:hover {
     margin-bottom: 20px;
 }
 
+.search input[type="text"], .search button {  
+    flex: 1; /* O input irá ocupar o espaço disponível */  
+    padding: 10px;  
+    margin-right: 10px;  
+    border: 1px solid var(--darkblue);  
+    background-color: var(--lightwhite);
+    border-radius: 40px;  
+    max-width: 300px; /* Limita a largura máxima do input */  
+}  
+
 .search .input-filter-date {
     width: 20%;
     margin: 10px;
@@ -90,26 +100,24 @@ table tbody tr:hover {
 
 .search .input-filter-date input {
     width: 100%;
-    padding: 5px;
-    margin: 5px;
+    padding: 10px;
     border: none;
     border-radius: 5px;
 }
 
-.add-quote {
-    width: 20%;
-    margin: 10px;
-    padding: 15px;
+.add-quote, .add-product {
+    width: 15%;
+    padding: 10px;
     background: var(--darkblue);
-    border-radius: 10px;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     color: var(--white);
 }
 
-.add-quote-btn {
-    padding: 10px 20px;
+.add-quote-btn, .add-product-btn {
+    padding: 10px 10px;
     background: var(--darkblue);
     color: var(--white);
     border: none;

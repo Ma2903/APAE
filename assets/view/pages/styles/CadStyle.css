@@ -40,8 +40,7 @@ form label {
 }
 
 form select,
-form input[type="number"],
-form input[type="date"] {
+form input[type="number"], form input{
     width: 100%;
     padding: 10px;
     margin-top: 5px;

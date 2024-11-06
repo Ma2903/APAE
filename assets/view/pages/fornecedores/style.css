@@ -103,30 +103,7 @@ table tbody tr:hover {
     margin-bottom: 20px;
 } 
 
-.search input[type="text"] {  
-    flex: 1; /* O input irá ocupar o espaço disponível */  
-    padding: 10px;  
-    margin-right: 10px;  
-    border: 1px solid #ccc;  
-    border-radius: 40px;  
-    max-width: 300px; /* Limita a largura máxima do input */  
-}  
 
-.search button {  
-    padding: 10px 20px;  
-    border: none;  
-    border-radius: 40px;  
-    background-color: #2a3e85;  
-    color: #fff;  
-    font-size: 1rem;  
-    cursor: pointer;  
-    margin: 10px;
-    transition: background-color 0.3s ease;  
-}  
-
-.search button:hover {  
-    background-color: #3e9bd4;  
-}
 
 .home-btn, .add-product-btn {  
     padding: 10px 20px;  
