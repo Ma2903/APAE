@@ -67,11 +67,9 @@ $controladorFornecedor = new ControladorFornecedor();
             $controladorCotacao->editarCota($_GET['id'], $_POST['produto_id'], $_POST['fornecedor_id'], $_POST['preco_unitario'], $_POST['quantidade'], $_POST['data_cotacao']);
             header('Location: ../listarCotacoes/listarCotacoes.php');
         };
-        
-        
         ?>
     </form>
 </main>
-<?php renderFooter(); ?>
+    <?php renderFooter(); ?>
 </body>
 </html>
