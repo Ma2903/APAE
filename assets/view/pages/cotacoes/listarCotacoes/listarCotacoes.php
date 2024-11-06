@@ -173,6 +173,8 @@ if(isset($cotasFiltradas)){
 
 if(!isset($cotasAtuais)){
     echo "<script>function updatenaoexiste(){naoexistecotasatuais = true}</script>";
+}else{
+    echo "<script>function updatenaoexiste(){naoexistecotasatuais = false}</script>";
 }
 
 ?>
