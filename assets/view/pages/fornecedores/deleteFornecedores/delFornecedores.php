@@ -24,20 +24,30 @@
         foreach ($fornecedores as $fornecedor){
             if($fornecedor->getId() == $_GET['id']){
             echo '
-            <label for="id"><strong>ID:</strong></label>
-            <input type="text" id="id" name="id" value="' . htmlspecialchars($fornecedor->getId()) . '" readonly>
+            <section>
             <label for="nome"><strong>Nome:</strong></label>
             <input type="text" id="nome" name="nome" value="' . htmlspecialchars($fornecedor->getNome()) . '" readonly>
+            </section>
+            <section>
             <label for="endereco"><strong>Endereço:</strong></label>
             <input type="text" id="endereco" name="endereco" value="' . htmlspecialchars($fornecedor->getEndereco()) . '" readonly>
+            </section>
+            <section>
             <label for="telefone"><strong>Telefone:</strong></label>
             <input type="text" id="telefone" name="telefone" value="' . htmlspecialchars($fornecedor->getTelefone()) . '" readonly>
+            </section>
+            <section>
             <label for="whatsapp"><strong>WhatsApp:</strong></label>
             <input type="text" id="whatsapp" name="whatsapp" value="' . htmlspecialchars($fornecedor->getWhatsapp()) . '" readonly>
+            </section>
+            <section>
             <label for="email"><strong>E-mail:</strong></label>
             <input type="text" id="email" name="email" value="' . htmlspecialchars($fornecedor->getEmail()) . '" readonly>
+            </section>
+            <section>
             <label for="ramo"><strong>Ramo de Atuação:</strong></label>
-            <input type="text" id="ramo" name="ramo" value="' . htmlspecialchars($fornecedor->getRamo()) . '" readonly>';
+            <input type="text" id="ramo" name="ramo" value="' . htmlspecialchars($fornecedor->getRamo()) . '" readonly>
+            </section>';
             }
         }
         ?>

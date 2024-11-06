@@ -19,12 +19,6 @@ $controler = new ControladorProdutos();
 <a href="../listarProduto/listarProduto.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
 <h1>Editar Produto</h1>
 <form action="" method="post">
-    <section>
-        <label for="produto_id">Id do Produto Escolhido:</label>
-        <?php
-            echo '<input id="produto_id" name="produto_id" required disabled value="'.$_GET['id'].'">';
-        ?>
-    </section>
     <?php
         $produtos = $controler->verProdutos();
         foreach ($produtos as $produto){
@@ -64,7 +58,6 @@ $controler = new ControladorProdutos();
     </section>
     <?php
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Verifica se todos os campos estão preenchidos
             if (!empty($_POST['nome']) && !empty($_POST['categoria']) && !empty($_POST['unidade_medida'])) {
                 $controler->editarProdutos($_GET['id'],$_POST['nome'],$_POST['categoria'],$_POST['unidade_medida']);
                 header('Location: ../listarProduto/listarProduto.php');

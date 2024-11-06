@@ -26,7 +26,6 @@ $controler = new ControladorFornecedor();
     <table>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nome</th>
                 <th>Endereço</th>
                 <th>Telefone</th>
@@ -42,7 +41,6 @@ $controler = new ControladorFornecedor();
                 $fornecedores = $controler->verFornecedor();
                 foreach ($fornecedores as $fornecedor) {
                     echo "<tr>";
-                    echo "<td>{$fornecedor->getId()}</td>";
                     echo "<td>{$fornecedor->getNome()}</td>";
                     echo "<td>{$fornecedor->getEndereco()}</td>";
                     echo "<td>{$fornecedor->getTelefone()}</td>";

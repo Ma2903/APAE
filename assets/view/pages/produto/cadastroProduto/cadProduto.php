@@ -48,6 +48,7 @@
                 <option value="Limpeza">Limpeza</option>
                 <option value="Descartáveis">Descartáveis</option>
                 <option value="Frios">Frios</option>
+                <option value="Alimenticios">Alimenticios</option>
                 <option value="Outros">Outros</option>
             </select>
             </section>

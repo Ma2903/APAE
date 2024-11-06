@@ -41,7 +41,6 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nome</th>
                 <th>Categoria</th>
                 <th>Unidade de Medida</th>
@@ -62,14 +61,17 @@
                     
                 // }
             //}
+            usort($produtos, function($a, $b) {
+                return strcmp($a->getNome(), $b->getNome());
+            });
             if ($controler->verProdutos()) {
                 foreach ($produtos as $produto) {
+                    $dataCriacao = date('d-m-Y', strtotime($produto->getDtCriacao()));
                     echo "<tr>";
-                    echo "<td>{$produto->getId()}</td>";
                     echo "<td>{$produto->getNome()}</td>";
                     echo "<td>{$produto->getCategoria()}</td>";
                     echo "<td>{$produto->getUn()}</td>";
-                    echo "<td>{$produto->getDtCriacao()}</td>";
+                    echo "<td>{$dataCriacao}</td>";
                     if ($podeGerenciarProdutos) {
                         echo "<td> <a href='../editarProduto/editProduto.php?id={$produto->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar</a> </td>";
                         echo "<td> <a href='../deleteProduto/delProduto.php?id={$produto->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar</a> </td>";
@@ -77,7 +79,7 @@
                     echo "</tr>";
                 }
             } else {
-                echo "<tr></tr>";
+                echo "<tr><td>Nenhum produto encontrado!</td></tr>";
             }
             ?>
         </tbody>

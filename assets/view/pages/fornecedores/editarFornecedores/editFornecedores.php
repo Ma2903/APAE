@@ -19,34 +19,48 @@
     <h1>Editar Fornecedor</h1>
     <form action="" method="POST">
         <?php
-        echo '<label for="nome">Id:</label>';
-        echo '<input type="text" name="id" value="'.$_GET['id'].'" required readonly>';
             $fornecedores = $controler->verFornecedor();
             foreach($fornecedores as $fornecedor){
                 if($fornecedor->getId() == $_GET['id']){
-
-                echo '<label for="nome">Nome:</label>
+                echo ' <section>
+                <label for="nome">Nome:</label>
                 <input type="text" name="nome" value="'.$fornecedor->getNome().'" required>
+                </section>
+                <section>
                 <label for="endereco">Endereço:</label>
                 <input type="text" name="endereco" value="'.$fornecedor->getEndereco().'">
+                </section>
+                <section>
                 <label for="telefone">Telefone:</label>
                 <input type="text" name="telefone" value="'.$fornecedor->getTelefone().'">
+                </section>
+                <section>
                 <label for="whatsapp">WhatsApp:</label>
                 <input type="text" name="whatsapp" value="'.$fornecedor->getWhatsapp().'">
+                </section>
+                <section>
                 <label for="email">E-mail:</label>
                 <input type="email" name="email" value="'.$fornecedor->getEmail().'">
+                </section>
+                <section>
                 <label for="ramo_atuacao">Ramo de Atuação:</label>
-                <input type="text" name="ramo_atuacao" value="'.$fornecedor->getRamo().'">';
+                <input type="text" name="ramo_atuacao" value="'.$fornecedor->getRamo().'">
+                </section>';
                 }
             }
-            ?>
-            <button type="submit">Salvar</button>; 
+        ?>
+            <section>
+            <button type="submit">Salvar Alterações</button>
+            </section>
             <?php 
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                if(!empty($_POST['nome']) && !empty($_POST['endereco']) && !empty($_POST['telefone']) && !empty($_POST['whatsapp']) && !empty($_POST['email']) && !empty($_POST['ramo_atuacao'])){
                 $controler->editarFornecedor($_POST['id'], $_POST['nome'], $_POST['endereco'], $_POST['telefone'], $_POST['whatsapp'], $_POST['email'], $_POST['ramo_atuacao']);
                 header('Location: ../listarFornecedores/listarFornecedores.php');
+            } else {
+                echo '<p>Por favor, preencha todos os campos.</p>';
             }
-            
+        }
             ?>
     </form>
 </main>
