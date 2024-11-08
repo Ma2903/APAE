@@ -67,10 +67,10 @@ class Database {
         }
     }
 
-    public function read($table, $columns = "*", $id = null) {
+    public function read($table, $columns = "*", $id = null, $where = null) {
         $sql = "SELECT $columns FROM $table";
         if ($id !== null) {
-            $sql .= " WHERE id = :id";
+            $sql .= " WHERE " . ($where ?? 'id') . " = :id";
         }
         
         try {

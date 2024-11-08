@@ -1,0 +1,15 @@
+.container{
+    flex-direction: column;
+}
+form *{
+    margin: 5px;
+}
+#reset-form{
+    width: 50%;
+}
+button{
+    margin-left: 20%;
+}
+h2{
+    text-align: center;
+}

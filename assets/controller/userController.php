@@ -64,6 +64,23 @@ class ControladorUsuarios
         }
     }
 
+    public function RedefinirSenha($email, $senha)
+    {
+        $usuarios = $this->banco->read("usuarios");
+
+        foreach($usuarios as $usuario)
+        {
+            if($usuario['email'] == $email)
+            {
+                $this->banco->update("usuarios",(object)[
+                    'senha' => $senha
+                ],$usuario['id']);
+                header('Location: ./../principal/principal.php');
+                break;
+            }
+        }
+    }
+
     public function logarUsuarios($email, $senha)
     {
         $usuarioBanco = $this->getUsuarioPorEmail($email);
@@ -142,17 +159,15 @@ class ControladorUsuarios
     }
 
     public function enviarCodigoRedefinicao($email) {
-        $usuario = $this->getUsuarioPorEmail($email);
-        if ($usuario) {
-            $codigo = rand(100000, 999999);
-            $assunto = "Redefinição de Senha";
-            $mensagem = "Seu código para redefinir a senha é: $codigo";
-            $headers = "From: no-reply@apae.org";
-            $this->EnviarEmail($email, $assunto, $mensagem, $headers);
-            return true;
-        } else {
-            return false;
-        }
+        $codigo = rand(100000, 999999);
+        session_start();
+        $_SESSION['codigo'] = $codigo;
+        $_SESSION['emailRecuperar'] = $email;
+        header('Location: ./../redefinirSenha/RedefinirPassword.php');
+        $assunto = "Redefinição de Senha";
+        $mensagem = "Seu código para redefinir a senha é: $codigo";
+        $headers = "From: no-reply@apae.org";
+        $this->EnviarEmail($email, $assunto, $mensagem, $headers);
     }
 
     public function EnviarEmail($email, $assunto, $mensagem, $headers) {
@@ -174,7 +189,6 @@ class ControladorUsuarios
             $mail->Body    = $mensagem;
         
             $mail->send();
-            echo 'E-mail enviado com sucesso!';
         } catch (Exception $e) {
             echo "E-mail não pôde ser enviado. Erro: {$mail->ErrorInfo}";
         }
