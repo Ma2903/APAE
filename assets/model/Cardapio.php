@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/pdo/Database.php";
+require_once __DIR__ . "/Nutricionista.php";
 
 class Cardapio {
     private $db;
@@ -9,8 +10,10 @@ class Cardapio {
     }
 
     public function create($nutricionista, $dataC, $periodo, $descricao) {
-        $sql = "INSERT INTO cardapios (nutricionista, dataC, periodo, descricao) VALUES (:nutricionista, :dataC, :periodo, :descricao)";
+        $sql = "INSERT INTO cardapios (id, nutricionista, dataC, periodo, descricao) VALUES (:id ,:nutricionista, :dataC, :periodo, :descricao)";
         $stmt = $this->db->conn->prepare($sql);
+
+        $stmt->bindParam(':id', $id);
         $stmt->bindParam(':nutricionista', $nutricionista);
         $stmt->bindParam(':dataC', $dataC);
         $stmt->bindParam(':periodo', $periodo);

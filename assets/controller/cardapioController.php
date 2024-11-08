@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../model/pdo/Database.php";
 require_once __DIR__ . "/../model/Cardapio.php";
 
 class CardapioController {
@@ -8,8 +9,8 @@ class CardapioController {
         $this->cardapio = new Cardapio();
     }
 
-    public function criarCardapio($nutricionista, $dataC, $periodo, $descricao) {
-        return $this->cardapio->create($nutricionista, $dataC, $periodo, $descricao);
+    public function criarCardapio($id, $nutricionista, $dataC, $periodo, $descricao) {
+        return $this->cardapio->create($id, $nutricionista, $dataC, $periodo, $descricao);
     }
 
     public function listarCardapios() {

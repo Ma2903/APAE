@@ -23,7 +23,7 @@ $controladorNutricionista = new ControladorUsuarios();
 <main>
 <a href="../listarCardapio/listarCardapio.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h1>Cadastrar Cardápio</h1>
-    <form action="processaCadastro.php" method="post">
+    <form action="" method="post">
         <div>
             <label for="nutricionista_id">Nutricionista:</label>
             <select id="nutricionista_id" name="nutricionista_id" required>
@@ -51,6 +51,11 @@ $controladorNutricionista = new ControladorUsuarios();
             <button type="submit">Cadastrar Cardápio</button>
         </div>
     </form>
+    <?php
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $controladorCardapio->criarCardapio($_POST['nutricionista'], $_POST['dataC'], $_POST['periodo'], $_POST['descricao']);
+    }
+    ?>
 </main>
 <?php renderFooter(); ?>
 </body>
