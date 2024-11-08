@@ -34,6 +34,21 @@ $controler = new ControladorUsuarios();
             </section>
         </section>
     </section>
+    <section class="legend">
+        <span>Legenda: </span>
+        <section class="legend-item">
+            <div class="legend-color legend-nutricionista"></div>
+            <span>Nutricionista</span>
+        </section>
+        <section class="legend-item">
+            <div class="legend-color legend-contador"></div>
+            <span>Contador</span>
+        </section>
+        <section class="legend-item">
+            <div class="legend-color legend-administrador"></div>
+            <span>Administrador</span>
+        </section>
+    </section>
     <table>
         <thead>
             <tr>
@@ -74,7 +89,7 @@ $controler = new ControladorUsuarios();
                             break;
                     }
                     
-                    echo "<tr class='{$classeUsuario}' id='{$idUsuario}'>"; // Usando id e class
+                    echo "<tr class='{$classeUsuario}' id='{$idUsuario}'>";
                     echo "<td>{$usuario->getCpf()}</td>";
                     echo "<td>{$usuario->getNome()}</td>";
                     echo "<td>{$usuario->getSobrenome()}</td>";
@@ -91,62 +106,56 @@ $controler = new ControladorUsuarios();
         ?>
         </tbody>
     </table>
-    <section class="legend">
-        <span>Legenda: </span>
-    <section class="legend-item">
-        <section class="legend-color legend-nutricionista"></div>
-        <span>Nutricionista</span>
-        </section>
-    <section class="legend-item">
-        <section class="legend-color legend-contador"></div>
-        <span>Contador</span>
-        </section>
-    <section class="legend-item">
-        <section class="legend-color legend-administrador"></div>
-        <span>Administrador</span>
-        </section>
-        </section>
 </main>
 <?php renderFooter(); ?>
 <script>
     function toggleFilterMenu() {
-        const filterMenu = document.getElementById('filter-menu');
-        filterMenu.classList.toggle('show');
-    }
+    const filterMenu = document.getElementById('filter-menu');
+    filterMenu.classList.toggle('show');
+}
 
-    function filterUsers(type) {
-        const rows = document.querySelectorAll('#user-table-body tr');
-        rows.forEach(row => {
-            const userType = row.querySelector('td:nth-child(7)').textContent.toLowerCase();
-            if (userType.includes(type)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
-
-    function clearFilter() {
-        const rows = document.querySelectorAll('#user-table-body tr');
-        rows.forEach(row => {
+function filterUsers(type) {
+    const rows = document.querySelectorAll('#user-table-body tr');
+    rows.forEach(row => {
+        const userType = row.querySelector('td:nth-child(6)').textContent.toLowerCase(); // Coluna "Tipo de Usuário"
+        if (userType.includes(type.toLowerCase())) {
             row.style.display = '';
-        });
-        toggleFilterMenu(); // Fechar o menu de filtro
-    }
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
 
-    function searchUsers() {
-        const input = document.getElementById('search-input');
-        const filter = input.value.toLowerCase();
-        const rows = document.querySelectorAll('#user-table-body tr');
-        rows.forEach(row => {
-            const userName = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
-            if (userName.startsWith(filter)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
+function clearFilter() {
+    const rows = document.querySelectorAll('#user-table-body tr');
+    rows.forEach(row => {
+        row.style.display = '';
+    });
+    const filterMenu = document.getElementById('filter-menu');
+    filterMenu.classList.remove('show');
+}
+
+document.getElementById('search-input').addEventListener('input', function() {
+        const filterValue = this.value;
+        if (filterValue) {
+            filterUsers(filterValue);
+        } else {
+            clearFilter();
+        }
+    });
+
+function searchUsers() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    const rows = document.querySelectorAll('#user-table-body tr');
+    rows.forEach(row => {
+        const userName = row.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Nome está na segunda coluna
+        if (userName.startsWith(searchInput)) { // Verifica se o nome começa com a letra digitada
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
 </script>
 </body>
 </html>
