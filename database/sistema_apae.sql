@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 06/11/2024 às 14:37
--- Versão do servidor: 10.4.28-MariaDB
--- Versão do PHP: 8.2.4
+-- Tempo de geração: 08-Nov-2024 às 20:42
+-- Versão do servidor: 10.4.27-MariaDB
+-- versão do PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,29 +24,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `cardapios`
+-- Estrutura da tabela `cardapios`
 --
 
 CREATE TABLE `cardapios` (
   `id` int(11) NOT NULL,
   `nutricionista_id` int(11) NOT NULL,
-  `data_inicio` date NOT NULL,
-  `data_fim` date NOT NULL,
+  `dataC` date NOT NULL,
+  `periodo` text NOT NULL,
   `descricao` text DEFAULT NULL,
   `data_criacao` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `cardapios`
+-- Extraindo dados da tabela `cardapios`
 --
 
-INSERT INTO `cardapios` (`id`, `nutricionista_id`, `data_inicio`, `data_fim`, `descricao`, `data_criacao`) VALUES
-(1, 3, '2024-09-18', '2024-09-24', 'Cardápio saudável para a semana.', '2024-09-18 01:39:59');
+INSERT INTO `cardapios` (`id`, `nutricionista_id`, `dataC`, `periodo`, `descricao`, `data_criacao`) VALUES
+(1, 3, '2024-09-18', '', 'Cardápio saudável para a semana.', '2024-09-18 01:39:59');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `cardapio_produtos`
+-- Estrutura da tabela `cardapio_produtos`
 --
 
 CREATE TABLE `cardapio_produtos` (
@@ -57,17 +57,17 @@ CREATE TABLE `cardapio_produtos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `cardapio_produtos`
+-- Extraindo dados da tabela `cardapio_produtos`
 --
 
 INSERT INTO `cardapio_produtos` (`id`, `cardapio_id`, `produto_id`, `quantidade`) VALUES
-(1, 1, 1, 10.00),
-(2, 1, 2, 5.00);
+(1, 1, 1, '10.00'),
+(2, 1, 2, '5.00');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `cotas`
+-- Estrutura da tabela `cotas`
 --
 
 CREATE TABLE `cotas` (
@@ -80,24 +80,24 @@ CREATE TABLE `cotas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `cotas`
+-- Extraindo dados da tabela `cotas`
 --
 
 INSERT INTO `cotas` (`id`, `produto_id`, `fornecedor_id`, `preco_unitario`, `quantidade`, `data_cotacao`) VALUES
-(1, 1, 1, 4.50, 50.00, '2024-09-15'),
-(2, 1, 2, 5.00, 50.00, '2024-09-15'),
-(3, 2, 2, 10.90, 20.00, '2024-09-15'),
-(4, 3, 3, 15.00, 10.00, '2024-09-15'),
-(5, 1, 1, 4.50, 50.00, '2024-09-15'),
-(7, 2, 2, 10.90, 20.00, '2024-09-15'),
-(8, 3, 3, 15.00, 10.00, '2024-09-15'),
-(9, 1, 2, 4.00, 50.00, '2024-10-20'),
-(10, 2, 2, 20.00, 50.00, '2024-11-05');
+(1, 1, 1, '4.50', '50.00', '2024-09-15'),
+(2, 1, 2, '5.00', '50.00', '2024-09-15'),
+(3, 2, 2, '10.90', '20.00', '2024-09-15'),
+(4, 3, 3, '15.00', '10.00', '2024-09-15'),
+(5, 1, 1, '4.50', '50.00', '2024-09-15'),
+(7, 2, 2, '10.90', '20.00', '2024-09-15'),
+(8, 3, 3, '15.00', '10.00', '2024-09-15'),
+(9, 1, 2, '4.00', '50.00', '2024-10-20'),
+(10, 2, 2, '20.00', '50.00', '2024-11-05');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `fornecedores`
+-- Estrutura da tabela `fornecedores`
 --
 
 CREATE TABLE `fornecedores` (
@@ -112,7 +112,7 @@ CREATE TABLE `fornecedores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `fornecedores`
+-- Extraindo dados da tabela `fornecedores`
 --
 
 INSERT INTO `fornecedores` (`id`, `nome`, `endereco`, `telefone`, `whatsapp`, `email`, `ramo_atuacao`, `data_criacao`) VALUES
@@ -124,7 +124,7 @@ INSERT INTO `fornecedores` (`id`, `nome`, `endereco`, `telefone`, `whatsapp`, `e
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `notificacoes`
+-- Estrutura da tabela `notificacoes`
 --
 
 CREATE TABLE `notificacoes` (
@@ -137,7 +137,7 @@ CREATE TABLE `notificacoes` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `permissoes`
+-- Estrutura da tabela `permissoes`
 --
 
 CREATE TABLE `permissoes` (
@@ -154,7 +154,7 @@ CREATE TABLE `permissoes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `permissoes`
+-- Extraindo dados da tabela `permissoes`
 --
 
 INSERT INTO `permissoes` (`id`, `tipo_usuario`, `gerenciar_usuarios`, `gerenciar_cardapios`, `ver_cardapios`, `gerenciar_produtos`, `ver_produtos`, `gerenciar_cotacoes`, `ver_cotacoes`, `gerenciar_fornecedores`) VALUES
@@ -165,7 +165,7 @@ INSERT INTO `permissoes` (`id`, `tipo_usuario`, `gerenciar_usuarios`, `gerenciar
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `produtos`
+-- Estrutura da tabela `produtos`
 --
 
 CREATE TABLE `produtos` (
@@ -177,7 +177,7 @@ CREATE TABLE `produtos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `produtos`
+-- Extraindo dados da tabela `produtos`
 --
 
 INSERT INTO `produtos` (`id`, `nome`, `categoria`, `unidade_medida`, `data_criacao`) VALUES
@@ -196,7 +196,7 @@ INSERT INTO `produtos` (`id`, `nome`, `categoria`, `unidade_medida`, `data_criac
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `usuarios`
+-- Estrutura da tabela `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -215,7 +215,7 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `usuarios`
+-- Extraindo dados da tabela `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `cpf`, `nome`, `sobrenome`, `data_nascimento`, `endereco`, `telefone`, `email`, `senha`, `tipo_usuario`, `crn`, `data_criacao`) VALUES
@@ -230,14 +230,14 @@ INSERT INTO `usuarios` (`id`, `cpf`, `nome`, `sobrenome`, `data_nascimento`, `en
 --
 
 --
--- Índices de tabela `cardapios`
+-- Índices para tabela `cardapios`
 --
 ALTER TABLE `cardapios`
   ADD PRIMARY KEY (`id`),
   ADD KEY `nutricionista_id` (`nutricionista_id`);
 
 --
--- Índices de tabela `cardapio_produtos`
+-- Índices para tabela `cardapio_produtos`
 --
 ALTER TABLE `cardapio_produtos`
   ADD PRIMARY KEY (`id`),
@@ -245,7 +245,7 @@ ALTER TABLE `cardapio_produtos`
   ADD KEY `produto_id` (`produto_id`);
 
 --
--- Índices de tabela `cotas`
+-- Índices para tabela `cotas`
 --
 ALTER TABLE `cotas`
   ADD PRIMARY KEY (`id`),
@@ -253,32 +253,32 @@ ALTER TABLE `cotas`
   ADD KEY `fornecedor_id` (`fornecedor_id`);
 
 --
--- Índices de tabela `fornecedores`
+-- Índices para tabela `fornecedores`
 --
 ALTER TABLE `fornecedores`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `notificacoes`
+-- Índices para tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
--- Índices de tabela `permissoes`
+-- Índices para tabela `permissoes`
 --
 ALTER TABLE `permissoes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `produtos`
+-- Índices para tabela `produtos`
 --
 ALTER TABLE `produtos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `usuarios`
+-- Índices para tabela `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
@@ -286,7 +286,7 @@ ALTER TABLE `usuarios`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
@@ -338,31 +338,31 @@ ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- Restrições para tabelas despejadas
+-- Restrições para despejos de tabelas
 --
 
 --
--- Restrições para tabelas `cardapios`
+-- Limitadores para a tabela `cardapios`
 --
 ALTER TABLE `cardapios`
   ADD CONSTRAINT `cardapios_ibfk_1` FOREIGN KEY (`nutricionista_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
--- Restrições para tabelas `cardapio_produtos`
+-- Limitadores para a tabela `cardapio_produtos`
 --
 ALTER TABLE `cardapio_produtos`
   ADD CONSTRAINT `cardapio_produtos_ibfk_1` FOREIGN KEY (`cardapio_id`) REFERENCES `cardapios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `cardapio_produtos_ibfk_2` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE;
 
 --
--- Restrições para tabelas `cotas`
+-- Limitadores para a tabela `cotas`
 --
 ALTER TABLE `cotas`
   ADD CONSTRAINT `cotas_ibfk_1` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `cotas_ibfk_2` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedores` (`id`) ON DELETE CASCADE;
 
 --
--- Restrições para tabelas `notificacoes`
+-- Limitadores para a tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
   ADD CONSTRAINT `notificacoes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);

@@ -18,7 +18,8 @@ main {
 form {  
     max-width: 1000px; /* Aumentar a largura máxima do formulário */  
     width: 100%; /* Certifique-se de ocupar 100% da largura disponível */  
-    margin: 20px auto; /* Centraliza o formulário na página */  
+    height: 90%; /* Altura do formulário */
+    margin: -10px auto; /* Centraliza o formulário na página */  
     padding: 20px; /* Padding interno */  
     background-color: #ffffff; /* Cor de fundo */  
     border-radius: 8px; /* Bordas arredondadas */  
@@ -43,6 +44,33 @@ form input, form select {
     font-size: 16px; /* Tamanho da fonte */  
     box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */  
 }  
+
+form input[type="checkBox"]{
+    margin-bottom: 0px;
+}
+
+.allCheck{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    border: 1px solid #ccc;
+    width: 10%;
+    border-radius: 0.25em;
+}
+
+.check{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    margin: 0.5em;
+}
+
+.check label, .check input{
+    width: 100%;
+}
 
 button {
     padding: 10px 20px;

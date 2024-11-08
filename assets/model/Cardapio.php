@@ -8,12 +8,12 @@ class Cardapio {
         $this->db = new Database();
     }
 
-    public function create($nutricionista, $data_inicio, $data_fim, $descricao) {
-        $sql = "INSERT INTO cardapios (nutricionista, data_inicio, data_fim, descricao) VALUES (:nutricionista, :data_inicio, :data_fim, :descricao)";
+    public function create($nutricionista, $dataC, $periodo, $descricao) {
+        $sql = "INSERT INTO cardapios (nutricionista, dataC, periodo, descricao) VALUES (:nutricionista, :dataC, :periodo, :descricao)";
         $stmt = $this->db->conn->prepare($sql);
         $stmt->bindParam(':nutricionista', $nutricionista);
-        $stmt->bindParam(':data_inicio', $data_inicio);
-        $stmt->bindParam(':data_fim', $data_fim);
+        $stmt->bindParam(':dataC', $dataC);
+        $stmt->bindParam(':periodo', $periodo);
         $stmt->bindParam(':descricao', $descricao);
         return $stmt->execute();
     }
@@ -33,13 +33,13 @@ class Cardapio {
         }
     }
 
-    public function update($id, $nutricionista, $data_inicio, $data_fim, $descricao) {
-        $sql = "UPDATE cardapios SET nutricionista = :nutricionista, data_inicio = :data_inicio, data_fim = :data_fim, descricao = :descricao WHERE id = :id";
+    public function update($id, $nutricionista, $dataC, $descricao) {
+        $sql = "UPDATE cardapios SET nutricionista = :nutricionista, dataC = :dataC, periodo = :periodo, descricao = :descricao WHERE id = :id";
         $stmt = $this->db->conn->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':nutricionista', $nutricionista);
-        $stmt->bindParam(':data_inicio', $data_inicio);
-        $stmt->bindParam(':data_fim', $data_fim);
+        $stmt->bindParam(':dataC', $dataC);
+        $stmt->bindParam(':periodo', $periodo);
         $stmt->bindParam(':descricao', $descricao);
         return $stmt->execute();
     }

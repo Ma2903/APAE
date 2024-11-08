@@ -32,26 +32,20 @@ $controladorNutricionista = new ControladorUsuarios();
             </select>
         </div>
         <div>
-            <label for="data_inicio">Data Início:</label>
-            <input type="date" id="data_inicio" name="data_inicio" required>
+            <label for="data">Data:</label>
+            <input type="date" id="dataC" name="dataC" required>
         </div>
         <div>
-            <label for="data_fim">Data Fim:</label>
-            <input type="date" id="data_fim" name="data_fim" required>
-        </div>
-        <div>
-            <div>
-                <label for="manha">Manhã</label>
-                <input type="checkbox" id="manha" name="manha">
-            </div>
-            <div>
-                <label for="tarde">Tarde</label>
-                <input type="checkbox" id="tarde" name="tarde">
-            </div>
+            <label for="periodo">Período:</label>
+            <select id="periodo" name="periodo" required>
+            <option value="manha">Manhã</option>
+            <option value="tarde">Tarde</option>
+            <option value="manha-tarde">Manhã e Tarde</option>
+            </select>
         </div>
         <div>
             <label for="descricao">Descrição:</label>
-            <textarea id="descricao" name="descricao"></textarea>
+            <textarea id="descricao" name="descricao" style="resize: none" rows="6" cols="100"></textarea>
         </div>
         <div>
             <button type="submit">Cadastrar Cardápio</button>
