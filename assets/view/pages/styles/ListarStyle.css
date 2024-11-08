@@ -4,9 +4,10 @@ h1 {
     width: 100%;
     color: var(--darkblue);
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 42px;
 }
+
 body{
     height: 100vh;
 }
@@ -72,38 +73,51 @@ table tbody tr:hover {
 }
 
 .search {
-    width: 100%;
+    width: 35%;
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
-}
-
-.search input[type="text"], .search button, .filter{  
-    flex: 1;  
-    padding: 10px;  
-    margin-right: 10px;  
-    border: 1px solid var(--darkblue);  
-    background-color: var(--darkblue);
-    display: flex;
     align-items: center;
     flex-direction: row;
-    justify-content: center;
-    color: var(--white);
-    border-radius: 10px;  
-    max-width: 150px;  
+    padding: 5px;
+    margin-bottom: 20px;
+    gap: 8px; 
+    border-radius: 8px;
+}
+
+#search-input {
+    flex: 2;
+    padding: 8px;
+    font-size: 16px;
+    border: 3px solid var(--darkblue);
+    border-radius: 8px;
+    max-width: 300px; /* Limita a largura máxima em telas grandes */
+    box-sizing: border-box;
 }  
 
-.search .input-filter-date {
-    width: 20%;
+.search button{
     margin: 10px;
-    padding: 15px;
+    padding: 15px 15px;
     background: var(--darkblue);
     border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     color: var(--white);
+    font-size: 16px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.search .input-filter-date {
+   width: 20%;
+   margin: 10px;
+   padding: 15px;
+   background: var(--darkblue);
+   border-radius: 10px;
+   color: var(--white);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .search .input-filter-date input {
@@ -114,15 +128,13 @@ table tbody tr:hover {
 }
 
 .add-quote, .add-product, .add-user {
-    width: 15%;
-    padding: 10px;
-    background: var(--darkblue);
-    border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     color: var(--white);
+    justify-content: center;
 }
+
 .section-cotasfiltradas{
     width: 100%;
     display: flex;
@@ -138,7 +150,8 @@ button{
 }
 
 .add-quote-btn, .add-product-btn, .add-user-btn {
-    padding: 10px 10px;
+    padding: 15px 25px;
+    font-size: 16px;
     background: var(--darkblue);
     color: var(--white);
     border: none;
@@ -146,6 +159,13 @@ button{
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.add-user-btn:hover, .add-product-btn:hover, .add-quote-btn:hover {
+    background-color: var(--yellow);
 }
 
 .back-btn {
@@ -210,14 +230,27 @@ table tbody td a:hover {
 
 /* Estilos para o filtro */
 
+.filter {
+    flex: 0.5;
+    display: inline-block;
+    position: relative;
+}
+
 .filter-btn {
-    background: var(--lightblue);
+    background-color: var(--darkblue);
     color: var(--white);
-    padding: 10px 20px;
     border: none;
+    padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.filter-btn i {
+    font-size: 18px;
 }
 
 .filter-btn:hover {
@@ -229,49 +262,79 @@ table tbody td a:hover {
     display: none;
     position: absolute;
     background-color: var(--white);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
     z-index: 1;
-    border-radius: 5px;
     overflow: hidden;
 }
-
 .filter-menu.show {
     display: block;
 }
 
 .filter-menu button {
     background: none;
-    border: none;
+    width: 85%;
+    text-align: center;
+    font-size: 14px;
     color: var(--black);
-    padding: 10px 20px;
-    text-align: left;
-    width: 100%;
     cursor: pointer;
     transition: background 0.3s;
+    gap: 6px;
 }
 
 .filter-menu button:hover {
-    background-color: var(--lightblue);
-    color: var (--white);
+    border: 3px solid var(--darkblue);
+}
+
+.filter-menu button + button {
+    margin-top: 5px;
+}
+
+.close-filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--red);
+    padding: 10px 20px;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+    gap: 10px;
+}
+
+.close-filter:hover {
+    background-color: var(--lightred);
+}
+
+.close-filter i {
+    font-size: 16px;
 }
 
 .legend {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
 }
 
 .legend-item {
     display: flex;
     align-items: center;
-    margin-right: 20px;
+    gap: 5px;
 }
 
 .legend-color {
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
+}
+
+.legend span {
+    font-weight: bold;
+    color: var(--darkblue);
 }
 
 .legend-nutricionista {
@@ -284,4 +347,67 @@ table tbody td a:hover {
 
 .legend-administrador {
     background-color: #bbdefb; /* Azul claro */
+}
+
+/* Estilização da Tabela para Fluxo de Dados Grande */
+.table-container {
+    overflow-x: auto;
+    max-width: 100%;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 16px;
+    text-align: left;
+}
+
+table th, table td {
+    padding: 10px;
+    white-space: nowrap;
+}
+
+table thead tr {
+    background-color: var(--darkblue);
+    color: var(--white);
+    border-left: 5px solid var(--darkblue);
+}
+
+table tbody tr:nth-of-type(even) {
+    background-color: var(--lightwhite);
+}
+
+table tbody tr:hover {
+    background-color: var(--lightyellow);
+}
+
+/* Cores Específicas para Tipos de Usuário */
+#usuario-nutricionista {
+    background-color: #c8e6c9; /* Verde claro */
+}
+
+#usuario-contador {
+    background-color: #ffecb3; /* Amarelo claro */
+}
+
+#usuario-administrador {
+    background-color: #bbdefb; /* Azul claro */
+}
+
+/* Ajustes para Responsividade */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 32px;
+    }
+
+    .search input[type="text"], .search button, .filter {
+        max-width: 120px;
+    }
+
+    .legend {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
