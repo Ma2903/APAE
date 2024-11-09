@@ -108,8 +108,9 @@ function construirTabelas($cotas) {
             <tr>
                 <th>Nome do Produto</th>
                 <th>DataCotação</th>
-                <th>Preços (Maior | Menor)</th>
+                <th>Preço</th>
                 <th>Fornecedores (Maior | Menor)</th>
+                <th>Preços (Maior | Menor)</th>
                 <?php if ($podeGerenciarCotacoes): ?>
                 <th colspan="2">Ações</th>
                 <?php endif; ?>
@@ -154,6 +155,7 @@ function construirTabelas($cotas) {
             echo "<tr>";
             echo "<td>{$produtoNome}</td>";
             echo "<td>{$dataCotacao}</td>";
+            echo "<td>R$ {$cotacao->getPrecoUnitario()}</td>";
             echo "<td>R$ <span class='maior-preco'>{$maiorPreco} ↑</span> | R$ <span class='menor-preco'>{$menorPreco} ↓</span></td>";
             echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
             if ($podeGerenciarCotacoes) {
@@ -226,8 +228,9 @@ if(!isset($cotasAtuais)){
             <tr>
                 <th>Nome do Produto</th>
                 <th>DataCotação</th>
-                <th>Preços (Maior | Menor)</th>
+                <th>Preço</th>
                 <th>Fornecedores (Maior | Menor)</th>
+                <th>Preços (Maior | Menor)</th>
                 <?php if ($podeGerenciarCotacoes): ?>
                 <th colspan="2">Ações</th>
                 <?php endif; ?>
@@ -375,7 +378,7 @@ if(!isset($cotasAtuais)){
     if(naoexistecotasatuais){
         document.querySelector(".tablecotacaoatual").innerHTML = `
         <tr>
-            <td colspan="5" class='warning'>Não Realizado</td>
+            <td colspan="6" class='warning'>Não Realizado</td>
         </tr>`
     }
 
