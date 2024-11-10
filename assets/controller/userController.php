@@ -237,7 +237,7 @@ class ControladorUsuarios
         {
             switch ($usuario['tipo_usuario']) {
                 case 'nutricionista':
-                    echo "<option>" . $usuario['nome'] . "</option>";
+                    echo "<option value=". $usuario['id']. ">" . $usuario['nome'] . "</option>";
                     break;
             }
         }

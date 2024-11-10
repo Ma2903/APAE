@@ -7,6 +7,12 @@ require_once __DIR__ . '/../../../../controller/pageController.php';
 $controladorCardapio = new CardapioController();
 $controladorProduto = new ControladorProdutos();
 $controladorNutricionista = new ControladorUsuarios();
+
+
+// Supondo que você tenha uma função para obter a lista de nutricionistas
+// $nutricionistas = [
+//     $controladorNutricionista->listarUsuarios($usuario['tipo_usuario'] == "nutricionista")
+// ];
 ?>
 
 <!DOCTYPE html>
@@ -26,13 +32,12 @@ $controladorNutricionista = new ControladorUsuarios();
     <form action="" method="post">
         <div>
             <label for="nutricionista_id">Nutricionista:</label>
-            <select id="nutricionista_id" name="nutricionista_id" required>
-                <option value="nenhum">Nenhum</option>
+            <select id="nutricionista" name="nutricionista" required>
                 <?php $controladorNutricionista->filtrarNutricionistas(); ?>
             </select>
         </div>
         <div>
-            <label for="data">Data:</label>
+            <label for="dataC">Data:</label>
             <input type="date" id="dataC" name="dataC" required>
         </div>
         <div>
@@ -53,7 +58,7 @@ $controladorNutricionista = new ControladorUsuarios();
     </form>
     <?php
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $controladorCardapio->criarCardapio($_POST['nutricionista'], $_POST['dataC'], $_POST['periodo'], $_POST['descricao']);
+        $controladorCardapio->criarcardapio($_POST['nutricionista'], $_POST['dataC'], $_POST['periodo'], $_POST['descricao']);
     }
     ?>
 </main>

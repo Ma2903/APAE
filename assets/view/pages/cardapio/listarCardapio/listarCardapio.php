@@ -13,8 +13,8 @@
 
     $podeGerenciarCardapios = verificarPermissao($tipo_usuario, 'gerenciar_cardapios');
 
-    $cardapioController = new CardapioController();
-    $cardapios = $cardapioController->listarCardapios();
+    $cardapioController = new cardapioController();
+    $cardapios = $cardapioController->listarcardapios();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -54,8 +54,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Nutricionista</th>
-                    <th>Data Início</th>
-                    <th>Data Fim</th>
+                    <th>Data</th>
+                    <th>Período</th>
                     <th>Descrição</th>
                     <?php if ($podeGerenciarCardapios): ?>
                         <th colspan="2">Ações</th>
@@ -67,14 +67,14 @@
                 if ($cardapios) {
                     foreach ($cardapios as $cardapio) {
                         echo "<tr>";
-                         echo "<td>{$cardapio['id']}</td>";
-                         echo "<td> Nome nutricionista </td>";
-                         echo "<td>{$cardapio['data_inicio']}</td>";
-                         echo "<td>{$cardapio['data_fim']}</td>";
-                         echo "<td>{$cardapio['descricao']}</td>";
+                         echo "<td>{$cardapio->getId()}</td>";
+                         echo "<td>{$cardapio->getNutricionistaid()} </td>";
+                         echo "<td>{$cardapio->getDataC()}</td>";
+                         echo "<td>{$cardapio->getPeriodo()}</td>";
+                         echo "<td>{$cardapio->getDescricao()}</td>";
                         if ($podeGerenciarCardapios) {
-                            echo "<td><a href='../editarCardapio/editCardapio.php?id={$cardapio['id']}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
-                            echo "<td><a href='../deleteCardapio/delCardapio.php?id={$cardapio['id']}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
+                            echo "<td><a href='../editarCardapio/editCardapio.php?id={$cardapio->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
+                            echo "<td><a href='../deleteCardapio/delCardapio.php?id={$cardapio->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
                         }
                         echo "</tr>";
                     }

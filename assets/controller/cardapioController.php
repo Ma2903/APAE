@@ -2,31 +2,42 @@
 require_once __DIR__ . "/../model/pdo/Database.php";
 require_once __DIR__ . "/../model/Cardapio.php";
 
-class CardapioController {
-    private $cardapio;
+class cardapioController {
+    private $db;
 
     public function __construct() {
-        $this->cardapio = new Cardapio();
+        $this->db = new Database();
     }
 
-    public function criarCardapio($id, $nutricionista, $dataC, $periodo, $descricao) {
-        return $this->cardapio->create($id, $nutricionista, $dataC, $periodo, $descricao);
+    public function criarcardapio($nutricionista_id, $dataC, $periodo, $descricao) {
+        $this->db->insert("cardapios", (object)[
+            "nutricionista_id" => $nutricionista_id,
+            "dataC" => $dataC,
+            "periodo" => $periodo,
+            "descricao" => $descricao
+        ]);
     }
 
-    public function listarCardapios() {
-        return $this->cardapio->read();
+    public function listarcardapios() {
+        $todosCardapio = $this->db->read("cardapios");
+        $arr = [];
+        foreach($todosCardapio as $cardapio){
+            $novocardapio = new cardapio($cardapio['id'], $cardapio['nutricionista_id'], $cardapio['dataC'], $cardapio['periodo'], $cardapio['descricao']);
+            $arr[] = $novocardapio;
+        }
+        return $arr;
+    }
+    public function editarcardapio($id, $nutricionista_id, $dataC, $periodo, $descricao) {
+        $this->db->update('cardapios', (object)[
+            'nutricionista_id'=> $nutricionista_id,
+            'dataC'=> $dataC,
+            'periodo'=> $periodo,
+            'descricao'=> $descricao,
+        ],$id);
     }
 
-    public function obterCardapio($id) {
-        return $this->cardapio->read($id);
-    }
-
-    public function atualizarCardapio($id, $nutricionista, $dataC, $periodo, $descricao) {
-        return $this->cardapio->update($id, $nutricionista, $dataC, $periodo, $descricao);
-    }
-
-    public function excluirCardapio($id) {
-        return $this->cardapio->delete($id);
+    public function excluircardapio($id) {
+        $this->bd->delete("cardapios", $id);
     }
 }
 ?>

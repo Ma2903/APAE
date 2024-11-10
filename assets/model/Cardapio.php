@@ -1,57 +1,60 @@
 <?php
-require_once __DIR__ . "/pdo/Database.php";
 require_once __DIR__ . "/Nutricionista.php";
 
 class Cardapio {
-    private $db;
+    
+private $id;
+private $nutricionista_id;
+private $dataC;
+private $periodo;
+private $descricao;
 
-    public function __construct() {
-        $this->db = new Database();
-    }
+public function __construct($id = null, $nutricionista_id = null, $dataC = null, $periodo = null, $descricao = null) {
+    $this->id = $id;
+    $this->nutricionista_id = $nutricionista_id;
+    $this->dataC = $dataC;
+    $this->periodo = $periodo;
+    $this->descricao = $descricao;
+}
 
-    public function create($nutricionista, $dataC, $periodo, $descricao) {
-        $sql = "INSERT INTO cardapios (id, nutricionista, dataC, periodo, descricao) VALUES (:id ,:nutricionista, :dataC, :periodo, :descricao)";
-        $stmt = $this->db->conn->prepare($sql);
+public function getId() {
+    return $this->id;
+}
 
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':nutricionista', $nutricionista);
-        $stmt->bindParam(':dataC', $dataC);
-        $stmt->bindParam(':periodo', $periodo);
-        $stmt->bindParam(':descricao', $descricao);
-        return $stmt->execute();
-    }
+public function setId($id) {
+    $this->id = $id;
+}
 
-    public function read($id = null) {
-        if ($id) {
-            $sql = "SELECT * FROM cardapios WHERE id = :id";
-            $stmt = $this->db->conn->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } else {
-            $sql = "SELECT * FROM cardapios";
-            $stmt = $this->db->conn->prepare($sql);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-    }
+public function getNutricionistaId() {
+    return $this->nutricionista_id;
+}
 
-    public function update($id, $nutricionista, $dataC, $descricao) {
-        $sql = "UPDATE cardapios SET nutricionista = :nutricionista, dataC = :dataC, periodo = :periodo, descricao = :descricao WHERE id = :id";
-        $stmt = $this->db->conn->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':nutricionista', $nutricionista);
-        $stmt->bindParam(':dataC', $dataC);
-        $stmt->bindParam(':periodo', $periodo);
-        $stmt->bindParam(':descricao', $descricao);
-        return $stmt->execute();
-    }
+public function setNutricionistaId($nutricionista_id) {
+    $this->nutricionista_id = $nutricionista_id;
+}
 
-    public function delete($id) {
-        $sql = "DELETE FROM cardapios WHERE id = :id";
-        $stmt = $this->db->conn->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        return $stmt->execute();
-    }
+public function getDataC() {
+    return $this->dataC;
+}
+
+public function setDataC($dataC) {
+    $this->dataC = $dataC;
+}
+
+public function getPeriodo() {
+    return $this->periodo;
+}
+
+public function setPeriodo($periodo) {
+    $this->periodo = $periodo;
+}
+
+public function getDescricao() {
+    return $this->descricao;
+}
+
+public function setDescricao($descricao) {
+    $this->descricao = $descricao;
+}
 }
 ?>
