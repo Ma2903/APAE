@@ -39,8 +39,7 @@ form label {
     margin-top: 10px;
 }
 
-form select,
-form input[type="number"], form input{
+form select, form input, form textarea {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -49,6 +48,11 @@ form input[type="number"], form input{
     border-radius: 5px;
     background-color: var(--lightwhite);
     color: var(--darkblue);
+}
+
+form textarea {
+    resize: vertical; /* Permite redimensionar verticalmente */
+    min-height: 100px; /* Altura mínima */
 }
 
 form button {

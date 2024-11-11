@@ -48,8 +48,7 @@ form label {
     margin-top: 10px;
 }
 
-form input[type="text"],
-form input[type="date"] {
+form input, form textarea {
     width: 100%;
     padding: 10px;
     margin-top: 5px;

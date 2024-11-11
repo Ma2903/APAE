@@ -30,7 +30,7 @@
 <main>
     <h1>Listar Produtos</h1>
         <section class="search">
-        <input type="text" id="search-input" name="search" placeholder="Pesquisar Produtos..." onkeyup="searchUsers()">
+        <input type="text" id="search-input" name="search" placeholder="Pesquisar Produtos..." onkeyup="searchProducts()">
             <section class="add-product">
             <?php if ($podeGerenciarProdutos): ?>
                 <a href="../cadastroProduto/cadProduto.php" class="add-product-btn">Cadastrar Novo Produto</a>
@@ -41,9 +41,16 @@
                 <i class="fas fa-filter"></i> Filtrar
             </button>
             <section class="filter-menu" id="filter-menu">
-                <button onclick="filterUsers('contador')">Contadores</button>
-                <button onclick="filterUsers('nutricionista')">Nutricionistas</button>
-                <button onclick="filterUsers('administrador')">Administradores</button>
+                <button onclick="filterProducts('alimenticios')">Alimenticios</button>
+                <button onclick="filterProducts('acougue')">Açougue</button>
+                <!-- <button onclick="filterProducts('bebidas')">Bebidas</button> -->
+                <button onclick="filterProducts('descartaveis')">Descartáveis</button>
+                <button onclick="filterProducts('frios')">Frios</button>
+                <button onclick="filterProducts('frutas')">Frutas</button>
+                <button onclick="filterProducts('higiene pessoal')">Higiene Pessoal</button>
+                <button onclick="filterProducts('limpeza')">Limpeza</button>
+                <button onclick="filterProducts('verduras')">Verduras</button>
+                <button onclick="filterProducts('outros')">Outros</button>
                 <button class="close-filter" onclick="clearFilter()"><i class="fas fa-times"></i></button>
             </section>
         </section>
@@ -60,21 +67,13 @@
                 <?php endif; ?>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="product-table-body">
             <?php
             $produtos = $controler->verProdutos();
-            //TERMINAR DEPOIS
-            //if ($_SERVER["REQUEST_METHOD"] == "POST"){
-              //  var_dump($produtos);
-                //$like = $search = $_POST['search'];
-                // if($search != ""){
-                    
-                // }
-            //}
             usort($produtos, function($a, $b) {
                 return strcmp($a->getNome(), $b->getNome());
             });
-            if ($controler->verProdutos()) {
+            if ($produtos) {
                 foreach ($produtos as $produto) {
                     $dataCriacao = date('d-m-Y', strtotime($produto->getDtCriacao()));
                     echo "<tr>";
@@ -89,12 +88,61 @@
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td>Nenhum produto encontrado!</td></tr>";
+                echo "<tr><td colspan='7'>Nenhum produto encontrado.</td></tr>";
             }
             ?>
         </tbody>
     </table>
 </main>
 <?php renderFooter(); ?>
+<script>
+    function toggleFilterMenu() {
+        const filterMenu = document.getElementById('filter-menu');
+        filterMenu.classList.toggle('show');
+    }
+
+    function filterProducts(category) {
+        const rows = document.querySelectorAll('#product-table-body tr');
+        rows.forEach(row => {
+            const productCategory = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+            if (productCategory.includes(category)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    function clearFilter() {
+        const rows = document.querySelectorAll('#product-table-body tr');
+        rows.forEach(row => {
+            row.style.display = '';
+        });
+        const filterMenu = document.getElementById('filter-menu');
+        filterMenu.classList.remove('show');
+    }
+
+    document.getElementById('search-input').addEventListener('input', function() {
+        const filterValue = this.value;
+        if (filterValue) {
+            searchProducts(filterValue);
+        } else {
+            clearFilter();
+        }
+    });
+
+    function searchProducts() {
+        const searchInput = document.getElementById('search-input').value.toLowerCase();
+        const rows = document.querySelectorAll('#product-table-body tr');
+        rows.forEach(row => {
+            const productName = row.querySelector('td:nth-child(1)').textContent.toLowerCase(); // Nome está na primeira coluna
+            if (productName.startsWith(searchInput)) { // Verifica se o nome começa com a letra digitada
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
 </body>
 </html>
