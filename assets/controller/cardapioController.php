@@ -37,7 +37,15 @@ class cardapioController {
     }
 
     public function excluircardapio($id) {
-        $this->bd->delete("cardapios", $id);
+        $this->db->delete("cardapios", $id);
+    }
+
+    public function filtrarCardapio() {
+        $cardapios = $this->db->read("cardapios");
+        foreach($cardapios as $cardapio)
+        {
+                    echo "<option value=". $cardapio['id']. ">" . $cardapio['descricao'] . "</option>";
+        }
     }
 }
 ?>

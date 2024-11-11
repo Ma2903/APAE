@@ -1,4 +1,21 @@
 <?php
+require_once __DIR__ . '/../../../../controller/cardapioController.php';
+require_once __DIR__ . '/../../../../controller/produtoController.php';
+require_once __DIR__ . '/../../../../controller/userController.php';
+require_once __DIR__ . '/../../../../controller/pageController.php';
+
+$controladorCardapio = new CardapioController();
+$controladorProduto = new ControladorProdutos();
+$controladorNutricionista = new ControladorUsuarios();
+
+
+// Supondo que você tenha uma função para obter a lista de nutricionistas
+// $nutricionistas = [
+//     $controladorNutricionista->listarUsuarios($usuario['tipo_usuario'] == "nutricionista")
+// ];
+?>
+
+<?php
     require_once __DIR__ . "/../../../../controller/pageController.php";
 ?>
 <!DOCTYPE html>
@@ -13,28 +30,34 @@
 <body>
 <?php renderHeader(); ?>
 <main>
-    <a href="../listarCardapio/listarCardapio.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
+<a href="../listarCardapio/listarCardapio.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h1>Editar Cardápio</h1>
     <form action="" method="post">
-        <section>
-            <label for="cardapio_id">Selecione o Cardápio:</label>
-            <select id="cardapio_id" name="cardapio_id" required>
-                <!-- Aqui você deve adicionar o código PHP para listar os cardápios -->
+    <section>
+            <label for="id">Id do Cardapio:</label>
+            <select id="id" name="id" required>
+                <option value="nenhum">Nenhum</option>
+                <?php $controladorCardapio->filtrarCardapio(); ?>
             </select>
         </section>
         <section>
             <label for="nutricionista_id">Nutricionista:</label>
-            <select id="nutricionista_id" name="nutricionista_id" required>
-                <!-- Aqui você deve adicionar o código PHP para listar os nutricionistas -->
+            <select id="nutricionista" name="nutricionista" required>
+                <option value="nenhum">Nenhum</option>
+                <?php $controladorNutricionista->filtrarNutricionistas(); ?>
             </select>
+</section>
+        <section>
+            <label for="dataC">Data:</label>
+            <input type="date" id="dataC" name="dataC" required>
         </section>
         <section>
-            <label for="data_inicio">Data Início:</label>
-            <input type="date" id="data_inicio" name="data_inicio" required>
-        </section>
-        <section>
-            <label for="data_fim">Data Fim:</label>
-            <input type="date" id="data_fim" name="data_fim" required>
+            <label for="periodo">Período:</label>
+            <select id="periodo" name="periodo" required>
+            <option value="manha">Manhã</option>
+            <option value="tarde">Tarde</option>
+            <option value="manha-tarde">Manhã e Tarde</option>
+            </select>
         </section>
         <section>
             <label for="descricao">Descrição:</label>
@@ -44,6 +67,11 @@
             <button type="submit">Salvar Alterações</button>
         </section>
     </form>
+    <?php
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $controladorCardapio->criarcardapio($_POST['id'],$_POST['nutricionista'], $_POST['dataC'], $_POST['periodo'], $_POST['descricao']);
+    }
+    ?>
 </main>
 <?php renderFooter(); ?>
 </body>
