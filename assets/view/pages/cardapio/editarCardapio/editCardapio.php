@@ -28,45 +28,58 @@ $controladorNutricionista = new ControladorUsuarios();
 <?php renderHeader(); ?>
 <main>
 <a href="../listarCardapio/listarCardapio.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
-    <h1>Cadastrar Cardápio</h1>
-    <form action="" method="post">
-    <div>
-            <label for="id">Id do Cardapio:</label>
-            <select id="id" name="id" required>
-                <option value="nenhum">Nenhum</option>
-                <?php $controladorCardapio->filtrarCardapio(); ?>
-            </select>
-        </div>
+    <h1>Editar Cardápio</h1>
+    <form action="" method="post"> 
+        <?php
+        $cardapios = $controladorCardapio->listarCardapios();
+        $nutricionistas = $controladorNutricionista->listarUsuarios();
+        foreach($nutricionistas as $nutricionista) {
+            if($nutricionista->getId() == $_GET['nutricionista_id']){
+                $nomeNutri = $nutricionista->getNome();
+            }
+        }
+        var_dump($nomeNutri);
+        foreach($cardapios as $cardapio){
+            if($cardapio->getId() == $_GET['id']){
+                echo ' 
+                <div>
+                    <label for="nutricionista_id">Nutricionista:</label>
+                    <select id="nutricionista" name="nutricionista" required>';
+                        echo '<option value="'.$cardapio->getNutricionistaId().'">'.$nomeNutri.'</option>';
+                        echo '<option value="'.$cardapio->getNutricionistaId().'">'.$controladorNutricionista->filtrarNutricionistas().'</option>';
+                echo '</select>
+                </div>
+                <div>
+                    <label for="dataC">Data:</label>
+                    <input type="date" id="dataC" name="dataC" value="'.$cardapio->getDataC().'" required>
+                </div>
+                <div>
+                    <label for="periodo">Período:</label>
+                    <select id="periodo" name="periodo" required>
+                        <option value="manha" '.($cardapio->getPeriodo() == 'manha' ? 'selected' : '').'>Manhã</option>
+                        <option value="tarde" '.($cardapio->getPeriodo() == 'tarde' ? 'selected' : '').'>Tarde</option>
+                        <option value="manha-tarde" '.($cardapio->getPeriodo() == 'manha-tarde' ? 'selected' : '').'>Manhã e Tarde</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="descricao">Descrição:</label>
+                    <textarea id="descricao" name="descricao" style="resize: none" rows="6" cols="100" required>'.$cardapio->getDescricao().'</textarea>
+                </div>';
+            }
+        }
+        ?>
         <div>
-            <label for="nutricionista_id">Nutricionista:</label>
-            <select id="nutricionista" name="nutricionista" required>
-                <option value="nenhum">Nenhum</option>
-                <?php $controladorNutricionista->filtrarNutricionistas(); ?>
-            </select>
-        </div>
-        <div>
-            <label for="dataC">Data:</label>
-            <input type="date" id="dataC" name="dataC" required>
-        </div>
-        <div>
-            <label for="periodo">Período:</label>
-            <select id="periodo" name="periodo" required>
-            <option value="manha">Manhã</option>
-            <option value="tarde">Tarde</option>
-            <option value="manha-tarde">Manhã e Tarde</option>
-            </select>
-        </div>
-        <div>
-            <label for="descricao">Descrição:</label>
-            <textarea id="descricao" name="descricao" style="resize: none" rows="6" cols="100"></textarea>
-        </div>
-        <div>
-            <button type="submit">Cadastrar Cardápio</button>
+            <button type="submit">Salvar Alterações</button>
         </div>
     </form>
-    <?php
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $controladorCardapio->criarcardapio($_POST['id'],$_POST['nutricionista'], $_POST['dataC'], $_POST['periodo'], $_POST['descricao']);
+    <?php 
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if(!empty($_POST['id']) && !empty($_POST['nutricionista']) && !empty($_POST['dataC']) && !empty($_POST['periodo']) && !empty($_POST['descricao'])){
+            $controladorCardapio->editarCardapio($_POST['id'], $_POST['nutricionista'], $_POST['dataC'], $_POST['periodo'], $_POST['descricao']);
+            header('Location: ../listarCardapio/listarCardapio.php');
+        } else {
+            echo '<p>Por favor, preencha todos os campos.</p>';
+        }
     }
     ?>
 </main>

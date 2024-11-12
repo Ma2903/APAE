@@ -1,3 +1,20 @@
+<?php
+require_once __DIR__ . '/../../../../controller/cardapioController.php';
+require_once __DIR__ . '/../../../../controller/produtoController.php';
+require_once __DIR__ . '/../../../../controller/userController.php';
+require_once __DIR__ . '/../../../../controller/pageController.php';
+
+$controladorCardapio = new CardapioController();
+$controladorProduto = new ControladorProdutos();
+$controladorNutricionista = new ControladorUsuarios();
+
+
+// Supondo que você tenha uma função para obter a lista de nutricionistas
+// $nutricionistas = [
+//     $controladorNutricionista->listarUsuarios($usuario['tipo_usuario'] == "nutricionista")
+// ];
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,51 +25,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-<header>
-    <section class="header-container">
-        <section class="logo-container">
-            <img src="../../../../../src/logo_sem_fundo.png" alt="Logo do SmartControl" class="logo">
-            <h1 class="system-name">SmartControl</h1>
-        </section>
-        <section class="user-info">
-            <a href="../../index.php" class="home-btn">Home</a>
-            <a href="logout.php" class="logout-btn">Sair</a>
-        </section>
-    </section>
-</header>
+<?php renderHeader(); ?>
 <main>
     <a href="../listarCardapio/listarCardapio.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h1>Excluir Cardápio</h1>
     <p>Tem certeza que deseja excluir o seguinte cardápio?</p>
-    <form method="POST" action="processaExclusao.php">
-        <div>
-            <label for="cardapio_id"><strong>ID:</strong></label>
-            <input type="text" id="cardapio_id" name="cardapio_id" readonly>
-        </div>
-        <div>
-            <label for="nutricionista_id"><strong>ID do Nutricionista:</strong></label>
-            <input type="text" id="nutricionista_id" name="nutricionista_id" readonly>
-        </div>
-        <div>
-            <label for="data_inicio"><strong>Data de Início:</strong></label>
-            <input type="text" id="data_inicio" name="data_inicio" readonly>
-        </div>
-        <div>
-            <label for="data_fim"><strong>Data de Fim:</strong></label>
-            <input type="text" id="data_fim" name="data_fim" readonly>
-        </div>
-        <div>
-            <label for="descricao"><strong>Descrição:</strong></label>
-            <input type="text" id="descricao" name="descricao" readonly>
-        </div>
-        <div>
-            <button type="submit" name="confirmar">Confirmar Exclusão</button>
-            <button type="submit" name="cancelar">Cancelar</button>
-        </div>
+    <form method="POST" action="">
+        <?php
+        require_once __DIR__ . '/../../../controller/cardapioController.php';
+        $controladorCardapio = new cardapioController();
+        $cardapios = $controladorCardapio->listarcardapios();
+        foreach ($cardapios as $cardapio) {
+            if ($cardapio->getId() == $_GET['id']) {
+                echo '
+                <div>
+                    <label for="nutricionista_id"><strong>Nutricionista:</strong></label>
+                    <input type="text" id="nutricionista_id" name="nutricionista_id" value="' . htmlspecialchars($controladorNutricionista->filtrarNutricionistas($cardapio->getNutricionistaId())) . '" readonly>
+                </div>
+                <div>
+                    <label for="dataC"><strong>Data:</strong></label>
+                    <input type="text" id="dataC" name="dataC" value="' . htmlspecialchars($cardapio->getDataC()) . '" readonly>
+                </div>
+                <div>
+                    <label for="periodo"><strong>Período:</strong></label>
+                    <input type="text" id="periodo" name="periodo" value="' . htmlspecialchars($cardapio->getPeriodo()) . '" readonly>
+                </div>
+                <div>
+                    <label for="descricao"><strong>Descrição:</strong></label>
+                    <input type="text" id="descricao" name="descricao" value="' . htmlspecialchars($cardapio->getDescricao()) . '" readonly>
+                </div>';
+            }
+        }
+        ?>
+        <button type="submit" name="confirmar">Confirmar Exclusão</button>
     </form>
+
+    <?php
+    if (isset($_POST['confirmar'])) {
+        $controladorCardapio->deletarCardapio($_POST['id']);
+        header('Location: ../listarCardapio/listarCardapio.php');
+    }
+    ?>
 </main>
-<footer>
-    <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
-</footer>
+<?php renderFooter(); ?>
 </body>
 </html>

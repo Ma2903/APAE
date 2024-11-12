@@ -2,6 +2,7 @@
     require_once __DIR__ . '/../../../../controller/cardapioController.php';
     require_once __DIR__ . "/../../../../controller/userController.php";
     require_once __DIR__ . "/../../../../model/utils.php";
+    require_once __DIR__ . '/../../../../controller/pageController.php';
     session_start();
     
     $user = $_SESSION['user'];
@@ -26,18 +27,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header>
-        <section class="header-container">
-            <section class="logo-container">
-                <img src="../../../../../src/logo_sem_fundo.png" alt="Logo do SmartControl" class="logo">
-                <h1 class="system-name">SmartControl</h1>
-            </section>
-            <section class="user-info">
-                <a href="../../principal.php" class="home-btn">Home</a>
-                <a href="logout.php" class="logout-btn">Sair</a>
-            </section>
-        </section>
-    </header>
+    <?php renderHeader(); ?>
     <main>
         <h1>Listar Cardápios</h1>
         <section class="search">
@@ -68,12 +58,12 @@
                     foreach ($cardapios as $cardapio) {
                         echo "<tr>";
                          echo "<td>{$cardapio->getId()}</td>";
-                         echo "<td>{$cardapio->getNutricionistaid()} </td>";
+                         echo "<td>{$cardapio->getNutricionistaId()} </td>";
                          echo "<td>{$cardapio->getDataC()}</td>";
                          echo "<td>{$cardapio->getPeriodo()}</td>";
                          echo "<td>{$cardapio->getDescricao()}</td>";
                         if ($podeGerenciarCardapios) {
-                            echo "<td><a href='../editarCardapio/editCardapio.php?id={$cardapio->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
+                            echo "<td><a href='../editarCardapio/editCardapio.php?id={$cardapio->getId()}&nutricionista_id={$cardapio->getNutricionistaId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
                             echo "<td><a href='../deleteCardapio/delCardapio.php?id={$cardapio->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
                         }
                         echo "</tr>";
@@ -85,8 +75,6 @@
             </tbody>
         </table>
     </main>
-    <footer>
-        <p>SmartControl - Sistema de Gerenciamento de Cotações e Cardápios</p>
-    </footer>
+    <?php renderFooter(); ?>
 </body>
 </html>

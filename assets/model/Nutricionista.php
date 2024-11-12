@@ -18,11 +18,11 @@ class Nutricionista extends Usuario{
     }
 
     public function getNutricionistaId() {
-        return $this->nutricionista_id;
+        return $this->id;
     }
     
-    public function setNutricionistaId($nutricionista_id_id) {
-        $this->nutricionista_id = $nutricionista_id_id;
+    public function setNutricionistaId($id) {
+        $this->id = $id;
     }
 }
 ?>

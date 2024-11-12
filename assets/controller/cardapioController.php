@@ -47,5 +47,10 @@ class cardapioController {
                     echo "<option value=". $cardapio['id']. ">" . $cardapio['descricao'] . "</option>";
         }
     }
+
+    public function getNutricionistaNome($nutricionista_id) {
+        $nutricionista = new Nutricionista($nutricionista_id);
+        return $nutricionista->getNome();
+    }
 }
 ?>
