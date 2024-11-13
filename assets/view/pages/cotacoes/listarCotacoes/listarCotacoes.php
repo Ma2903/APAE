@@ -177,14 +177,17 @@ if(isset($cotasFiltradas)){
     $precosFiltradosFiltro = calcularMaiorMenorPreco($cotasFiltradas);
 }
 
-if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == null){
-    echo "<script>function updatefiltros(){filtrosnulos = true}</script>";
-}
 
 if(!isset($cotasAtuais)){
     echo "<script>function updatenaoexiste(){naoexistecotasatuais = true}</script>";
 }else{
     echo "<script>function updatenaoexiste(){naoexistecotasatuais = false}</script>";
+}
+
+if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == null){
+    echo "<script>function updatefiltros(){filtrosnulos = true}</script>";
+}else{
+    echo "<script>function updatefiltros(){filtrosnulos = false;naoexistecotasatuais = false}</script>";
 }
 
 ?>
@@ -276,6 +279,8 @@ if(!isset($cotasAtuais)){
                     echo "<tr>";
                     echo "<td>{$produtoNome}</td>";
                     echo "<td>{$dataCotacao}</td>";
+                    echo "<td>R$ {$cotacao->getPrecoUnitario()}</td>";
+                    echo "<td>{$fornecedorNome}</td>";
                     echo "<td>R$ <span class='maior-preco'>{$maiorPreco} ↑</span> | R$ <span class='menor-preco'>{$menorPreco} ↓</span></td>";
                     echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
                     if ($podeGerenciarCotacoes) {
@@ -383,6 +388,7 @@ if(!isset($cotasAtuais)){
     document.querySelector("#dataInicio").addEventListener("change",FilterData)
 
     updatenaoexiste()
+
     if(naoexistecotasatuais){
         document.querySelector(".tablecotacaoatual").innerHTML = `
         <tr>
