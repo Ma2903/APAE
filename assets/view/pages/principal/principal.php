@@ -19,11 +19,12 @@
     // echo "<pre>";
     // var_dump($notificacoes);
     // echo "</pre>";
-
-    if(sizeof($notificacoes) - 1 == 0) {
-        echo "<script>setTimeout(() => alert('". $notificacoes[0]->getMensagem() . "'),1000);</script>";
-    }else{
-        echo "<script>setTimeout(() => alert('". $notificacoes[sizeof($notificacoes) - 1]->getMensagem() . "'),1000);</script>";
+    if(sizeof($notificacoes) > 0) {  
+        if(sizeof($notificacoes) - 1 == 0) {
+            echo "<script>setTimeout(() => alert('". $notificacoes[0]->getMensagem() . "'),1000);</script>";
+        }else{
+            echo "<script>setTimeout(() => alert('". $notificacoes[sizeof($notificacoes) - 1]->getMensagem() . "'),1000);</script>";
+        }
     }
 
 
