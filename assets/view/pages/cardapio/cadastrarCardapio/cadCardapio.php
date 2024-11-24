@@ -21,7 +21,7 @@ $controladorNutricionista = new ControladorUsuarios();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Cardápio</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../styles/CadStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -30,31 +30,31 @@ $controladorNutricionista = new ControladorUsuarios();
 <a href="../listarCardapio/listarCardapio.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h1>Cadastrar Cardápio</h1>
     <form action="" method="post">
-        <div>
+        <section>
             <label for="nutricionista_id">Nutricionista:</label>
             <select id="nutricionista" name="nutricionista" required>
                 <?php $controladorNutricionista->filtrarNutricionistas(); ?>
             </select>
-        </div>
-        <div>
+        </section>
+        <section>
             <label for="dataC">Data:</label>
             <input type="date" id="dataC" name="dataC" required>
-        </div>
-        <div>
+        </section>
+        <section>
             <label for="periodo">Período:</label>
             <select id="periodo" name="periodo" required>
             <option value="manha">Manhã</option>
             <option value="tarde">Tarde</option>
             <option value="manha-tarde">Manhã e Tarde</option>
             </select>
-        </div>
-        <div>
+        </section>
+        <section>
             <label for="descricao">Descrição:</label>
             <textarea id="descricao" name="descricao" style="resize: none" rows="6" cols="100"></textarea>
-        </div>
-        <div>
+        </section>
+        <section>
             <button type="submit">Cadastrar Cardápio</button>
-        </div>
+        </section>
     </form>
     <?php
     if($_SERVER['REQUEST_METHOD'] === 'POST') {

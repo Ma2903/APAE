@@ -2,7 +2,6 @@
     require_once __DIR__ . '/../../../../controller/cardapioController.php';
     require_once __DIR__ . "/../../../../controller/userController.php";
     require_once __DIR__ . "/../../../../model/utils.php";
-    require_once __DIR__ . '/../../../../controller/pageController.php';
     session_start();
     
     $user = $_SESSION['user'];
@@ -23,7 +22,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listar Cardápios</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../styles/ListarStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -31,12 +30,22 @@
     <main>
         <h1>Listar Cardápios</h1>
         <section class="search">
-            <input type="text" name="search" placeholder="Pesquisar produtos...">
-            <button type="submit">Pesquisar</button>
+            <input type="text" id="search-input" name="search" placeholder="Pesquisar produtos...">
         <section class="add-user">
         <?php if ($podeGerenciarCardapios): ?>
             <a href="../cadastrarCardapio/cadCardapio.php" class="add-user-btn">Cadastrar Cardápio</a>
             <?php endif; ?>
+            </section>
+            <section class="filter">
+            <button class="filter-btn" onclick="toggleFilterMenu()">
+                <i class="fas fa-filter"></i> Filtrar
+            </button>
+                <section class="filter-menu" id="filter-menu">
+                    <button onclick="filterUsers('contador')">Contadores</button>
+                    <button onclick="filterUsers('nutricionista')">Nutricionistas</button>
+                    <button onclick="filterUsers('administrador')">Administradores</button>
+                    <button class="close-filter" onclick="clearFilter()"><i class="fas fa-times"></i></button>
+                </section>
             </section>
         </section>
         <table>

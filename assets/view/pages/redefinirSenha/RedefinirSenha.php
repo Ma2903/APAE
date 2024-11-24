@@ -15,28 +15,30 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redefinir Senha - APAE</title>
-    <link rel="stylesheet" href="../login/style2.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../login/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script defer src="../global.js"></script>
 </head>
 <body>
     <section class="container">
-        <img src="../../../../src/logo0.jpg" alt="Logo" class="logo">
-        <section class="right-section">
-            <h2>Redefinir Senha</h2>
-            
-            <!-- Etapa 1: Solicitação do e-mail para envio do código -->
-            <form action="" method="POST" id="email-form">
+        <img src="../../../../src/logo0.jpg" alt="Logo APAE" class="logo">
+        <section class="left">
+            <form action="" method="POST" id="login-form">
+                <h2>Redefinir Senha</h2>
                 <section class="input-container">
                     <label for="email">E-mail:</label>
                     <input name="email" type="email" id="email" placeholder="Digite seu e-mail" required>
                 </section>
-                <button type="submit">Enviar Código</button>
+                <button type="submit" aria-label="Enviar Código para o e-mail">Enviar Código</button>
             </form>
-            
-            <!-- Etapa 2: Formulário para redefinir senha com o código e resposta de segurança -->
+        </section>
+        <section class="right">
+            <h2>Bem-Vindo ao <br>
+                Redefinir Senha <br>
+                da SmartControl!</h2> <br>
+            <p>Digite seu E-mail
+            <br> para continuar!</p>
         </section>
     </section>
 </body>

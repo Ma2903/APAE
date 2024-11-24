@@ -15,61 +15,56 @@ $controladorNutricionista = new ControladorUsuarios();
 // ];
 ?>
 
+<?php
+    require_once __DIR__ . "/../../../../controller/pageController.php";
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Cardápio</title>
-    <link rel="stylesheet" href="../style.css">
+    <title>Editar Cardápio</title>
+    <link rel="stylesheet" href="../../styles/EditStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 <?php renderHeader(); ?>
 <main>
 <a href="../listarCardapio/listarCardapio.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
-    <h1>Editar Cardápio</h1>
-    <form action="" method="post"> 
-        <?php
-        $cardapios = $controladorCardapio->listarCardapios();
-        $nutricionistas = $controladorNutricionista->listarUsuarios();
-        foreach($nutricionistas as $nutricionista) {
-            if($nutricionista->getId() == $_GET['nutricionista_id']){
-                $nomeNutri = $nutricionista->getNome();
-            }
-        }
-        var_dump($nomeNutri);
-        foreach($cardapios as $cardapio){
-            if($cardapio->getId() == $_GET['id']){
-                echo ' 
-                <div>
-                    <label for="nutricionista_id">Nutricionista:</label>
-                    <select id="nutricionista" name="nutricionista" required>';
-                        echo '<option value="'.$cardapio->getNutricionistaId().'">'.$nomeNutri.'</option>';
-                        echo '<option value="'.$cardapio->getNutricionistaId().'">'.$controladorNutricionista->filtrarNutricionistas().'</option>';
-                echo '</select>
-                </div>
-                <div>
-                    <label for="dataC">Data:</label>
-                    <input type="date" id="dataC" name="dataC" value="'.$cardapio->getDataC().'" required>
-                </div>
-                <div>
-                    <label for="periodo">Período:</label>
-                    <select id="periodo" name="periodo" required>
-                        <option value="manha" '.($cardapio->getPeriodo() == 'manha' ? 'selected' : '').'>Manhã</option>
-                        <option value="tarde" '.($cardapio->getPeriodo() == 'tarde' ? 'selected' : '').'>Tarde</option>
-                        <option value="manha-tarde" '.($cardapio->getPeriodo() == 'manha-tarde' ? 'selected' : '').'>Manhã e Tarde</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="descricao">Descrição:</label>
-                    <textarea id="descricao" name="descricao" style="resize: none" rows="6" cols="100" required>'.$cardapio->getDescricao().'</textarea>
-                </div>';
-            }
-        }
-        ?>
+    <h1>Cadastrar Cardápio</h1>
+    <form action="" method="post">
+    <div>
+            <label for="id">Id do Cardapio:</label>
+            <select id="id" name="id" required>
+                <option value="nenhum">Nenhum</option>
+                <?php $controladorCardapio->filtrarCardapio(); ?>
+            </select>
+        </div>
         <div>
-            <button type="submit">Salvar Alterações</button>
+            <label for="nutricionista_id">Nutricionista:</label>
+            <select id="nutricionista" name="nutricionista" required>
+                <option value="nenhum">Nenhum</option>
+                <?php $controladorNutricionista->filtrarNutricionistas(); ?>
+            </select>
+        </div>
+        <div>
+            <label for="dataC">Data:</label>
+            <input type="date" id="dataC" name="dataC" required>
+        </div>
+        <div>
+            <label for="periodo">Período:</label>
+            <select id="periodo" name="periodo" required>
+            <option value="manha">Manhã</option>
+            <option value="tarde">Tarde</option>
+            <option value="manha-tarde">Manhã e Tarde</option>
+            </select>
+        </div>
+        <div>
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" name="descricao" style="resize: none" rows="6" cols="100"></textarea>
+        </div>
+        <div>
+            <button type="submit">Cadastrar Cardápio</button>
         </div>
     </form>
     <?php 
