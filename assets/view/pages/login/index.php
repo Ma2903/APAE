@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input 
                         name="password" 
                         type="password" 
-                        id="password" 
+                        id="password0" 
                         placeholder="******" 
                         autocomplete="current-password" 
                         required

@@ -26,9 +26,9 @@ $controler = new ControladorFornecedor();
                 <i class="fas fa-filter"></i> Filtrar
             </button>
             <section class="filter-menu" id="filter-menu">
-                <button onclick="filterSuppliers('ramo1')">Ramo 1</button>
-                <button onclick="filterSuppliers('ramo2')">Ramo 2</button>
-                <button onclick="filterSuppliers('ramo3')">Ramo 3</button>
+                <button onclick="filterSuppliers('alimenticio')">Alimenticio</button>
+                <button onclick="filterSuppliers('açougue')">Açougue</button>
+                <button onclick="filterSuppliers('frutas')">Frutas</button>
                 <button class="close-filter" onclick="clearFilter()"><i class="fas fa-times"></i></button>
             </section>
         </section>

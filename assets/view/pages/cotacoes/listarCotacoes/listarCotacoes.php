@@ -109,6 +109,7 @@ function construirTabelas($cotas) {
                 <th>Nome do Produto</th>
                 <th>DataCotação</th>
                 <th>Preço</th>
+                <th>Fornecedor</th>
                 <th>Fornecedores (Maior | Menor)</th>
                 <th>Preços (Maior | Menor)</th>
                 <?php if ($podeGerenciarCotacoes): ?>
@@ -156,6 +157,7 @@ function construirTabelas($cotas) {
             echo "<td>{$produtoNome}</td>";
             echo "<td>{$dataCotacao}</td>";
             echo "<td>R$ {$cotacao->getPrecoUnitario()}</td>";
+            echo "<td>{$fornecedorNome}</td>";
             echo "<td>R$ <span class='maior-preco'>{$maiorPreco} ↑</span> | R$ <span class='menor-preco'>{$menorPreco} ↓</span></td>";
             echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
             if ($podeGerenciarCotacoes) {
@@ -175,14 +177,17 @@ if(isset($cotasFiltradas)){
     $precosFiltradosFiltro = calcularMaiorMenorPreco($cotasFiltradas);
 }
 
-if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == null){
-    echo "<script>function updatefiltros(){filtrosnulos = true}</script>";
-}
 
 if(!isset($cotasAtuais)){
     echo "<script>function updatenaoexiste(){naoexistecotasatuais = true}</script>";
 }else{
     echo "<script>function updatenaoexiste(){naoexistecotasatuais = false}</script>";
+}
+
+if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == null){
+    echo "<script>function updatefiltros(){filtrosnulos = true}</script>";
+}else{
+    echo "<script>function updatefiltros(){filtrosnulos = false;naoexistecotasatuais = false}</script>";
 }
 
 ?>
@@ -194,6 +199,11 @@ if(!isset($cotasAtuais)){
     <title>Listar Cotações</title>
     <link rel="stylesheet" href="../../styles/ListarStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        h2 {
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 <?php renderHeader(); ?>
@@ -229,6 +239,7 @@ if(!isset($cotasAtuais)){
                 <th>Nome do Produto</th>
                 <th>DataCotação</th>
                 <th>Preço</th>
+                <th>Fornecedor</th>
                 <th>Fornecedores (Maior | Menor)</th>
                 <th>Preços (Maior | Menor)</th>
                 <?php if ($podeGerenciarCotacoes): ?>
@@ -268,6 +279,8 @@ if(!isset($cotasAtuais)){
                     echo "<tr>";
                     echo "<td>{$produtoNome}</td>";
                     echo "<td>{$dataCotacao}</td>";
+                    echo "<td>R$ {$cotacao->getPrecoUnitario()}</td>";
+                    echo "<td>{$fornecedorNome}</td>";
                     echo "<td>R$ <span class='maior-preco'>{$maiorPreco} ↑</span> | R$ <span class='menor-preco'>{$menorPreco} ↓</span></td>";
                     echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
                     if ($podeGerenciarCotacoes) {
@@ -375,10 +388,11 @@ if(!isset($cotasAtuais)){
     document.querySelector("#dataInicio").addEventListener("change",FilterData)
 
     updatenaoexiste()
+
     if(naoexistecotasatuais){
         document.querySelector(".tablecotacaoatual").innerHTML = `
         <tr>
-            <td colspan="6" class='warning'>Não Realizado</td>
+            <td colspan="7" class='warning'>Não Realizado</td>
         </tr>`
     }
 
@@ -481,7 +495,7 @@ if(!isset($cotasAtuais)){
         let titletable = document.querySelector(".table-title")
         let noFilteredQuotesMessage = document.createElement("button");
 
-        noFilteredQuotesMessage.innerHTML = "Não há cotações filtradas";
+        noFilteredQuotesMessage.innerHTML = "Limpar";
         noFilteredQuotesMessage.classList = "buttonLimpar";
         noFilteredQuotesMessage.style.textAlign = "center";
         noFilteredQuotesMessage.setAttribute("onclick", "limparfiltros()")

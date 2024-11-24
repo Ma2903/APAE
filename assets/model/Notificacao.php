@@ -4,12 +4,14 @@ class Notificacao {
     private $user_id;
     private $mensagem;
     private $dt_notification;
+    private $is_active;
 
-    public function __construct($id, $user_id, $mensagem, $dt_notification) {
+    public function __construct($id, $user_id, $mensagem, $dt_notification , $is_active) {
         $this->id = $id;
         $this->user_id = $user_id;
         $this->mensagem = $mensagem;
         $this->dt_notification = $dt_notification;
+        $this->is_active = $is_active;
     }
 
     public function getId() {
@@ -42,6 +44,10 @@ class Notificacao {
 
     public function setDtNotification($dt_notification) {
         $this->dt_notification = $dt_notification;
+    }
+
+    public function getIsActive() {
+        return $this->is_active;
     }
 }
 ?>

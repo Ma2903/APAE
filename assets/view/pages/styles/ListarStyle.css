@@ -192,13 +192,10 @@ table tbody td a {
     transition: background-color 0.3s ease;
 }
 
-table tbody td a:hover {
-    background-color: var(--darkblue);
-    color: var(--white);
-}
-
 .table-container {
     overflow-x: auto;
+    max-width: 100%;
+    margin-top: 20px;
 }
 
 .maior-preco {
@@ -266,9 +263,14 @@ table tbody td a:hover {
     border-radius: 8px;
     z-index: 1;
     overflow: hidden;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(-10px);
 }
 .filter-menu.show {
     display: block;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .filter-menu button {
@@ -279,11 +281,12 @@ table tbody td a:hover {
     color: var(--black);
     cursor: pointer;
     transition: background 0.3s;
-    gap: 6px;
+    padding: 10px 20px;
 }
 
 .filter-menu button:hover {
-    border: 3px solid var(--darkblue);
+    background-color: var(--darkblue);
+    color: var(--white);
 }
 
 .filter-menu button + button {
@@ -349,17 +352,11 @@ table tbody td a:hover {
     background-color: #bbdefb; /* Azul claro */
 }
 
-/* Estilização da Tabela para Fluxo de Dados Grande */
-.table-container {
-    overflow-x: auto;
-    max-width: 100%;
-    margin-top: 20px;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
     margin: 0 auto;
+    margin-top: 20px;
     font-size: 16px;
     text-align: left;
 }
@@ -381,19 +378,6 @@ table tbody tr:nth-of-type(even) {
 
 table tbody tr:hover {
     background-color: var(--lightyellow);
-}
-
-/* Cores Específicas para Tipos de Usuário */
-#usuario-nutricionista {
-    background-color: #c8e6c9; /* Verde claro */
-}
-
-#usuario-contador {
-    background-color: #ffecb3; /* Amarelo claro */
-}
-
-#usuario-administrador {
-    background-color: #bbdefb; /* Azul claro */
 }
 
 /* Ajustes para Responsividade */
