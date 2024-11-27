@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../../../controller/cotacaoController.php';
-require_once __DIR__ . '/../../../../controller/produtoController.php';
+require_once __DIR__ . '/../../../../controller/produtoController.php'; 
 require_once __DIR__ . '/../../../../controller/fornecedorController.php';
 require_once __DIR__ . "/../../../../controller/pageController.php";
 require_once __DIR__ . "/../../../../controller/userController.php";
@@ -99,10 +99,10 @@ function construirTabelas($cotas) {
 
         $semanas[$semana][] = $cota;
     }
-
+    $indexNum = 0;
     foreach ($semanas as $semana => $cotasDaSemana) {
-        echo "<h2>Semana: $semana</h2>";
-        echo "<table border='1'>";
+        echo "<div class='tableHeader' onclick='switchTable(" .$indexNum . ")'>Semana: $semana <i class='bx bx-chevron-down'></i></div>";
+        echo "<table border='1' class='history h-num-". $indexNum ."'>";
         echo '
         <thead>
             <tr>
@@ -165,6 +165,7 @@ function construirTabelas($cotas) {
                 echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
             }
             echo "</tr>";
+            $indexNum++;
         }
 
         echo "</table>";
@@ -198,6 +199,8 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == n
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listar Cotações</title>
     <link rel="stylesheet" href="../../styles/ListarStyle.css">
+    <link rel="stylesheet" href="./custom.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         h2 {
@@ -211,17 +214,19 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == n
     <h1>Listar Cotações</h1>
     <section class="search">
         <?php if ($podeGerenciarCotacoes): ?>
+            <?php endif; ?>
+            <div>
+                <section class="input-filter-date">
+                    <label for="dataInicio">Data Início:</label>
+                    <input type="date" id="dataInicio" name="dataInicio">
+                </section>
+                <section class="input-filter-date">
+                    <label for="dataFim">Data Fim:</label>
+                    <input type="date" id="dataFim" name="dataFim">
+                </section>
+            </div>
             <section class="add-quote">
                 <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
-            </section>
-                <?php endif; ?>
-            <section class="input-filter-date">
-                <label for="dataInicio">Data Início:</label>
-                <input type="date" id="dataInicio" name="dataInicio">
-            </section>
-            <section class="input-filter-date">
-                <label for="dataFim">Data Fim:</label>
-                <input type="date" id="dataFim" name="dataFim">
             </section>
     </section>
     <table>
@@ -397,6 +402,10 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == n
     }
 
     try {updatefiltros()} catch (error) {console.log(error)}
+
+    function switchTable(id){
+        document.querySelector(".h-num-"+id).classList.toggle("active")
+    }
 
     function getQueryParams() {
         let params = {};

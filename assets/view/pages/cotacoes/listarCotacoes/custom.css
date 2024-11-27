@@ -1,0 +1,52 @@
+.search{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.search > div{
+    width: 50%;
+    display: flex;
+}
+.search > div .input-filter-date{
+    width: 40%;
+}
+.tableHeader{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: var(--darkblue);
+    color: #fff;
+    margin-top: 25px;
+    padding: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+.tableHeader:hover{
+    background: var(--superdarkblue);
+}
+.tableHeader i{
+    position: absolute;
+    right: 20px;
+    font-size: 52px;
+}
+.history{
+    display: none;
+    max-height: 0;
+}
+.history tr{
+    padding: 200px;
+}
+.history.active{
+    display:inline-table;
+    animation: entry 200ms;
+    z-index: -5;
+}
+table{
+    margin: 0;
+}
+
+@keyframes entry {
+    0%{transform: translateY(-50%);}   
+    100%{transform: translateY(0);} 
+}
