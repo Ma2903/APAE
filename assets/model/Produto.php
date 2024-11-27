@@ -3,14 +3,12 @@ class Produto {
     private $id;
     private $nome;
     private $categoria;
-    private $un;
     private $dt_criacao;
 
-    public function __construct($id, $nome, $categoria, $un, $dt_criacao) {
+    public function __construct($id, $nome, $categoria, $dt_criacao) {
         $this->id = $id;
         $this->nome = $nome;
         $this->categoria = $categoria;
-        $this->un = $un;
         $this->dt_criacao = $dt_criacao;
     }
 

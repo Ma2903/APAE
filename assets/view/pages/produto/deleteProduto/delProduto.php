@@ -26,8 +26,6 @@
                 if($produto->getId() == $_GET['id']){
                     echo '<label for="nome">Nome:</label>';
                     echo '<input type="text" id="nome" name="nome" value="' . htmlspecialchars($produto->getNome()) . '" readonly><br>';
-                    echo '<label for="preco">Preço:</label>';
-                    echo '<input type="text" id="preco" name="preco" value="' . htmlspecialchars($produto->getUn()) . '" readonly><br>';
                     echo '<label for="descricao">Descrição:</label>';
                     echo '<input type="text" id="descricao" name="descricao" value="' . htmlspecialchars($produto->getCategoria()) . '" readonly><br>';
                 }

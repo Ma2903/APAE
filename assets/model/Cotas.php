@@ -5,14 +5,16 @@ class Cota {
     private $fornecedorId;
     private $precoUnitario;
     private $quantidade;
+    private $relacaoUnidadePeso;
     private $dataCotacao;
 
-    public function __construct($id, $produtoId, $fornecedorId, $precoUnitario, $quantidade, $dataCotacao) {
+    public function __construct($id, $produtoId, $fornecedorId, $precoUnitario, $quantidade,$relacaoUnidadePeso, $dataCotacao) {
         $this->id = $id;
         $this->produtoId = $produtoId;
         $this->fornecedorId = $fornecedorId;
         $this->precoUnitario = $precoUnitario;
         $this->quantidade = $quantidade;
+        $this->relacaoUnidadePeso = $relacaoUnidadePeso;
         $this->dataCotacao = $dataCotacao;
     }
 
@@ -62,6 +64,14 @@ class Cota {
 
     public function setDataCotacao($dataCotacao) {
         $this->dataCotacao = $dataCotacao;
+    }
+
+    public function getRelacaoUnidadePeso() {
+        return $this->relacaoUnidadePeso;
+    }
+
+    public function setRelacaoUnidadePeso($relacaoUnidadePeso) {
+        $this->relacaoUnidadePeso = $relacaoUnidadePeso;
     }
 }
 ?>

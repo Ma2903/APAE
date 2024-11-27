@@ -7,6 +7,17 @@
     width: 50%;
     display: flex;
 }
+.search > div > *{
+    margin: 0;
+    margin-right: 20px;
+}
+.search > div.right > *{
+    margin-right: 0;
+    margin-left: 20px;
+}
+.search > div.right{
+    justify-content: flex-end;
+}
 .search > div .input-filter-date{
     width: 40%;
 }
@@ -29,6 +40,9 @@
     position: absolute;
     right: 20px;
     font-size: 52px;
+}
+.tableHeader.active i{
+    transform: rotate(180deg);
 }
 .history{
     display: none;

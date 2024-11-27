@@ -27,7 +27,7 @@ $controler = new ControladorUsuarios();
                 <i class="fas fa-filter"></i> Filtrar
             </button>
             <section class="filter-menu" id="filter-menu">
-                <button onclick="filterUsers('contador')">Contadores</button>
+                <button onclick="filterUsers('contador')">Administradores Compras</button>
                 <button onclick="filterUsers('nutricionista')">Nutricionistas</button>
                 <button onclick="filterUsers('administrador')">Administradores</button>
                 <button class="close-filter" onclick="clearFilter()"><i class="fas fa-times"></i></button>
@@ -42,7 +42,7 @@ $controler = new ControladorUsuarios();
         </section>
         <section class="legend-item">
             <div class="legend-color legend-contador"></div>
-            <span>Contador</span>
+            <span>Adm Compras</span>
         </section>
         <section class="legend-item">
             <div class="legend-color legend-administrador"></div>
@@ -88,14 +88,19 @@ $controler = new ControladorUsuarios();
                             $idUsuario = 'usuario-contador';
                             break;
                     }
-                    
+                    $tipo;
+                    if($usuario->getTipoUsuario() === "contador"){
+                        $tipo = 'Adm Compras';
+                    }else{
+                        $tipo = $usuario->getTipoUsuario();
+                    }
                     echo "<tr class='{$classeUsuario}' id='{$idUsuario}'>";
                     echo "<td>{$usuario->getCpf()}</td>";
                     echo "<td>{$usuario->getNome()}</td>";
                     echo "<td>{$usuario->getSobrenome()}</td>";
                     echo "<td>".converterDataParaBR($usuario->getDataNasc())."</td>";
                     echo "<td>{$usuario->getEmail()}</td>";
-                    echo "<td>{$usuario->getTipoUsuario()}</td>";
+                    echo "<td>{$tipo}</td>";
                     echo "<td><a href='../editarUsuario/editUsuario.php?id={$usuario->getId()}' class='acao-editar'><i class='fas fa-edit'></i> Editar</a></td>";
                     echo "<td><a href='../deleteUsuario/delUsuario.php?id={$usuario->getId()}' class='acao-deletar'><i class='fas fa-trash'></i> Deletar</a></td>";
                     echo "</tr>";

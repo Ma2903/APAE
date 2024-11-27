@@ -40,7 +40,7 @@ class ControladorProdutos{
         $todosProdutos = $this->bd->read("produtos");
         $arr = [];
         foreach($todosProdutos as $produto){
-            $novoProduto = new Produto($produto['id'], $produto['nome'], $produto['categoria'], $produto['unidade_medida'], $produto['data_criacao']);
+            $novoProduto = new Produto($produto['id'], $produto['nome'], $produto['categoria'], $produto['data_criacao']);
             $arr[] = $novoProduto;
         }
         return $arr;

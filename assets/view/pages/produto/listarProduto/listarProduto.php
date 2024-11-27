@@ -60,7 +60,6 @@
             <tr>
                 <th>Nome</th>
                 <th>Categoria</th>
-                <th>Unidade de Medida</th>
                 <th>Data de Criação</th>
                 <?php if ($podeGerenciarProdutos): ?>
                 <th colspan="2">Ações</th>
@@ -79,7 +78,6 @@
                     echo "<tr>";
                     echo "<td>{$produto->getNome()}</td>";
                     echo "<td>{$produto->getCategoria()}</td>";
-                    echo "<td>{$produto->getUn()}</td>";
                     echo "<td>{$dataCriacao}</td>";
                     if ($podeGerenciarProdutos) {
                         echo "<td> <a href='../editarProduto/editProduto.php?id={$produto->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar</a> </td>";

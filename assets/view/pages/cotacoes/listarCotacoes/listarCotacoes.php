@@ -101,7 +101,7 @@ function construirTabelas($cotas) {
     }
     $indexNum = 0;
     foreach ($semanas as $semana => $cotasDaSemana) {
-        echo "<div class='tableHeader' onclick='switchTable(" .$indexNum . ")'>Semana: $semana <i class='bx bx-chevron-down'></i></div>";
+        echo "<div class='tableHeader h-head-". $indexNum ."' onclick='switchTable(" .$indexNum . ")'>Semana: $semana <i class='bx bx-chevron-down'></i></div>";
         echo "<table border='1' class='history h-num-". $indexNum ."'>";
         echo '
         <thead>
@@ -225,9 +225,14 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == n
                     <input type="date" id="dataFim" name="dataFim">
                 </section>
             </div>
-            <section class="add-quote">
-                <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
-            </section>
+            <div class="right">
+                <section class="add-quote">
+                    <a href="../resumoCotacoes/" class="add-quote-btn">Resumo </a>
+                </section>
+                <section class="add-quote">
+                    <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
+                </section>
+            </div>
     </section>
     <table>
         <thead>
@@ -324,6 +329,8 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == n
                     echo "<tr>";
                     echo "<td>{$produtoNome}</td>";
                     echo "<td>{$dataCotacao}</td>";
+                    echo "<td>R$ {$cotacao->getPrecoUnitario()}</td>";
+                    echo "<td>{$fornecedorNome}</td>";
                     echo "<td>R$ <span class='maior-preco'>{$maiorPreco} ↑</span> | R$ <span class='menor-preco'>{$menorPreco} ↓</span></td>";
                     echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
                     if ($podeGerenciarCotacoes) {
@@ -405,6 +412,7 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == n
 
     function switchTable(id){
         document.querySelector(".h-num-"+id).classList.toggle("active")
+        document.querySelector(".h-head-"+id).classList.toggle("active")
     }
 
     function getQueryParams() {

@@ -9,7 +9,7 @@ class ControladorCotacao {
         $this->bd = new Database();
     }
 
-    public function cadastrarCota($produtoId, $fornecedorId, $precoUnitario, $quantidade) {
+    public function cadastrarCota($produtoId, $fornecedorId, $precoUnitario,$relacaoUnidadePeso, $quantidade) {
         date_default_timezone_set('America/Sao_Paulo');
         $data_criacao = date("Y-m-d H:i:s");
 
@@ -18,6 +18,7 @@ class ControladorCotacao {
             "fornecedor_id" => $fornecedorId,
             "preco_unitario" => $precoUnitario,
             "quantidade" => $quantidade,
+            "rel_un_peso" => $relacaoUnidadePeso,
             "data_cotacao" => $data_criacao
         ]);
         header("Location: ./../listarCotacoes/listarCotacoes.php");    
@@ -27,7 +28,7 @@ class ControladorCotacao {
         $todasCotas = $this->bd->read("cotas");
         $arr = [];
         foreach($todasCotas as $cota) {
-            $novaCota = new Cota($cota['id'], $cota['produto_id'], $cota['fornecedor_id'], $cota['preco_unitario'], $cota['quantidade'], $cota['data_cotacao']);
+            $novaCota = new Cota($cota['id'], $cota['produto_id'], $cota['fornecedor_id'], $cota['preco_unitario'], $cota['quantidade'],$cota['rel_un_peso'], $cota['data_cotacao']);
             $arr[] = $novaCota;
         }
         return $arr;

@@ -21,12 +21,11 @@
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nome = $_POST['nome'];
             $categoria = $_POST['categoria'];
-            $unidade_medida = $_POST['unidade_medida'];
             date_default_timezone_set('America/Sao_Paulo');
             $data_criacao = date("Y-m-d H:i:s");
 
-            if (!empty($nome) && !empty($categoria) && !empty($unidade_medida) && !empty($data_criacao)) {
-                $controler->cadastrarProdutos($nome, $categoria, $unidade_medida, $data_criacao);
+            if (!empty($nome) && !empty($categoria) && !empty($data_criacao)) {
+                $controler->cadastrarProdutos($nome, $categoria, $data_criacao);
                 header("Location: ../listarProduto/listarProduto.php");
             } else {
             echo "<p>Por favor, preencha todos os campos.</p>";
@@ -50,16 +49,6 @@
                 <option value="Frios">Frios</option>
                 <option value="Alimenticios">Alimenticios</option>
                 <option value="Outros">Outros</option>
-            </select>
-            </section>
-            <section>
-            <label for="unidade_medida">Unidade de Medida:</label>
-            <select id="unidade_medida" name="unidade_medida" required>
-                <option value="CX">CX</option>
-                <option value="UN">UN</option>
-                <option value="KG">KG</option>
-                <option value="SC">SC</option>
-                
             </select>
             </section>
             <section>

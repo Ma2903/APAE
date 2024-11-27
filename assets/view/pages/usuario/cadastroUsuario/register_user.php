@@ -57,7 +57,7 @@ $controler = new ControladorUsuarios();
                 <label for="tipo_usuario">Tipo de Usuário:</label>
                     <select id="tipo_usuario" name="tipo_usuario" required>
                         <option value="administrador">Administrador</option>
-                        <option value="contador">Contador</option>
+                        <option value="contador">Adm Compras</option>
                         <option value="nutricionista">Nutricionista</option>
                     </select>
             </section>

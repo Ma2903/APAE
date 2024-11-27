@@ -46,11 +46,13 @@ $cotas = $controladorCotacao->verCotas();
             <input type="number" step="0.01" id="preco_unitario" name="preco_unitario" required>
             <label for="quantidade">Quantidade:</label>
             <input type="number" step="0.01" id="quantidade" name="quantidade" required>
+            <label for="quantidade">Relação Peso da Unidade:</label>
+            <input type="number" step="0.01" id="rel_un_peso" name="rel_un_peso" required>
             <button type="submit">Cadastrar Cotação</button>
     </form>
     <?php
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $controladorCotacao->cadastrarCota($_POST['produto_id'], $_POST['fornecedor_id'], $_POST['preco_unitario'], $_POST['quantidade']);
+        $controladorCotacao->cadastrarCota($_POST['produto_id'], $_POST['fornecedor_id'], $_POST['preco_unitario'],$_POST['rel_un_peso'], $_POST['quantidade']);
     }
     
     

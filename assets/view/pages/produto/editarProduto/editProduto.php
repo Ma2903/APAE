@@ -40,15 +40,6 @@ $controler = new ControladorProdutos();
                     <option value="Frios"';if($produto->getCategoria() == "Frios") echo ' selected';echo'>Frios</option>
                     <option value="Outros"';if($produto->getCategoria() == "Outros") echo ' selected';echo'>Outros</option>
                 </select>
-                </section>
-                <section>
-                <label for="unidade_medida">Unidade de Medida:</label>
-                <select type="text" id="unidade_medida" name="unidade_medida" required>
-                    <option value="CX"';if($produto->getUn() == "CX") echo ' selected'; echo '>CX</option>
-                    <option value="UN"';if($produto->getUn() == "UN") echo ' selected'; echo '>UN</option>
-                    <option value="KG"';if($produto->getUn() == "KG") echo ' selected'; echo '>KG</option>
-                    <option value="SC"';if($produto->getUn() == "SC") echo ' selected'; echo '>SC</option>
-                </select>
                 </section>';
             }
         }
@@ -58,8 +49,8 @@ $controler = new ControladorProdutos();
     </section>
     <?php
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['nome']) && !empty($_POST['categoria']) && !empty($_POST['unidade_medida'])) {
-                $controler->editarProdutos($_GET['id'],$_POST['nome'],$_POST['categoria'],$_POST['unidade_medida']);
+            if (!empty($_POST['nome']) && !empty($_POST['categoria'])) {
+                $controler->editarProdutos($_GET['id'],$_POST['nome'],$_POST['categoria']);
                 header('Location: ../listarProduto/listarProduto.php');
             } else {
                 echo '<p>Por favor, preencha todos os campos.</p>';
