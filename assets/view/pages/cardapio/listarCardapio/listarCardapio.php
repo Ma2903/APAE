@@ -1,6 +1,8 @@
 <?php
     require_once __DIR__ . '/../../../../controller/cardapioController.php';
     require_once __DIR__ . "/../../../../controller/userController.php";
+    require_once __DIR__ . "/../../../../controller/produtoController.php";
+    require_once __DIR__ . "/../../../../controller/pageController.php";
     require_once __DIR__ . "/../../../../model/utils.php";
     session_start();
     
@@ -14,7 +16,13 @@
     $podeGerenciarCardapios = verificarPermissao($tipo_usuario, 'gerenciar_cardapios');
 
     $cardapioController = new cardapioController();
+    $controladorProduto = new ControladorProdutos();
     $cardapios = $cardapioController->listarcardapios();
+
+    // Supondo que $cardapios seja um array de objetos Cardapio
+    usort($cardapios, function($a, $b) {
+        return strtotime($b->getDataC()) - strtotime($a->getDataC());
+    });
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -53,7 +61,6 @@
                 <tr>
                     <th>ID</th>
                     <th>Nutricionista</th>
-                    <th>Data</th>
                     <th>Período</th>
                     <th>Descrição</th>
                     <?php if ($podeGerenciarCardapios): ?>
@@ -62,19 +69,24 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
+                <?php 
                 if ($cardapios) {
                     foreach ($cardapios as $cardapio) {
                         echo "<tr>";
-                         echo "<td>{$cardapio->getId()}</td>";
-                         echo "<td>{$cardapio->getNutricionistaId()} </td>";
-                         echo "<td>{$cardapio->getDataC()}</td>";
-                         echo "<td>{$cardapio->getPeriodo()}</td>";
-                         echo "<td>{$cardapio->getDescricao()}</td>";
+                        echo "<td colspan='7'><h2>{$cardapio->getDataC()}</h2></td>";
+                        echo "</tr>";
+                        echo "<tr>";
+                        echo "<td>{$cardapio->getId()}</td>";
+                        echo "<td>{$cardapio->getNutricionistaId()}</td>";
+                        echo "<td>{$cardapio->getPeriodo()}</td>";
+                        echo "<td>{$cardapio->getDescricao()}</td>";
                         if ($podeGerenciarCardapios) {
-                            echo "<td><a href='../editarCardapio/editCardapio.php?id={$cardapio->getId()}&nutricionista_id={$cardapio->getNutricionistaId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
-                            echo "<td><a href='../deleteCardapio/delCardapio.php?id={$cardapio->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
+                            echo "<td><a href='../editarCardapio/editCardapio.php?id={$cardapio->getId()}&nutricionista_id={$cardapio->getNutricionistaId()}' class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
+                            echo "<td><a href='../deleteCardapio/delCardapio.php?id={$cardapio->getId()}' class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
                         }
+                        echo "</tr>";
+                        echo "<tr>";
+                        echo "<td colspan='7'><h2>Produtos:{$controladorProduto->verCadProdutos()}</h2></td>";
                         echo "</tr>";
                     }
                 } else {

@@ -90,3 +90,12 @@ form button:hover {
 .back-btn:hover {
     background-color: var(--lightblue);
 }
+
+.form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 40%;
+}
