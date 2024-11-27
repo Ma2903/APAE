@@ -40,7 +40,6 @@
 .history.active{
     display:inline-table;
     animation: entry 200ms;
-    z-index: -5;
 }
 table{
     margin: 0;
