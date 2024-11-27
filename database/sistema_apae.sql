@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 17/11/2024 às 17:48
+-- Tempo de geração: 27/11/2024 às 17:04
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.0.30
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -41,7 +41,10 @@ CREATE TABLE `cardapios` (
 --
 
 INSERT INTO `cardapios` (`id`, `nutricionista_id`, `dataC`, `periodo`, `descricao`, `data_criacao`) VALUES
-(1, 3, '2024-09-18', '', 'Cardápio saudável para a semana.', '2024-09-18 01:39:59');
+(15, 3, '2024-11-20', 'tarde', 'sssss', '2024-11-10 22:26:26'),
+(19, 15, '2024-12-02', 'manha', 'Café da manhã: Café com leite e boscoitos.', '2024-11-11 23:11:43'),
+(20, 3, '2024-11-28', 'manha-tarde', 'sim', '2024-11-27 01:22:57'),
+(21, 3, '2024-11-29', 'manha', 'dfe', '2024-11-27 02:06:50');
 
 -- --------------------------------------------------------
 
@@ -55,14 +58,6 @@ CREATE TABLE `cardapio_produtos` (
   `produto_id` int(11) NOT NULL,
   `quantidade` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `cardapio_produtos`
---
-
-INSERT INTO `cardapio_produtos` (`id`, `cardapio_id`, `produto_id`, `quantidade`) VALUES
-(1, 1, 1, 10.00),
-(2, 1, 2, 5.00);
 
 -- --------------------------------------------------------
 
@@ -131,8 +126,7 @@ CREATE TABLE `notificacoes` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) DEFAULT NULL,
   `mensagem` text DEFAULT NULL,
-  `data_notificacao` timestamp NOT NULL DEFAULT current_timestamp(),
-  `is_active` int(1) NOT NULL
+  `data_notificacao` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -224,7 +218,8 @@ INSERT INTO `usuarios` (`id`, `cpf`, `nome`, `sobrenome`, `data_nascimento`, `en
 (3, '11122233344', 'Ana', 'Santos', '1990-07-10', 'Rua da Saúde, 789', '(18) 97777-7777', 'ana@apae.org', 'nutri123', 'nutricionista', 'CRN-12345', '2024-09-18 01:39:03'),
 (4, '487.677.598', 'Manoela', 'Pinheiro da Silva', '2006-03-29', 'Rua Ângelo Salvatore, 125', '(18) 99681-6585', 'manoela2903@outlook.com', '0401', 'administrador', NULL, '2024-10-02 02:58:40'),
 (5, '456.765.098', 'Renata', 'Costa', '1992-05-12', 'Rua ABC N 12', '(18) 99215-9875', 'CostaRenata@apae.org', 'cont123', 'contador', '', '2024-11-06 12:28:24'),
-(6, '0987654321', 'Antônio', 'Santos', '1982-09-25', 'Rua XYZ N14', '(18) 1234-8756', 'SantosAntonio@apae.org', 'cont987', 'contador', '', '2024-11-06 12:35:48');
+(6, '0987654321', 'Antônio', 'Santos', '1982-09-25', 'Rua XYZ N14', '(18) 1234-8756', 'SantosAntonio@apae.org', 'cont987', 'contador', '', '2024-11-06 12:35:48'),
+(15, '999999999', 'Josias', 'Jamar', '1988-10-18', 'Rua Jasmin Freitas', '189999999', 'josiasJ@gmail.com', 'nutri1234', 'nutricionista', '', '0000-00-00 00:00:00');
 
 --
 -- Índices para tabelas despejadas
@@ -294,7 +289,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `cardapios`
 --
 ALTER TABLE `cardapios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de tabela `cardapio_produtos`
@@ -336,7 +331,7 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Restrições para tabelas despejadas
