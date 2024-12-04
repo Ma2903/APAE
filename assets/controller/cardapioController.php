@@ -17,6 +17,14 @@ class cardapioController {
             "descricao" => $descricao
         ]);
     }
+    public function criarCadProd($cardapio_id, $produto_id, $quantidade, $custo) {
+        $this->db->insert("cardapio_produtos", (object)[
+            "cardapio_id" => $cardapio_id,
+            "produto_id" => $produto_id,
+            "quantidade" => $quantidade,
+            "custo" => $custo
+        ]);
+    }
 
     public function listarcardapios() {
         $todosCardapio = $this->db->read("cardapios");
@@ -55,20 +63,37 @@ class cardapioController {
     }
 
     public function getNutricionistaNome($nutricionista_id) {
-        $nutricionista = new Nutricionista($nutricionista_id);
-        return $nutricionista->getNome();
+        $todoscardapios = $this->db->read("cardapios");
+        $usuarioBanco = $this->db->read("usuarios");
+        $nutricio = "";
+        foreach($todoscardapios as $cardapio){
+            if($cardapio['nutricionista_id'] == $nutricionista_id){
+                foreach($usuarioBanco as $usuario){
+                    if($cardapio['nutricionista_id'] == $usuario['id']){
+                        $nutricio = $usuario['nome'];
+                    }
+                }
+            }
+        }
+        return $nutricio;
+        // foreach($usuarioBanco as $usuario)
+        // {
+        //     switch ($id) {
+        //         case $usuario['id']:
+        //             $nutricio = $usuario['nome'];
+        //             break;
+        //     }
+        //     var_dump($nutricio); 
+        //     return $nutricio;
+        // }
     }
 
     public function getCardapioById($cardapioID) {
         $cardapio = $this->db->read("cardapios");
         foreach($cardapio as $cardapios) {
             if ($cardapios['id'] == $cardapioID) {
-                // echo "<pre>";
-                // var_dump($cardapios);
-                // echo "</pre>";
                 return new Cardapio($cardapios['id'], $cardapios['nutricionista_id'], $cardapios['dataC'], $cardapios['periodo'], $cardapios['descricao']);
             }
-            return null;
         }
     }
 }

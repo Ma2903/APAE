@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../model/pdo/DataBase.php';
 require_once __DIR__ .'/../model/Produto.php';
-require_once __DIR__ .'/../model/Cardapio_prod.php';
 
 class ControladorProdutos{
     private $bd;
@@ -20,7 +19,6 @@ class ControladorProdutos{
 
     // GAMBIARRA
     public function armazenarProdutosSelecionados($cardapio_id, $produto_id, $quantidade) {
-        $this->bd->insert("cardapio_produtos");
         $produtosSelecionados = [];
         foreach ($produtosSelecionados as $produto) {
             $produto_id = $produto['produto'];
@@ -45,16 +43,7 @@ class ControladorProdutos{
         }
         return $arr;
     }
-
-    public function verCadProdutos(){
-        $todosCadProdutos = $this->bd->read("cardapio_produtos");
-        $arr = [];
-        foreach($todosCadProdutos as $Cadproduto){
-            $novoProduto = new Cardapio_produtos($Cadproduto['id'], $Cadproduto['cardapio_id'], $Cadproduto['produto_id'], $Cadproduto['quantidade']);
-            $arr[] = $novoProduto;
-        }
-        return $arr;
-    }
+    
     public function editarProdutos($idParaEditar, $nome, $categoria, $un){
             $this->bd->update('produtos', (object)[
                 'nome'=> $nome,
@@ -73,6 +62,31 @@ class ControladorProdutos{
         }
     }
 
+    public function filtrarProdutosCotadosSemanaAtual(){
+        $cotas = $this->bd->read("cotas");
+        $semanaAtual = $this->obterInicioEFimDaSemanaAtual();
+        $produtosCotados = [];
+
+
+        foreach($cotas as $cota){
+            if($cota['data_cotacao'] >= $semanaAtual['inicioSemana'] && $cota['data_cotacao'] <= $semanaAtual['fimSemana']){
+
+                $produtos = $this->bd->read("produtos");
+                
+                foreach($produtos as $produto){
+                    if($produto['id'] == $cota['produto_id']){
+                        $produtosCotados[] = [
+                            "preco_por_grama" => floatval($cota['preco_unitario']) / floatval($cota['rel_un_peso']),
+                            "produto" => new Produto($produto['id'], $produto['nome'], $produto['categoria'], $produto['data_criacao'])
+                        ];
+                    }
+                }
+            }
+        }
+        
+        return $produtosCotados;
+    }
+
     public $ProdutosSelecionados = [];
 
     public function adicionarSelecionado() {
@@ -85,6 +99,23 @@ class ControladorProdutos{
         foreach($this->ProdutosSelecionados as $produto) {
             echo $produto . '<br>';
         }
+    }
+
+    
+    function obterInicioEFimDaSemanaAtual() {
+        // Obter a data atual
+        $dataAtual = date('Y-m-d');
+        
+        // Calcular o início da semana (segunda-feira)
+        $inicioSemana = date('Y-m-d', strtotime('monday this week', strtotime($dataAtual)));
+        
+        // Calcular o fim da semana (domingo)
+        $fimSemana = date('Y-m-d', strtotime('sunday this week', strtotime($dataAtual)));
+        
+        return [
+            'inicioSemana' => $inicioSemana,
+            'fimSemana' => $fimSemana
+        ];
     }
 }
 ?>

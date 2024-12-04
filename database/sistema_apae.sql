@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 27/11/2024 às 17:04
+-- Tempo de geração: 04/12/2024 às 05:36
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -43,8 +43,13 @@ CREATE TABLE `cardapios` (
 INSERT INTO `cardapios` (`id`, `nutricionista_id`, `dataC`, `periodo`, `descricao`, `data_criacao`) VALUES
 (15, 3, '2024-11-20', 'tarde', 'sssss', '2024-11-10 22:26:26'),
 (19, 15, '2024-12-02', 'manha', 'Café da manhã: Café com leite e boscoitos.', '2024-11-11 23:11:43'),
-(20, 3, '2024-11-28', 'manha-tarde', 'sim', '2024-11-27 01:22:57'),
-(21, 3, '2024-11-29', 'manha', 'dfe', '2024-11-27 02:06:50');
+(21, 3, '2024-11-28', 'manha-tarde', 'sim', '2024-11-27 01:22:57'),
+(24, 15, '2024-12-05', 'manha-tarde', 'Bananinha', '2024-12-04 04:01:26'),
+(25, 15, '2024-12-11', 'tarde', 'Frango Abananado', '2024-12-04 04:02:37'),
+(26, 15, '2024-12-11', 'tarde', 'Frango Abananado', '2024-12-04 04:06:31'),
+(27, 15, '2024-12-11', 'tarde', 'Frango Abananado', '2024-12-04 04:08:42'),
+(28, 15, '2024-12-07', 'tarde', 'asd', '2024-12-04 04:10:56'),
+(29, 15, '2024-12-05', 'tarde', 'asd', '2024-12-04 04:11:30');
 
 -- --------------------------------------------------------
 
@@ -56,8 +61,19 @@ CREATE TABLE `cardapio_produtos` (
   `id` int(11) NOT NULL,
   `cardapio_id` int(11) NOT NULL,
   `produto_id` int(11) NOT NULL,
-  `quantidade` decimal(10,2) NOT NULL
+  `quantidade` int(20) NOT NULL,
+  `custo` float(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `cardapio_produtos`
+--
+
+INSERT INTO `cardapio_produtos` (`id`, `cardapio_id`, `produto_id`, `quantidade`, `custo`) VALUES
+(7, 28, 14, 500, 50.00),
+(8, 28, 2, 120, 4.80),
+(9, 28, 2, 213, 8.52),
+(10, 29, 2, 12, 0.48);
 
 -- --------------------------------------------------------
 
@@ -71,23 +87,26 @@ CREATE TABLE `cotas` (
   `fornecedor_id` int(11) NOT NULL,
   `preco_unitario` decimal(10,2) NOT NULL,
   `quantidade` decimal(10,2) NOT NULL,
-  `data_cotacao` date NOT NULL
+  `data_cotacao` date NOT NULL,
+  `rel_un_peso` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `cotas`
 --
 
-INSERT INTO `cotas` (`id`, `produto_id`, `fornecedor_id`, `preco_unitario`, `quantidade`, `data_cotacao`) VALUES
-(1, 1, 1, 4.50, 50.00, '2024-09-15'),
-(2, 1, 2, 5.00, 50.00, '2024-09-15'),
-(3, 2, 2, 10.90, 20.00, '2024-09-15'),
-(4, 3, 3, 15.00, 10.00, '2024-09-15'),
-(5, 1, 1, 4.50, 50.00, '2024-09-15'),
-(7, 2, 2, 10.90, 20.00, '2024-09-15'),
-(8, 3, 3, 15.00, 10.00, '2024-09-15'),
-(9, 1, 2, 4.00, 50.00, '2024-10-20'),
-(10, 2, 2, 20.00, 50.00, '2024-11-05');
+INSERT INTO `cotas` (`id`, `produto_id`, `fornecedor_id`, `preco_unitario`, `quantidade`, `data_cotacao`, `rel_un_peso`) VALUES
+(1, 1, 1, 4.50, 50.00, '2024-09-15', 0),
+(2, 1, 2, 5.00, 50.00, '2024-09-15', 0),
+(3, 2, 2, 10.90, 20.00, '2024-09-15', 0),
+(4, 3, 3, 15.00, 10.00, '2024-09-15', 0),
+(5, 1, 1, 4.50, 50.00, '2024-09-15', 0),
+(7, 2, 2, 10.90, 20.00, '2024-09-15', 0),
+(8, 3, 3, 15.00, 10.00, '2024-09-15', 0),
+(9, 1, 2, 4.00, 50.00, '2024-10-20', 0),
+(10, 2, 2, 20.00, 50.00, '2024-11-05', 0),
+(11, 14, 2, 20.00, 5.00, '2024-12-03', 200),
+(12, 2, 6, 120.00, 20.00, '2024-12-03', 3000);
 
 -- --------------------------------------------------------
 
@@ -167,7 +186,6 @@ CREATE TABLE `produtos` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
   `categoria` varchar(100) DEFAULT NULL,
-  `unidade_medida` enum('CX','UN','KG','MC','SC','BDJ','CBÇ') NOT NULL,
   `data_criacao` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -175,18 +193,18 @@ CREATE TABLE `produtos` (
 -- Despejando dados para a tabela `produtos`
 --
 
-INSERT INTO `produtos` (`id`, `nome`, `categoria`, `unidade_medida`, `data_criacao`) VALUES
-(1, 'Maçã', 'Verduras', 'KG', '2024-09-18 01:39:26'),
-(2, 'Frango', 'Carnes', 'KG', '2024-09-18 01:39:26'),
-(3, 'Sabão em Pó', 'Limpeza', 'CX', '2024-09-18 01:39:26'),
-(7, 'Absorvente', 'Higiene Pessoal', 'UN', '2024-11-06 11:37:29'),
-(8, 'Achocolatado em pó', 'Alimenticios', 'UN', '2024-11-06 11:42:20'),
-(9, 'Creme Dental', 'Higiene Pessoal', 'UN', '2024-11-06 11:43:36'),
-(10, 'Detergente', 'Limpeza', 'UN', '2024-11-06 11:44:02'),
-(11, 'Farinha de Trigo', 'Alimenticios', 'UN', '2024-11-06 11:44:20'),
-(12, 'Mussarela', 'Frios', 'KG', '2024-11-06 11:44:47'),
-(13, 'Pães Frances', 'Outros', 'UN', '2024-11-06 11:45:33'),
-(14, 'Banana', 'Frutas', 'KG', '2024-11-06 11:46:58');
+INSERT INTO `produtos` (`id`, `nome`, `categoria`, `data_criacao`) VALUES
+(1, 'Maçã', 'Verduras', '2024-09-18 01:39:26'),
+(2, 'Frango', 'Carnes', '2024-09-18 01:39:26'),
+(3, 'Sabão em Pó', 'Limpeza', '2024-09-18 01:39:26'),
+(7, 'Absorvente', 'Higiene Pessoal', '2024-11-06 11:37:29'),
+(8, 'Achocolatado em pó', 'Alimenticios', '2024-11-06 11:42:20'),
+(9, 'Creme Dental', 'Higiene Pessoal', '2024-11-06 11:43:36'),
+(10, 'Detergente', 'Limpeza', '2024-11-06 11:44:02'),
+(11, 'Farinha de Trigo', 'Alimenticios', '2024-11-06 11:44:20'),
+(12, 'Mussarela', 'Frios', '2024-11-06 11:44:47'),
+(13, 'Pães Frances', 'Outros', '2024-11-06 11:45:33'),
+(14, 'Banana', 'Frutas', '2024-11-06 11:46:58');
 
 -- --------------------------------------------------------
 
@@ -289,19 +307,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `cardapios`
 --
 ALTER TABLE `cardapios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de tabela `cardapio_produtos`
 --
 ALTER TABLE `cardapio_produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `cotas`
 --
 ALTER TABLE `cotas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `fornecedores`
@@ -342,13 +360,6 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `cardapios`
   ADD CONSTRAINT `cardapios_ibfk_1` FOREIGN KEY (`nutricionista_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
-
---
--- Restrições para tabelas `cardapio_produtos`
---
-ALTER TABLE `cardapio_produtos`
-  ADD CONSTRAINT `cardapio_produtos_ibfk_1` FOREIGN KEY (`cardapio_id`) REFERENCES `cardapios` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `cardapio_produtos_ibfk_2` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE;
 
 --
 -- Restrições para tabelas `cotas`

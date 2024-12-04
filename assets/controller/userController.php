@@ -243,5 +243,17 @@ class ControladorUsuarios
             }
         }
     }
+
+    public function filtrarNutricionistas2() {
+        $usuarioBanco = $this->banco->read("usuarios");
+        foreach($usuarioBanco as $usuario)
+        {
+            switch ($usuario['tipo_usuario']) {
+                case 'nutricionista':
+                    echo "<option value=". $usuario['id']. " selected>" . $usuario['nome'] . "</option>";
+                    break;
+            }
+        }
+    }
 }
 ?>

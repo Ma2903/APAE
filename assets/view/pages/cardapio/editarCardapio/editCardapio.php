@@ -9,7 +9,6 @@ $controladorCardapio = new CardapioController();
 $controladorProduto = new ControladorProdutos();
 $controladorNutricionista = new ControladorUsuarios();
 
-$cardapio = null;
 if (isset($_GET['id'])) {
     $cardapioID = $_GET['id'];
     $cardapio = $controladorCardapio->getCardapioById($cardapioID);
@@ -41,10 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form action="" method="post">
         <input type="hidden" name="id" value="<?php echo $cardapio->getId(); ?>">
         <div>
-            <input type="text" id="nutricionista" name="nutricionista" value="<?php echo $cardapio->getNutricionistaId(); ?>" readonly>
             <label for="nutricionista">Nutricionista:</label>
                 <select id="nutricionista" name="nutricionista" required>
-                    <?php $controladorNutricionista->filtrarNutricionistas(); ?>
+                    <?php $controladorNutricionista->filtrarNutricionistas2(); ?>
                 </select>
         </div>
         <div>

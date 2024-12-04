@@ -47,5 +47,33 @@ class ControladorCotacao {
     public function deletarCota($id) {
         $this->bd->delete("cotas", $id);
     }
+
+    public function verCadProdutos($cardapio_id){
+        $todosCadProdutosCot = $this->bd->read("cardapio_produtos");
+        $todosCardapios = $this->bd->read("cardapios");
+        $todosProdutos = $this->bd->read("produtos");
+
+        
+        $arr = [];
+        foreach($todosCardapios as $cardapio){
+            if($cardapio['id'] == $cardapio_id){
+                $cardapioSelecionado = $cardapio;
+                
+                foreach($todosCadProdutosCot as $ProdutoCot){
+                    if($ProdutoCot['cardapio_id'] == $cardapioSelecionado['id']){
+                        
+                        foreach($todosProdutos as $produto){
+                            if($produto['id'] == $ProdutoCot['produto_id']){
+                                $arr[] = $produto['nome'];
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+        return $arr;
+    }
+    
 }
 ?>

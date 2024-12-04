@@ -1,0 +1,50 @@
+form{
+    min-height: 500px;
+}
+
+#produtoForm{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#cardapioForm{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.secbutton{
+    display: flex;
+    justify-content: end;
+}
+
+.lista-produtos{
+    color: #2a3e85;
+    overflow-y: scroll;
+    min-height: 240px;
+    max-height: 240px;
+    margin-top: 10px;
+}
+table{
+    border-collapse: collapse;
+}
+
+.lista-produtos th, .lista-produtos td{
+    border: 1px solid #2a3e85;
+}
+
+.lista-produtos td{
+    padding: 5px;   
+}
+.confirm{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button{
+        margin-top: 0;
+    }	
+}
+#valCardapio{
+    font-size: 24px;
+}
+

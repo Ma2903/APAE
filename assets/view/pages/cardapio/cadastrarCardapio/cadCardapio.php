@@ -2,11 +2,13 @@
 session_start();
 require_once __DIR__ . '/../../../../controller/cardapioController.php';
 require_once __DIR__ . '/../../../../controller/produtoController.php';
+require_once __DIR__ . '/../../../../controller/cotacaoController.php';
 require_once __DIR__ . '/../../../../controller/userController.php';
 require_once __DIR__ . '/../../../../controller/pageController.php';
 
 $controladorCardapio = new CardapioController();
 $controladorProduto = new ControladorProdutos();
+$controladorCotacao = new ControladorCotacao();
 $controladorNutricionista = new ControladorUsuarios();
 
 ?>
@@ -18,6 +20,7 @@ $controladorNutricionista = new ControladorUsuarios();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Cardápio</title>
     <link rel="stylesheet" href="../../styles/CadStyle.css">
+    <link rel="stylesheet" href="./custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -50,8 +53,9 @@ $controladorNutricionista = new ControladorUsuarios();
                 <label for="descricao">Descrição:</label>
                 <textarea id="descricao" name="descricao" style="resize: none" rows="6" cols="100"></textarea>
             </section>
-            <section>
-                <button type="submit" name="cadastrar_cardapio">Cadastrar Cardápio</button>
+            <section class="confirm">
+                <button type="submit" name="cadastrar_cardapio" id="cadBtn">Cadastrar Cardápio</button>
+                <span id="valCardapio">Total: R$00.00</span>
             </section>
         </form>
         <div class="barra"></div>
@@ -60,23 +64,32 @@ $controladorNutricionista = new ControladorUsuarios();
             <section>
                 <label for="produto_id">Produto:</label>
                 <select id="produto" name="produto" required>
-                    <?php $controladorProduto->filtrarProdutos(); ?>
+                    <?php 
+                    $produtos = $controladorProduto->filtrarProdutosCotadosSemanaAtual();
+                    // echo "<pre>";
+                    // echo var_dump($produtos);
+                    // echo "</pre>";
+                    foreach ($produtos as $produto) {
+                        echo "<option value='{$produto['produto']->getId()}' precopergrama='{$produto['preco_por_grama']}'>{$produto['produto']->getNome()}</option>";
+                    }
+                    ?>
                 </select>
             </section>
             <section>
-                <label for="quantidade">Quantidade:</label>
-                <input type="number" id="quantidade" name="quantidade" required>
+                <label for="quantidade">Quantidade (g):</label>
+                <input type="number" id="quantidade" name="quantidade" required placeholder="30(g)">
             </section>
-            <section>
+            <section class="secbutton">
                 <button type="submit" name="adicionar_produto">Adicionar Produto</button>
             </section>
             <div class="lista-produtos">
                 <h2>Lista de Produtos Adicionados</h2>
-                <table id="listaProdutosTable">
+                <table id="listaProdutosTable" width="100%">
                     <thead>
                         <tr>
                             <th>Produto</th>
                             <th>Quantidade</th>
+                            <th>Custo</th>
                         </tr>
                     </thead>
                     <tbody id="produtosBody">
@@ -100,11 +113,16 @@ document.addEventListener('DOMContentLoaded', function() {
         var produtoNome = produtoSelect.options[produtoSelect.selectedIndex].text;
         var quantidade = document.getElementById('quantidade').value;
 
+        var produtoCusto = produtoSelect.options[produtoSelect.selectedIndex].getAttribute('precopergrama') * quantidade;
+
+
         // Adiciona o produto à lista
-        produtosSelecionados.push({ produto: produtoNome, quantidade: quantidade });
+        produtosSelecionados.push({ produtoId: produtoId ,produto: produtoNome, quantidade: quantidade , custo: produtoCusto});
 
         // Atualiza a tabela
         atualizarTabela();
+        atualizarValorTotal();
+        limpaValores();
     });
 
     function atualizarTabela() {
@@ -115,19 +133,43 @@ document.addEventListener('DOMContentLoaded', function() {
             var newRow = tableBody.insertRow();
             var cell1 = newRow.insertCell(0);
             var cell2 = newRow.insertCell(1);
+            var cell3 = newRow.insertCell(2);
             cell1.innerHTML = produto.produto;
             cell2.innerHTML = produto.quantidade;
+            cell3.innerHTML = `R$${produto.custo.toFixed(2)}`;
         });
     }
+    function atualizarValorTotal(){
+        let total = 0
+        produtosSelecionados.forEach(function(produto) {
+            total += produto.custo;
+        });
+        document.querySelector("#valCardapio").innerHTML = `Total: R$${total.toFixed(2)}`;
+    }
+
+    function limpaValores(){
+        document.getElementById('produto').value = '';
+        document.getElementById('quantidade').value = '';
+    }
+
+    document.querySelector("#cardapioForm").addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        let formData = new FormData();
+
+        formData.append('nutricionista_id', document.querySelector("#nutricionista").value);
+        formData.append('dataC', document.querySelector("#dataC").value);
+        formData.append('periodo', document.querySelector("#periodo").value);
+        formData.append('descricao', document.querySelector("#descricao").value);
+
+        formData.append('produtos', JSON.stringify(produtosSelecionados));
+
+        fetch('procCad.php', {
+            method: 'POST',
+            body: formData
+        }).then(response => window.location.href = '../listarCardapio/listarCardapio.php')
+    });
 });
 </script>
 </body>
 </html>
-<?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($_POST['form_type'] === 'cardapioForm') {
-        $controladorCardapio->criarcardapio($_POST['nutricionista'], $_POST['dataC'], $_POST['periodo'], $_POST['descricao']);
-        header('Location: ../listarCardapio/listarCardapio.php');
-    }
-}
-?>

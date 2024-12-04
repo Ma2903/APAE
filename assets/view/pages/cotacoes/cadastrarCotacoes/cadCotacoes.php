@@ -43,11 +43,11 @@ $cotas = $controladorCotacao->verCotas();
                 ?>
             </select>
             <label for="preco_unitario">Preço Unitário:</label>
-            <input type="number" step="0.01" id="preco_unitario" name="preco_unitario" required>
+            <input type="number" step="0.01" id="preco_unitario" name="preco_unitario" required placeholder="Ex: 19.99 (Reais)">
             <label for="quantidade">Quantidade:</label>
-            <input type="number" step="0.01" id="quantidade" name="quantidade" required>
+            <input type="number" step="0.01" id="quantidade" name="quantidade" required placeholder="Ex: 5 (Unidade)" >
             <label for="quantidade">Relação Peso da Unidade:</label>
-            <input type="number" step="0.01" id="rel_un_peso" name="rel_un_peso" required>
+            <input type="number" step="0.01" id="rel_un_peso" name="rel_un_peso" required placeholder="Ex: 200 (gramas / unidade)">
             <button type="submit">Cadastrar Cotação</button>
     </form>
     <?php
