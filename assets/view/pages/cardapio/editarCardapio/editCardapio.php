@@ -47,15 +47,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div>
             <label for="dataC">Data:</label>
-            <input type="date" id="dataC" name="dataC" value="<?php echo $cardapio->getDataC(); ?>" readonly>
+            <input type="date" id="dataC" name="dataC" value="<?php echo $cardapio->getDataC(); ?>">
         </div>
         <div>
             <label for="periodo">Período:</label>
-            <input type="text" id="periodo" name="periodo" value="<?php echo $cardapio->getPeriodo(); ?>" readonly>
+                <select id="periodo" name="periodo" required>
+                    <option value="manha" <?php echo $cardapio->getPeriodo() === 'manha' ? 'selected' : ''; ?>>Manhã</option>
+                    <option value="tarde" <?php echo $cardapio->getPeriodo() === 'tarde' ? 'selected' : ''; ?>>Tarde</option>
+                    <option value="manha-tarde" <?php echo $cardapio->getPeriodo() === 'manha-tarde' ? 'selected' : ''; ?>>Manhã e Tarde</option>
+                </select>
         </div>
         <div>
             <label for="descricao">Descrição:</label>
-            <textarea id="descricao" name="descricao" rows="6" cols="100" readonly><?php echo $cardapio->getDescricao(); ?></textarea>
+            <textarea id="descricao" name="descricao" rows="6" cols="100"><?php echo $cardapio->getDescricao(); ?></textarea>
         </div>
         <div>
             <button type="submit" name="excluir_cardapio">Editar Cardápio</button>

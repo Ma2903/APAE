@@ -66,11 +66,11 @@ $controladorNutricionista = new ControladorUsuarios();
                 <select id="produto" name="produto" required>
                     <?php 
                     $produtos = $controladorProduto->filtrarProdutosCotadosSemanaAtual();
-                    // echo "<pre>";
-                    // echo var_dump($produtos);
-                    // echo "</pre>";
                     foreach ($produtos as $produto) {
                         echo "<option value='{$produto['produto']->getId()}' precopergrama='{$produto['preco_por_grama']}'>{$produto['produto']->getNome()}</option>";
+                    }
+                    if(empty($produtos)){
+                        echo "<option value=''>Nenhum produto disponível</option>";
                     }
                     ?>
                 </select>
