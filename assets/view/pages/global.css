@@ -118,16 +118,35 @@ header {
     transition: background-color 0.3s ease;  
 } 
 
+/* Configuração do layout principal */
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garante que o body ocupe toda a altura da viewport */
+    margin: 0;
+    background: linear-gradient(135deg, var(--superlightblue) 0%, var(--lightwhite) 100%);
+    color: var(--darkgray);
+}
+
+main {
+    flex: 1; /* Faz o conteúdo principal ocupar o espaço restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px;
+}
+
+/* Rodapé fixado na parte inferior */
 footer {
     text-align: center;
-    padding: 20px; 
-    height: 8%;
+    padding: 20px;
+    background-color: var(--darkblue);
+    color: var(--white);
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    background-color: var(--darkblue); 
-    color: var(--white);
-    width: 100%;
-    bottom: 0;
+    flex-shrink: 0; /* Garante que o footer não encolha */
 }

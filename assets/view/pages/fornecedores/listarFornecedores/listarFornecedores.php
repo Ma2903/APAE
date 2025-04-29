@@ -15,23 +15,33 @@ $controler = new ControladorFornecedor();
 <body>
 <?php renderHeader(); ?>
 <main>
-    <h1>Lista de Fornecedores</h1>
+    <h1><i class="fas fa-truck"></i> Lista de Fornecedores</h1>
     <section class="search">
-        <input type="text" id="search-input" name="search" placeholder="Pesquisar fornecedores..." onkeyup="searchSuppliers()">
+        <input 
+            type="text" 
+            id="search-input" 
+            name="search" 
+            placeholder="Pesquisar fornecedores..." 
+            onkeyup="searchSuppliers()" 
+            aria-label="Pesquisar fornecedores"
+        >
         <section class="add-product">
-            <a href="../cadastroFornecedores/cadFornecedores.php" class="add-product-btn">Cadastrar Novo Fornecedor</a>
+            <a href="../cadastroFornecedores/cadFornecedores.php" class="add-product-btn" aria-label="Cadastrar novo fornecedor">
+            <i class="fas fa-truck"></i></i> Cadastrar Novo Fornecedor
+            </a>
         </section>
-        <section class="filter">
-            <button class="filter-btn" onclick="toggleFilterMenu()">
-                <i class="fas fa-filter"></i> Filtrar
-            </button>
-            <section class="filter-menu" id="filter-menu">
-                <button onclick="filterSuppliers('alimenticio')">Alimenticio</button>
-                <button onclick="filterSuppliers('açougue')">Açougue</button>
-                <button onclick="filterSuppliers('frutas')">Frutas</button>
-                <button class="close-filter" onclick="clearFilter()"><i class="fas fa-times"></i></button>
-            </section>
-        </section>
+    </section>
+    <section class="filter">
+        <label for="ramo" class="filter-label">Filtrar por Ramo de Atuação:</label>
+        <select id="ramo" name="ramo" onchange="filterSuppliersBySelect()" aria-label="Filtrar fornecedores por ramo">
+            <option value="">Todos</option>
+            <option value="alimenticio">Alimentício</option>
+            <option value="açougue">Açougue</option>
+            <option value="frutas">Frutas</option>
+            <option value="verduras">Verduras</option>
+            <option value="limpeza">Limpeza</option>
+            <option value="outros">Outros</option>
+        </select>
     </section>
     <table>
         <thead>
@@ -55,19 +65,44 @@ $controler = new ControladorFornecedor();
 
             if ($fornecedores) {
                 foreach ($fornecedores as $fornecedor) {
+                    $iconeRamo = '';
+                    switch (strtolower($fornecedor->getRamo())) {
+                        case 'alimenticio':
+                            $iconeRamo = '<i class="fas fa-utensils"></i>'; // Ícone para Alimentício
+                            break;
+                        case 'açougue':
+                            $iconeRamo = '<i class="fas fa-drumstick-bite"></i>'; // Ícone para Açougue
+                            break;
+                        case 'frutas':
+                            $iconeRamo = '<i class="fas fa-apple-alt"></i>'; // Ícone para Frutas
+                            break;
+                        case 'verduras':
+                            $iconeRamo = '<i class="fas fa-leaf"></i>'; // Ícone para Verduras
+                            break;
+                        case 'limpeza':
+                            $iconeRamo = '<i class="fas fa-broom"></i>'; // Ícone para Limpeza
+                            break;
+                        case 'outros':
+                            $iconeRamo = '<i class="fas fa-box"></i>'; // Ícone para Outros
+                            break;
+                        default:
+                            $iconeRamo = '<i class="fas fa-question-circle"></i>'; // Ícone padrão
+                            break;
+                    }
+
                     echo "<tr>";
                     echo "<td>{$fornecedor->getNome()}</td>";
                     echo "<td>{$fornecedor->getEndereco()}</td>";
                     echo "<td>{$fornecedor->getTelefone()}</td>";
                     echo "<td>{$fornecedor->getWhatsapp()}</td>";
                     echo "<td>{$fornecedor->getEmail()}</td>";
-                    echo "<td>{$fornecedor->getRamo()}</td>";
-                    echo "<td><a href='../editarFornecedores/editFornecedores.php?id={$fornecedor->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar</a></td>";
-                    echo "<td><a href='../deleteFornecedores/delFornecedores.php?id={$fornecedor->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar</a></td>";
+                    echo "<td>{$iconeRamo} {$fornecedor->getRamo()}</td>";
+                    echo "<td><a href='../editarFornecedores/editFornecedores.php?id={$fornecedor->getId()}' class='acao-editar'><i class='fas fa-edit'></i> Editar</a></td>";
+                    echo "<td><a href='../deleteFornecedores/delFornecedores.php?id={$fornecedor->getId()}' class='acao-deletar'><i class='fas fa-trash'></i> Deletar</a></td>";
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='7'>Nenhum fornecedor encontrado.</td></tr>";
+                echo "<tr><td colspan='8'>Nenhum fornecedor encontrado.</td></tr>";
             }
             ?>
         </tbody>
@@ -75,44 +110,33 @@ $controler = new ControladorFornecedor();
 </main>
 <?php renderFooter(); ?>
 <script>
-    function toggleFilterMenu() {
-        const filterMenu = document.getElementById('filter-menu');
-        filterMenu.classList.toggle('show');
-    }
-
-    function filterSuppliers(ramo) {
+    function filterSuppliersBySelect() {
+        const selectedRamo = document.getElementById('ramo').value.toLowerCase();
         const rows = document.querySelectorAll('#supplier-table-body tr');
+        const searchInput = document.getElementById('search-input').value.toLowerCase();
+
         rows.forEach(row => {
-            const supplierRamo = row.querySelector('td:nth-child(6)').textContent.toLowerCase();
-            if (supplierRamo.includes(ramo)) {
+            const supplierRamo = row.querySelector('td:nth-child(6)').textContent.toLowerCase(); // Ramo está na sexta coluna
+            const supplierName = row.querySelector('td:nth-child(1)').textContent.toLowerCase(); // Nome está na primeira coluna
+
+            // Exibe a linha se o ramo e o texto de busca coincidirem
+            if (
+                (selectedRamo === "" || supplierRamo.includes(selectedRamo)) &&
+                (searchInput === "" || supplierName.startsWith(searchInput))
+            ) {
                 row.style.display = '';
             } else {
                 row.style.display = 'none';
             }
         });
-    }
-
-    function clearFilter() {
-        const rows = document.querySelectorAll('#supplier-table-body tr');
-        rows.forEach(row => {
-            row.style.display = '';
-        });
-        toggleFilterMenu(); // Fechar o menu de filtro
     }
 
     function searchSuppliers() {
-        const input = document.getElementById('search-input');
-        const filter = input.value.toLowerCase();
-        const rows = document.querySelectorAll('#supplier-table-body tr');
-        rows.forEach(row => {
-            const supplierName = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
-            if (supplierName.startsWith(filter)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
+        filterSuppliersBySelect(); // Reutiliza a lógica do filtro para combinar busca e ramo
     }
+
+    // Adiciona o evento de input ao campo de busca
+    document.getElementById('search-input').addEventListener('input', searchSuppliers);
 </script>
 </body>
 </html>

@@ -1,21 +1,22 @@
 <?php
-    require_once __DIR__ . "/../../../../controller/produtoController.php";
-    require_once __DIR__ . "/../../../../controller/userController.php";
-    require_once __DIR__ . "/../../../../controller/pageController.php";
-    require_once __DIR__ . "/../../../../model/utils.php"; 
-    session_start();
+require_once __DIR__ . "/../../../../controller/produtoController.php";
+require_once __DIR__ . "/../../../../controller/userController.php";
+require_once __DIR__ . "/../../../../controller/pageController.php";
+require_once __DIR__ . "/../../../../model/utils.php"; 
+session_start();
 
-    $controler = new ControladorProdutos();
-    $user = $_SESSION['user'];
-    $tipo_usuario = $user->getTipoUsuario();
+$controler = new ControladorProdutos();
+$user = $_SESSION['user'];
+$tipo_usuario = $user->getTipoUsuario();
 
-    if(!isset($user)){
-        header("Location: index.php");
-    }
+if (!isset($user)) {
+    header("Location: index.php");
+    exit();
+}
 
-    $podeGerenciarProdutos = verificarPermissao($tipo_usuario, 'gerenciar_produtos');
+$podeGerenciarProdutos = verificarPermissao($tipo_usuario, 'gerenciar_produtos');
 ?>
-    
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -26,121 +27,142 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-<?php renderHeader(); ?>
-<main>
-    <h1>Listar Produtos</h1>
+    <?php renderHeader(); ?>
+    <main>
+        <h1>  <i class="fas fa-box"></i> Listar Produtos</h1>
         <section class="search">
-        <input type="text" id="search-input" name="search" placeholder="Pesquisar Produtos..." onkeyup="searchProducts()">
+            <input 
+                type="text" 
+                id="search-input" 
+                name="search" 
+                placeholder="Pesquisar Produtos..." 
+                onkeyup="searchProducts()" 
+                aria-label="Pesquisar produtos"
+            >
             <section class="add-product">
-            <?php if ($podeGerenciarProdutos): ?>
-                <a href="../cadastroProduto/cadProduto.php" class="add-product-btn">Cadastrar Novo Produto</a>
+                <?php if ($podeGerenciarProdutos): ?>
+                    <a href="../cadastroProduto/cadProduto.php" class="add-product-btn" aria-label="Cadastrar novo produto">
+                    <i class="fas fa-box"></i> Cadastrar Novo Produto
+                    </a>
                 <?php endif; ?>
-            </section>
-            <section class="filter">
-            <button class="filter-btn" onclick="toggleFilterMenu()">
-                <i class="fas fa-filter"></i> Filtrar
-            </button>
-            <section class="filter-menu" id="filter-menu">
-                <button onclick="filterProducts('alimenticios')">Alimenticios</button>
-                <button onclick="filterProducts('acougue')">Açougue</button>
-                <!-- <button onclick="filterProducts('bebidas')">Bebidas</button> -->
-                <button onclick="filterProducts('descartaveis')">Descartáveis</button>
-                <button onclick="filterProducts('frios')">Frios</button>
-                <button onclick="filterProducts('frutas')">Frutas</button>
-                <button onclick="filterProducts('higiene pessoal')">Higiene Pessoal</button>
-                <button onclick="filterProducts('limpeza')">Limpeza</button>
-                <button onclick="filterProducts('verduras')">Verduras</button>
-                <button onclick="filterProducts('outros')">Outros</button>
-                <button class="close-filter" onclick="clearFilter()"><i class="fas fa-times"></i></button>
             </section>
         </section>
-    </section>
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Categoria</th>
-                <th>Data de Criação</th>
-                <?php if ($podeGerenciarProdutos): ?>
-                <th colspan="2">Ações</th>
-                <?php endif; ?>
-            </tr>
-        </thead>
-        <tbody id="product-table-body">
-            <?php
-            $produtos = $controler->verProdutos();
-            usort($produtos, function($a, $b) {
-                return strcmp($a->getNome(), $b->getNome());
-            });
-            if ($produtos) {
-                foreach ($produtos as $produto) {
-                    $dataCriacao = date('d-m-Y', strtotime($produto->getDtCriacao()));
-                    echo "<tr>";
-                    echo "<td>{$produto->getNome()}</td>";
-                    echo "<td>{$produto->getCategoria()}</td>";
-                    echo "<td>{$dataCriacao}</td>";
-                    if ($podeGerenciarProdutos) {
-                        echo "<td> <a href='../editarProduto/editProduto.php?id={$produto->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar</a> </td>";
-                        echo "<td> <a href='../deleteProduto/delProduto.php?id={$produto->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar</a> </td>";
+        <section class="filter">
+            <label for="categoria" class="filter-label">Filtrar por Categoria:</label>
+            <select id="categoria" name="categoria" onchange="filterProductsBySelect()" aria-label="Filtrar produtos por categoria">
+                <option value="">Todas</option>
+                <option value="Frutas">Frutas</option>
+                <option value="Verduras">Verduras</option>
+                <option value="Higiene Pessoal">Higiene Pessoal</option>
+                <option value="Açougue">Açougue</option>
+                <option value="Limpeza">Limpeza</option>
+                <option value="Descartáveis">Descartáveis</option>
+                <option value="Frios">Frios</option>
+                <option value="Alimenticios">Alimenticios</option>
+                <option value="Outros">Outros</option>
+            </select>
+        </section>
+        <table aria-label="Tabela de produtos">
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Data de Criação</th>
+                    <?php if ($podeGerenciarProdutos): ?>
+                        <th scope="col" colspan="2">Ações</th>
+                    <?php endif; ?>
+                </tr>
+            </thead>
+            <tbody id="product-table-body">
+                <?php
+                $produtos = $controler->verProdutos();
+                usort($produtos, function($a, $b) {
+                    return strcmp($a->getNome(), $b->getNome());
+                });
+
+                if ($produtos) {
+                    foreach ($produtos as $produto) {
+                        $dataCriacao = date('d-m-Y', strtotime($produto->getDtCriacao()));
+                        $iconeCategoria = '';
+                        switch (strtolower($produto->getCategoria())) {
+                            case 'frutas':
+                                $iconeCategoria = '<i class="fas fa-apple-alt"></i>'; // Ícone para Frutas
+                                break;
+                            case 'verduras':
+                                $iconeCategoria = '<i class="fas fa-leaf"></i>'; // Ícone para Verduras
+                                break;
+                            case 'higiene pessoal':
+                                $iconeCategoria = '<i class="fas fa-soap"></i>'; // Ícone para Higiene Pessoal
+                                break;
+                            case 'açougue':
+                                $iconeCategoria = '<i class="fas fa-drumstick-bite"></i>'; // Ícone para Açougue
+                                break;
+                            case 'limpeza':
+                                $iconeCategoria = '<i class="fas fa-broom"></i>'; // Ícone para Limpeza
+                                break;
+                            case 'descartáveis':
+                                $iconeCategoria = '<i class="fas fa-trash"></i>'; // Ícone para Descartáveis
+                                break;
+                            case 'frios':
+                                $iconeCategoria = '<i class="fas fa-snowflake"></i>'; // Ícone para Frios
+                                break;
+                            case 'alimenticios':
+                                $iconeCategoria = '<i class="fas fa-utensils"></i>'; // Ícone para Alimentícios
+                                break;
+                            case 'outros':
+                                $iconeCategoria = '<i class="fas fa-box"></i>'; // Ícone para Outros
+                                break;
+                            default:
+                                $iconeCategoria = '<i class="fas fa-question-circle"></i>'; // Ícone padrão
+                                break;
+                        }
+
+                        echo "<tr>";
+                        echo "<td>{$produto->getNome()}</td>";
+                        echo "<td>{$iconeCategoria} {$produto->getCategoria()}</td>";
+                        echo "<td>{$dataCriacao}</td>";
+                        if ($podeGerenciarProdutos) {
+                            echo "<td><a href='../editarProduto/editProduto.php?id={$produto->getId()}' class='acao-editar' aria-label='Editar produto {$produto->getNome()}'><i class='fas fa-edit'></i> Editar</a></td>";
+                            echo "<td><a href='../deleteProduto/delProduto.php?id={$produto->getId()}' class='acao-deletar' aria-label='Deletar produto {$produto->getNome()}'><i class='fas fa-trash'></i> Deletar</a></td>";
+                        }
+                        echo "</tr>";
                     }
-                    echo "</tr>";
+                } else {
+                    echo "<tr><td colspan='4'>Nenhum produto encontrado.</td></tr>";
                 }
-            } else {
-                echo "<tr><td colspan='7'>Nenhum produto encontrado.</td></tr>";
-            }
-            ?>
-        </tbody>
-    </table>
-</main>
-<?php renderFooter(); ?>
-<script>
-    function toggleFilterMenu() {
-        const filterMenu = document.getElementById('filter-menu');
-        filterMenu.classList.toggle('show');
-    }
+                ?>
+            </tbody>
+        </table>
+    </main>
+    <?php renderFooter(); ?>
+    <script>
+        function filterProductsBySelect() {
+            const selectedCategory = document.getElementById('categoria').value.toLowerCase();
+            const rows = document.querySelectorAll('#product-table-body tr');
+            const searchInput = document.getElementById('search-input').value.toLowerCase();
 
-    function filterProducts(category) {
-        const rows = document.querySelectorAll('#product-table-body tr');
-        rows.forEach(row => {
-            const productCategory = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-            if (productCategory.includes(category)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
+            rows.forEach(row => {
+                const productCategory = row.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Categoria está na segunda coluna
+                const productName = row.querySelector('td:nth-child(1)').textContent.toLowerCase(); // Nome está na primeira coluna
 
-    function clearFilter() {
-        const rows = document.querySelectorAll('#product-table-body tr');
-        rows.forEach(row => {
-            row.style.display = '';
-        });
-        const filterMenu = document.getElementById('filter-menu');
-        filterMenu.classList.remove('show');
-    }
-
-    document.getElementById('search-input').addEventListener('input', function() {
-        const filterValue = this.value;
-        if (filterValue) {
-            searchProducts(filterValue);
-        } else {
-            clearFilter();
+                // Exibe a linha se a categoria e o texto de busca coincidirem
+                if (
+                    (selectedCategory === "" || productCategory.includes(selectedCategory)) &&
+                    (searchInput === "" || productName.startsWith(searchInput)) // Verifica se o nome começa com o texto digitado
+                ) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         }
-    });
 
-    function searchProducts() {
-        const searchInput = document.getElementById('search-input').value.toLowerCase();
-        const rows = document.querySelectorAll('#product-table-body tr');
-        rows.forEach(row => {
-            const productName = row.querySelector('td:nth-child(1)').textContent.toLowerCase(); // Nome está na primeira coluna
-            if (productName.startsWith(searchInput)) { // Verifica se o nome começa com a letra digitada
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
-</script>
+        function searchProducts() {
+            filterProductsBySelect(); // Reutiliza a lógica do filtro para combinar busca e categoria
+        }
+
+        // Adiciona o evento de input ao campo de busca
+        document.getElementById('search-input').addEventListener('input', searchProducts);
+    </script>
 </body>
 </html>

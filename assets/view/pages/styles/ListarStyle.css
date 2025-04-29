@@ -1,53 +1,73 @@
 @import url('../global.css');
 
+/* Títulos */
 h1 {
-    width: 100%;
+    font-size: 2.5rem;
     color: var(--darkblue);
     text-align: center;
-    margin-bottom: 10px;
-    font-size: 42px;
+    margin-bottom: 20px;
 }
 
-body{
-    height: 100vh;
-}
-
-main {
+/* Campos de busca */
+.search {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    flex-direction: column;
-    padding: 20px;
-    min-height: 80vh;
+    margin-bottom: 20px;
+    gap: 10px;
 }
 
-.table-title {
-    width: 100%;
-    text-align: left;
-    margin: 0;
-}
-.buttonLimpar{
-    padding: 20px;
-}
-
-button:hover {
-    background-color: var(--lightblue);
+#search-input {
+    flex: 1;
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid var(--darkblue);
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
 }
 
+#search-input:focus {
+    border-color: var(--yellow);
+}
+
+/* Botões de ação */
+.add-product-btn, .add-user-btn, .add-quote-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: var(--darkblue);
+    color: var(--white);
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-product-btn:hover, .add-user-btn:hover, .add-quote-btn:hover {
+    background-color: var(--yellow);
+    color: var(--darkblue);
+    transform: scale(1.05);
+}
+
+/* Tabelas */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px;
-    font-size: 18px;
+    margin: 20px 0;
+    font-size: 1rem;
     text-align: left;
+    background-color: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 table thead tr {
     background-color: var(--darkblue);
     color: var(--white);
-    text-align: left;
     font-weight: bold;
-    border-left: 5px solid var(--darkblue);
 }
 
 table th, table td {
@@ -55,343 +75,129 @@ table th, table td {
     border: 1px solid var(--darkblue);
 }
 
-table tbody tr {
-    border-bottom: 1px solid var(--darkblue);
-    border-left: 5px solid var(--darkblue);
-}
-
 table tbody tr:nth-of-type(even) {
     background-color: var(--lightwhite);
 }
 
-table tbody tr:last-of-type {
-    border-bottom: 2px solid var(--darkblue);
-}
-
-table tbody tr:hover {
-    background-color: var(--lightyellow);
-}
-
-.search {
-    width: 35%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    padding: 5px;
-    margin-bottom: 20px;
-    gap: 8px; 
-    border-radius: 8px;
-}
-
-#search-input {
-    flex: 2;
-    padding: 8px;
-    font-size: 16px;
-    border: 3px solid var(--darkblue);
-    border-radius: 8px;
-    max-width: 300px; /* Limita a largura máxima em telas grandes */
-    box-sizing: border-box;
-}  
-
-.search button{
-    margin: 10px;
-    padding: 15px 15px;
-    background: var(--darkblue);
-    border-radius: 10px;
-    color: var(--white);
-    font-size: 16px;
-    border: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    transition: background 0.3s, transform 0.2s;
-}
-
-.search .input-filter-date {
-   width: 20%;
-   margin: 10px;
-   padding: 15px;
-   background: var(--darkblue);
-   border-radius: 10px;
-   color: var(--white);
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-.search .input-filter-date input {
-    width: 100%;
-    padding: 10px;
-    border: none;
+/* Botões de ação dentro da tabela */
+.acao-editar, .acao-deletar {
+    padding: 8px 12px;
     border-radius: 5px;
-}
-
-.add-quote, .add-product, .add-user {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: var(--white);
-    justify-content: center;
-}
-
-.section-cotasfiltradas{
-    width: 100%;
-    display: flex;
-}
-button{
-    border: none;
-    cursor: pointer;
-    border-radius: 20px;
-    padding: 0px 10px 0px 10px;
-    background: var(--darkblue);
-    text-align: center;
-    color: var(--white);
-}
-
-.add-quote-btn, .add-product-btn, .add-user-btn {
-    padding: 15px 25px;
-    font-size: 16px;
-    background: var(--darkblue);
-    color: var(--white);
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
     text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.add-user-btn:hover, .add-product-btn:hover, .add-quote-btn:hover {
-    background-color: var(--yellow);
-}
-
-.back-btn {
-    position: absolute;
-    left: 30px;
-    top: 150px;
-    padding: 10px 20px;
-    background-color: var(--darkblue);
-    color: var(--white);
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.back-btn:hover {
+/* Botão Editar */
+.acao-editar {
     background-color: var(--lightblue);
-}
-
-table tbody td a {
-    padding: 5px 10px;
-    border-radius: 4px;
     color: var(--darkblue);
-    text-decoration: none;
-    transition: background-color 0.3s ease;
 }
 
-.table-container {
-    overflow-x: auto;
-    max-width: 100%;
-    margin-top: 20px;
-}
-
-.maior-preco {
-    color: var(--red);
-}
-
-.menor-preco {
-    color: var(--green);
-}
-
-.warning {
-    width: 100%;
-    text-align: center;
-    color: var(--red);
-}
-
-#usuario-nutricionista {
-    background-color: #c8e6c9; /* Verde claro */
-}
-
-#usuario-contador {
-    background-color: #f9f1cc;
-}
-
-#usuario-administrador {
-    background-color: #bbdefb; /* Azul claro */
-}
-
-
-/* Estilos para o filtro */
-
-.filter {
-    flex: 0.5;
-    display: inline-block;
-    position: relative;
-}
-
-.filter-btn {
-    background-color: var(--darkblue);
+.acao-editar:hover {
+    background-color: #2a7db3; /* Azul mais escuro */
     color: var(--white);
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.filter-btn i {
-    font-size: 18px;
-}
-
-.filter-btn:hover {
-    background: var(--yellow);
     transform: scale(1.05);
 }
 
-.filter-menu {
-    display: none;
-    position: absolute;
-    background-color: var(--white);
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    z-index: 1;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    opacity: 0;
-    transform: translateY(-10px);
-}
-.filter-menu.show {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.filter-menu button {
-    background: none;
-    width: 85%;
-    text-align: center;
-    font-size: 14px;
-    color: var(--black);
-    cursor: pointer;
-    transition: background 0.3s;
-    padding: 10px 20px;
-}
-
-.filter-menu button:hover {
-    background-color: var(--darkblue);
+/* Botão Deletar */
+.acao-deletar {
+    background-color: var(--red);
     color: var(--white);
 }
 
-.filter-menu button + button {
-    margin-top: 5px;
+.acao-deletar:hover {
+    background-color: #b52a2a; /* Vermelho mais escuro */
+    transform: scale(1.05);
 }
 
-.close-filter {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--red);
-    padding: 10px 20px;
-    width: 100%;
-    text-align: left;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.3s;
-    gap: 10px;
-}
-
-.close-filter:hover {
-    background-color: var(--lightred);
-}
-
-.close-filter i {
-    font-size: 16px;
-}
-
+/* Legenda (apenas para listarUsuario.php) */
 .legend {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    padding: 5px;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
 }
 
 .legend-item {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
 }
 
 .legend-color {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
 }
 
-.legend span {
-    font-weight: bold;
-    color: var(--darkblue);
-}
-
 .legend-nutricionista {
-    background-color: #c8e6c9; /* Verde claro */
+    background-color: var(--green);
 }
 
 .legend-contador {
-    background-color: #f9f1cc; /* Amarelo claro */
+    background-color: var(--orange);
 }
 
 .legend-administrador {
-    background-color: #bbdefb; /* Azul claro */
+    background-color: #808080;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-    margin-top: 20px;
-    font-size: 16px;
-    text-align: left;
+/* Feedback visual para foco */
+a:focus, button:focus, input:focus {
+    outline: 3px solid var(--yellow);
+    outline-offset: 2px;
 }
 
-table th, table td {
+/* Filtros */
+.filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-label {
+    font-size: 1rem;
+    color: var(--darkblue);
+    font-weight: bold;
+}
+
+#categoria, #tipo-usuario, #ramo {
     padding: 10px;
-    white-space: nowrap;
+    font-size: 1rem;
+    border: 2px solid var(--darkblue);
+    border-radius: 5px;
+    background-color: var(--white);
+    color: var(--darkgray);
+    transition: border-color 0.3s ease;
 }
 
-table thead tr {
-    background-color: var(--darkblue);
+#categoria:focus, #tipo-usuario:focus, #ramo:focus {
+    border-color: var(--yellow);
+    outline: none;
+}
+
+/* Estilização das linhas da tabela de acordo com o tipo de usuário */
+tr.administrador {
+    background-color: #808080 !important; /* Cinza escuro */
+    color: var(--white) !important;
+}
+
+tr.nutricionista {
+    background-color: var(--green); /* Verde */
     color: var(--white);
-    border-left: 5px solid var(--darkblue);
 }
 
-table tbody tr:nth-of-type(even) {
-    background-color: var(--lightwhite);
+tr.contador {
+    background-color: var(--orange); /* Laranja */
+    color: var(--white);
 }
 
+/* Efeito de hover suave com cor mais escura */
 table tbody tr:hover {
-    background-color: var(--lightyellow);
-}
-
-/* Ajustes para Responsividade */
-@media (max-width: 768px) {
-    h1 {
-        font-size: 32px;
-    }
-
-    .search input[type="text"], .search button, .filter {
-        max-width: 120px;
-    }
-
-    .legend {
-        flex-direction: column;
-        gap: 10px;
-    }
+    background-color: #d9d9d9; /* Cinza mais escuro */
+    transition: background-color 0.3s ease;
+    cursor: pointer;
 }

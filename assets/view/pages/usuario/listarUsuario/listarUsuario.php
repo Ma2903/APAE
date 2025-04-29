@@ -16,22 +16,20 @@ $controler = new ControladorUsuarios();
 <body>
 <?php renderHeader(); ?>
 <main>
-    <h1>Listar Usuários</h1>
+    <h1> <i class="fas fa-users"></i> Listar Usuários</h1>
     <section class="search">
         <input type="text" id="search-input" name="search" placeholder="Pesquisar usuários..." onkeyup="searchUsers()">
         <section class="add-user">
-            <a href="../cadastroUsuario/register_user.php" class="add-user-btn">Cadastrar Novo Usuário</a>
+            <href="../cadastroUsuario/register_user.php" class="add-user-btn"> <i class="fas fa-users"></i> Cadastrar Novo Usuário</a>
         </section>
         <section class="filter">
-            <button class="filter-btn" onclick="toggleFilterMenu()">
-                <i class="fas fa-filter"></i> Filtrar
-            </button>
-            <section class="filter-menu" id="filter-menu">
-                <button onclick="filterUsers('contador')">Administradores Compras</button>
-                <button onclick="filterUsers('nutricionista')">Nutricionistas</button>
-                <button onclick="filterUsers('administrador')">Administradores</button>
-                <button class="close-filter" onclick="clearFilter()"><i class="fas fa-times"></i></button>
-            </section>
+            <label for="tipo-usuario" class="filter-label">Filtrar por Tipo de Usuário:</label>
+            <select id="tipo-usuario" name="tipo-usuario" onchange="filterUsersBySelect()" aria-label="Filtrar usuários por tipo">
+                <option value="">Todos</option>
+                <option value="administrador">Administrador</option>
+                <option value="nutricionista">Nutricionista</option>
+                <option value="contador">Adm Compras</option>
+            </select>
         </section>
     </section>
     <section class="legend">
@@ -62,7 +60,7 @@ $controler = new ControladorUsuarios();
             </tr>
         </thead>
         <tbody id="user-table-body">
-        <?php
+            <?php
             $usuarios = $controler->listarUsuarios();
             // Ordenar usuários em ordem alfabética pelo nome
             usort($usuarios, function($a, $b) {
@@ -72,35 +70,29 @@ $controler = new ControladorUsuarios();
             if ($usuarios) {
                 foreach ($usuarios as $usuario) {
                     $classeUsuario = '';
-                    $idUsuario = '';
-                    
+                    $iconeUsuario = '';
                     switch ($usuario->getTipoUsuario()) {
                         case 'administrador':
                             $classeUsuario = 'administrador';
-                            $idUsuario = 'usuario-administrador';
+                            $iconeUsuario = '<i class="fas fa-user-shield"></i>'; // Ícone para Administrador
                             break;
                         case 'nutricionista':
                             $classeUsuario = 'nutricionista';
-                            $idUsuario = 'usuario-nutricionista';
+                            $iconeUsuario = '<i class="fas fa-utensils"></i>'; // Ícone para Nutricionista
                             break;
                         case 'contador':
                             $classeUsuario = 'contador';
-                            $idUsuario = 'usuario-contador';
+                            $iconeUsuario = '<i class="fas fa-calculator"></i>'; // Ícone para Adm Compras
                             break;
                     }
-                    $tipo;
-                    if($usuario->getTipoUsuario() === "contador"){
-                        $tipo = 'Adm Compras';
-                    }else{
-                        $tipo = $usuario->getTipoUsuario();
-                    }
-                    echo "<tr class='{$classeUsuario}' id='{$idUsuario}'>";
+                    $tipo = $usuario->getTipoUsuario() === "contador" ? 'Adm Compras' : ucfirst($usuario->getTipoUsuario());
+                    echo "<tr class='{$classeUsuario}'>";
                     echo "<td>{$usuario->getCpf()}</td>";
                     echo "<td>{$usuario->getNome()}</td>";
                     echo "<td>{$usuario->getSobrenome()}</td>";
                     echo "<td>".converterDataParaBR($usuario->getDataNasc())."</td>";
                     echo "<td>{$usuario->getEmail()}</td>";
-                    echo "<td>{$tipo}</td>";
+                    echo "<td>{$iconeUsuario} {$tipo}</td>";
                     echo "<td><a href='../editarUsuario/editUsuario.php?id={$usuario->getId()}' class='acao-editar'><i class='fas fa-edit'></i> Editar</a></td>";
                     echo "<td><a href='../deleteUsuario/delUsuario.php?id={$usuario->getId()}' class='acao-deletar'><i class='fas fa-trash'></i> Deletar</a></td>";
                     echo "</tr>";
@@ -108,36 +100,24 @@ $controler = new ControladorUsuarios();
             } else {
                 echo "<tr><td colspan='8'>Nenhum usuário cadastrado</td></tr>";
             }
-        ?>
+            ?>
         </tbody>
     </table>
 </main>
 <?php renderFooter(); ?>
 <script>
-    function toggleFilterMenu() {
-    const filterMenu = document.getElementById('filter-menu');
-    filterMenu.classList.toggle('show');
-}
-
-function filterUsers(type) {
+function filterUsersBySelect() {
+    const select = document.getElementById('tipo-usuario');
+    const selectedValue = select.value.toLowerCase();
     const rows = document.querySelectorAll('#user-table-body tr');
     rows.forEach(row => {
         const userType = row.querySelector('td:nth-child(6)').textContent.toLowerCase(); // Coluna "Tipo de Usuário"
-        if (userType.includes(type.toLowerCase())) {
+        if (selectedValue === "" || userType.includes(selectedValue)) {
             row.style.display = '';
         } else {
             row.style.display = 'none';
         }
     });
-}
-
-function clearFilter() {
-    const rows = document.querySelectorAll('#user-table-body tr');
-    rows.forEach(row => {
-        row.style.display = '';
-    });
-    const filterMenu = document.getElementById('filter-menu');
-    filterMenu.classList.remove('show');
 }
 
 document.getElementById('search-input').addEventListener('input', function() {
