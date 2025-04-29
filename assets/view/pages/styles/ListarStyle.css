@@ -75,10 +75,6 @@ table th, table td {
     border: 1px solid var(--darkblue);
 }
 
-table tbody tr:nth-of-type(even) {
-    background-color: var(--lightwhite);
-}
-
 /* Botões de ação dentro da tabela */
 .acao-editar, .acao-deletar {
     padding: 8px 12px;
@@ -155,7 +151,6 @@ a:focus, button:focus, input:focus {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 20px;
 }
 
 .filter-label {

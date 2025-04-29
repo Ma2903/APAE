@@ -11,9 +11,32 @@ $controler = new ControladorProdutos();
     <title>Cadastro de Produto</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../../styles/CadStyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 </head>
 <body>
 <?php renderHeader(); ?>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
+        if (logoutButton) {
+            logoutButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Deseja realmente sair?',
+                    text: "Você será desconectado do sistema.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, sair',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = logoutButton.href;
+                    }
+                });
+            });
+        }
+    });
+</script>
 <main>
     <a href="../listarProduto/listarProduto.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h1><i class="fas fa-box"></i> Cadastro de Produto</h1>

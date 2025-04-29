@@ -11,9 +11,32 @@ $controler = new ControladorUsuarios();
     <title>Editar Usuário</title>
     <link rel="stylesheet" href="../../styles/EditStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 </head>
 <body>
 <?php renderHeader(); ?>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
+        if (logoutButton) {
+            logoutButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Deseja realmente sair?',
+                    text: "Você será desconectado do sistema.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, sair',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = logoutButton.href;
+                    }
+                });
+            });
+        }
+    });
+</script>
 <main>
     <a href="../listarUsuario/listarUsuario.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h1><i class="fas fa-user-edit"></i> Editar Usuário</h1>
@@ -38,6 +61,14 @@ $controler = new ControladorUsuarios();
                 <section>
                     <label for="data_nascimento"><i class="fas fa-calendar-alt"></i> Data de Nascimento:</label>
                     <input type="date" id="data_nascimento" name="data_nascimento" value="'.$usuario->getDataNasc().'" required>
+                </section>
+                <section>
+                    <label for="endereco"><i class="fas fa-map-marker-alt"></i> Endereço:</label>
+                    <input type="text" id="endereco" name="endereco" value="'.$usuario->getEndereco().'" required>
+                </section>
+                <section>
+                    <label for="telefone"><i class="fas fa-phone"></i> Telefone:</label>
+                    <input type="text" id="telefone" name="telefone" value="'.$usuario->getTelefone().'" required>
                 </section>
                 <section>
                     <label for="email"><i class="fas fa-envelope"></i> E-mail:</label>
@@ -66,7 +97,7 @@ $controler = new ControladorUsuarios();
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $crn = isset($_POST['crn']) ? $_POST['crn'] : 'nulo';
-        $controler->editarUsuario($_GET['id'], $_POST['cpf'], $_POST['nome'], $_POST['sobrenome'], $_POST['data_nascimento'], $_POST['email'], $_POST['tipo_usuario'], $crn);
+        $controler->editarUsuario($_GET['id'], $_POST['cpf'], $_POST['nome'], $_POST['sobrenome'], $_POST['data_nascimento'], $_POST['endereco'], $_POST['telefone'], $_POST['email'], $_POST['tipo_usuario'], $crn);
         header('Location: ../listarUsuario/listarUsuario.php');
     }
     ?>

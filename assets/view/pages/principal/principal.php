@@ -30,6 +30,7 @@ $tipo_usuario = $user->getTipoUsuario();
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 </head>
 <body>
     <header class="header-container">
@@ -93,7 +94,7 @@ $tipo_usuario = $user->getTipoUsuario();
                 <h1><i class="fas fa-home"></i> Bem-vindo ao SmartControl!</h1>
                 <p>Gerencie suas cotações e fornecedores de maneira simples e eficiente.</p>
                 <p>Com o SmartControl, você pode monitorar processos, otimizar custos e ter uma visão clara de suas operações.</p>
-                <a class="btn-primary" href="../cotacoes/listarCotacoes/listarCotacoes.php" aria-label="Comece agora">
+                <a class="btn-primary" href="./principal.php" aria-label="Comece agora">
                     Comece Agora
                 </a>
                 <div class="content-icons">
@@ -105,6 +106,28 @@ $tipo_usuario = $user->getTipoUsuario();
             </section>
         </section>
     </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutButton = document.querySelector('a[href="../logout.php"]'); // Caminho ajustado
+            if (logoutButton) {
+                logoutButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    Swal.fire({
+                        title: 'Deseja realmente sair?',
+                        text: "Você será desconectado do sistema.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sim, sair',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = logoutButton.href;
+                        }
+                    });
+                });
+            }
+        });
+    </script>
     <?php renderFooter(); ?>
 </body>
 </html>

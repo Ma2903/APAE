@@ -29,6 +29,28 @@ $podeGerenciarProdutos = verificarPermissao($tipo_usuario, 'gerenciar_produtos')
 </head>
 <body>
     <?php renderHeader(); ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
+            if (logoutButton) {
+                logoutButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    Swal.fire({
+                        title: 'Deseja realmente sair?',
+                        text: "Você será desconectado do sistema.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sim, sair',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = logoutButton.href;
+                        }
+                    });
+                });
+            }
+        });
+    </script>
     <main>
         <h1>  <i class="fas fa-box"></i> Listar Produtos</h1>
         <section class="search">
@@ -92,7 +114,30 @@ $podeGerenciarProdutos = verificarPermissao($tipo_usuario, 'gerenciar_produtos')
                             case 'verduras':
                                 $iconeCategoria = '<i class="fas fa-leaf"></i>';
                                 break;
-                            // Outros casos...
+                            case 'higiene pessoal':
+                                $iconeCategoria = '<i class="fas fa-soap"></i>';
+                                break;
+                            case 'açougue':
+                                $iconeCategoria = '<i class="fas fa-drumstick-bite"></i>';
+                                break;
+                            case 'limpeza':
+                                $iconeCategoria = '<i class="fas fa-broom"></i>';
+                                break;
+                            case 'descartáveis':
+                                $iconeCategoria = '<i class="fas fa-trash-alt"></i>';
+                                break;
+                            case 'frios':
+                                $iconeCategoria = '<i class="fas fa-cheese"></i>';
+                                break;
+                            case 'alimenticios':
+                                $iconeCategoria = '<i class="fas fa-utensils"></i>';
+                                break;
+                            case 'outros':
+                                $iconeCategoria = '<i class="fas fa-ellipsis-h"></i>';
+                                break;
+                            default:
+                                $iconeCategoria = '<i class="fas fa-box"></i>'; // Ícone padrão
+                                break;
                         }
 
                         echo "<tr>";
@@ -100,6 +145,7 @@ $podeGerenciarProdutos = verificarPermissao($tipo_usuario, 'gerenciar_produtos')
                         echo "<td>{$iconeCategoria} {$produto->getCategoria()}</td>";
                         echo "<td>{$dataCriacao}</td>";
                         if ($podeGerenciarProdutos) {
+                            echo "<td><a href='../editarProduto/editProduto.php?id={$produto->getId()}' class='acao-editar' aria-label='Editar produto {$produto->getNome()}'><i class='fas fa-edit'></i> Editar</a></td>";
                             echo "<td><a href='#' class='acao-deletar' onclick='confirmDelete({$produto->getId()}, \"{$produto->getNome()}\")' aria-label='Deletar produto {$produto->getNome()}'><i class='fas fa-trash'></i> Deletar</a></td>";
                         }
                         echo "</tr>";

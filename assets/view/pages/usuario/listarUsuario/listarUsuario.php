@@ -165,6 +165,27 @@ function searchUsers() {
             }
         });
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
+        if (logoutButton) {
+            logoutButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Deseja realmente sair?',
+                    text: "Você será desconectado do sistema.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, sair',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = logoutButton.href;
+                    }
+                });
+            });
+        }
+    });
 </script>
 </body>
 </html>

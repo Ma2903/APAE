@@ -15,6 +15,28 @@ $controler = new ControladorFornecedor();
 </head>
 <body>
 <?php renderHeader(); ?>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
+        if (logoutButton) {
+            logoutButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Deseja realmente sair?',
+                    text: "Você será desconectado do sistema.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, sair',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = logoutButton.href;
+                    }
+                });
+            });
+        }
+    });
+</script>
 <main>
     <h1><i class="fas fa-truck"></i> Lista de Fornecedores</h1>
     <section class="search">
