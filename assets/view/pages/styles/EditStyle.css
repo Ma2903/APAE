@@ -1,58 +1,80 @@
 @import url('../global.css');
 
+/* Configuração do layout principal */
 body {
-    height: 100vh;
-    width: 100vw;
-    background-color: var(--lightwhite);
-}
-
-h1 {
-    width: 100%;
-    color: var(--darkblue);
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 42px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, var(--superlightblue), var(--lightwhite));
+    color: var(--darkgray);
 }
 
 main {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    min-height: 80vh;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: var(--darkblue);
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    width: 80%;
-    max-width: 600px;
+    width: 100%;
     padding: 20px;
     background-color: var(--white);
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 15px;
+}
+
+form section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 form label {
     font-weight: bold;
     color: var(--darkblue);
-    margin-top: 10px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-form select, form input, form textarea {
-    width: 100%;
+form input, form select, form textarea {
     padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    border: 1px solid var(--darkblue);
+    font-size: 1rem;
+    border: 2px solid var(--darkblue);
     border-radius: 5px;
     background-color: var(--lightwhite);
-    color: var(--darkblue);
+    color: var(--darkgray);
+    transition: border-color 0.3s ease;
+}
+
+form input:focus, form select:focus, form textarea:focus {
+    border-color: var(--yellow);
+    outline: none;
 }
 
 form textarea {
-    resize: vertical; /* Permite redimensionar verticalmente */
-    min-height: 100px; /* Altura mínima */
+    resize: vertical;
+    min-height: 100px;
 }
 
 form button {
@@ -61,32 +83,50 @@ form button {
     color: var(--white);
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 form button:hover {
-    background-color: var(--lightblue);
+    background-color: var(--yellow);
+    color: var(--darkblue);
+    transform: scale(1.05);
 }
 
+/* Botão Voltar */
 .back-btn {
-    position: absolute;
-    left: 30px;
-    top: 150px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     padding: 10px 20px;
     background-color: var(--darkblue);
     color: var(--white);
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.back-btn i {
-    margin-right: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 20px;
+    align-self: flex-start;
 }
 
 .back-btn:hover {
-    background-color: var(--lightblue);
+    background-color: var(--yellow);
+    color: var(--darkblue);
+    transform: scale(1.05);
+}
+
+/* Rodapé fixado na parte inferior */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--darkblue);
+    color: var(--white);
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
 }
