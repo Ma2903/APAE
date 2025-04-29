@@ -1,7 +1,7 @@
 <?php
-    require_once __DIR__ . "/../../../../controller/fornecedorController.php";
-    require_once __DIR__ . "/../../../../controller/pageController.php";
-    $controler = new ControladorFornecedor();
+require_once __DIR__ . "/../../../../controller/fornecedorController.php";
+require_once __DIR__ . "/../../../../controller/pageController.php";
+$controler = new ControladorFornecedor();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -15,40 +15,52 @@
 <body>
 <?php renderHeader(); ?>
 <main>
-<a href="../listarFornecedores/listarFornecedores.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
-    <h1>Cadastrar Fornecedor</h1>
+    <a href="../listarFornecedores/listarFornecedores.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
+    <h1><i class="fas fa-truck"></i> Cadastrar Fornecedor</h1>
     <form action="" method="POST">
-        <?php
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $nome = $_POST['nome'];
-                $endereco = $_POST['endereco'];
-                $telefone = $_POST['telefone'];
-                $whatsapp = $_POST['whatsapp'];
-                $email = $_POST['email'];
-                $ramo_atuacao = $_POST['ramo_atuacao'];
-                date_default_timezone_set('America/Sao_Paulo');
-                $data_criacao = date("Y-m-d H:i:s");
-
-                if (!empty($nome) && !empty($endereco) && !empty($telefone) && !empty($whatsapp) && !empty($email) && !empty($ramo_atuacao)) {
-                    $controler->cadastrarFornecedor($nome, $endereco, $telefone, $whatsapp, $email, $ramo_atuacao ,$data_criacao);
-                    header("Location: ../listarFornecedores/listarFornecedores.php");
-                }
-            }
-        ?>
-        <label for="nome">Nome:</label>
-        <input type="text" name="nome" required>
-        <label for="endereco">Endereço:</label>
-        <input type="text" name="endereco">
-        <label for="telefone">Telefone:</label>
-        <input type="text" name="telefone">
-        <label for="whatsapp">WhatsApp:</label>
-        <input type="text" name="whatsapp">
-        <label for="email">E-mail:</label>
-        <input type="email" name="email">
-        <label for="ramo_atuacao">Ramo de Atuação:</label>
-        <input type="text" name="ramo_atuacao">
-        <button type="submit">Cadastrar</button>
+        <section>
+            <label for="nome"><i class="fas fa-user"></i> Nome:</label>
+            <input type="text" id="nome" name="nome" placeholder="Nome do Fornecedor" required>
+        </section>
+        <section>
+            <label for="endereco"><i class="fas fa-map-marker-alt"></i> Endereço:</label>
+            <input type="text" id="endereco" name="endereco" placeholder="Endereço">
+        </section>
+        <section>
+            <label for="telefone"><i class="fas fa-phone"></i> Telefone:</label>
+            <input type="text" id="telefone" name="telefone" placeholder="Telefone">
+        </section>
+        <section>
+            <label for="whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp:</label>
+            <input type="text" id="whatsapp" name="whatsapp" placeholder="WhatsApp">
+        </section>
+        <section>
+            <label for="email"><i class="fas fa-envelope"></i> E-mail:</label>
+            <input type="email" id="email" name="email" placeholder="E-mail">
+        </section>
+        <section>
+            <label for="ramo_atuacao"><i class="fas fa-briefcase"></i> Ramo de Atuação:</label>
+            <input type="text" id="ramo_atuacao" name="ramo_atuacao" placeholder="Ramo de Atuação">
+        </section>
+        <button type="submit"><i class="fas fa-save"></i> Cadastrar Fornecedor</button>
     </form>
+    <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $nome = $_POST['nome'];
+            $endereco = $_POST['endereco'];
+            $telefone = $_POST['telefone'];
+            $whatsapp = $_POST['whatsapp'];
+            $email = $_POST['email'];
+            $ramo_atuacao = $_POST['ramo_atuacao'];
+            date_default_timezone_set('America/Sao_Paulo');
+            $data_criacao = date("Y-m-d H:i:s");
+
+            if (!empty($nome) && !empty($endereco) && !empty($telefone) && !empty($whatsapp) && !empty($email) && !empty($ramo_atuacao)) {
+                $controler->cadastrarFornecedor($nome, $endereco, $telefone, $whatsapp, $email, $ramo_atuacao, $data_criacao);
+                header("Location: ../listarFornecedores/listarFornecedores.php");
+            }
+        }
+    ?>
 </main>
 <?php renderFooter(); ?>
 </body>
