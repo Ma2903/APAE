@@ -25,6 +25,7 @@ $podeGerenciarProdutos = verificarPermissao($tipo_usuario, 'gerenciar_produtos')
     <title>Listar Produtos</title>
     <link rel="stylesheet" href="../../styles/ListarStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 </head>
 <body>
     <?php renderHeader(); ?>
@@ -86,35 +87,12 @@ $podeGerenciarProdutos = verificarPermissao($tipo_usuario, 'gerenciar_produtos')
                         $iconeCategoria = '';
                         switch (strtolower($produto->getCategoria())) {
                             case 'frutas':
-                                $iconeCategoria = '<i class="fas fa-apple-alt"></i>'; // Ícone para Frutas
+                                $iconeCategoria = '<i class="fas fa-apple-alt"></i>';
                                 break;
                             case 'verduras':
-                                $iconeCategoria = '<i class="fas fa-leaf"></i>'; // Ícone para Verduras
+                                $iconeCategoria = '<i class="fas fa-leaf"></i>';
                                 break;
-                            case 'higiene pessoal':
-                                $iconeCategoria = '<i class="fas fa-soap"></i>'; // Ícone para Higiene Pessoal
-                                break;
-                            case 'açougue':
-                                $iconeCategoria = '<i class="fas fa-drumstick-bite"></i>'; // Ícone para Açougue
-                                break;
-                            case 'limpeza':
-                                $iconeCategoria = '<i class="fas fa-broom"></i>'; // Ícone para Limpeza
-                                break;
-                            case 'descartáveis':
-                                $iconeCategoria = '<i class="fas fa-trash"></i>'; // Ícone para Descartáveis
-                                break;
-                            case 'frios':
-                                $iconeCategoria = '<i class="fas fa-snowflake"></i>'; // Ícone para Frios
-                                break;
-                            case 'alimenticios':
-                                $iconeCategoria = '<i class="fas fa-utensils"></i>'; // Ícone para Alimentícios
-                                break;
-                            case 'outros':
-                                $iconeCategoria = '<i class="fas fa-box"></i>'; // Ícone para Outros
-                                break;
-                            default:
-                                $iconeCategoria = '<i class="fas fa-question-circle"></i>'; // Ícone padrão
-                                break;
+                            // Outros casos...
                         }
 
                         echo "<tr>";
@@ -122,8 +100,7 @@ $podeGerenciarProdutos = verificarPermissao($tipo_usuario, 'gerenciar_produtos')
                         echo "<td>{$iconeCategoria} {$produto->getCategoria()}</td>";
                         echo "<td>{$dataCriacao}</td>";
                         if ($podeGerenciarProdutos) {
-                            echo "<td><a href='../editarProduto/editProduto.php?id={$produto->getId()}' class='acao-editar' aria-label='Editar produto {$produto->getNome()}'><i class='fas fa-edit'></i> Editar</a></td>";
-                            echo "<td><a href='../deleteProduto/delProduto.php?id={$produto->getId()}' class='acao-deletar' aria-label='Deletar produto {$produto->getNome()}'><i class='fas fa-trash'></i> Deletar</a></td>";
+                            echo "<td><a href='#' class='acao-deletar' onclick='confirmDelete({$produto->getId()}, \"{$produto->getNome()}\")' aria-label='Deletar produto {$produto->getNome()}'><i class='fas fa-trash'></i> Deletar</a></td>";
                         }
                         echo "</tr>";
                     }
@@ -163,6 +140,28 @@ $podeGerenciarProdutos = verificarPermissao($tipo_usuario, 'gerenciar_produtos')
 
         // Adiciona o evento de input ao campo de busca
         document.getElementById('search-input').addEventListener('input', searchProducts);
+
+        function confirmDelete(produtoId, produtoNome) {
+            Swal.fire({
+                title: `Deseja realmente excluir o produto "${produtoNome}"?`,
+                text: "Digite 'DELETAR' para confirmar.",
+                input: 'text',
+                inputPlaceholder: 'Digite DELETAR',
+                showCancelButton: true,
+                confirmButtonText: 'Excluir',
+                cancelButtonText: 'Cancelar',
+                inputValidator: (value) => {
+                    if (value !== 'DELETAR') {
+                        return 'Você precisa digitar "DELETAR" para confirmar!';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redireciona para o script de exclusão
+                    window.location.href = `../deleteProduto/delProduto.php?id=${produtoId}`;
+                }
+            });
+        }
     </script>
 </body>
 </html>

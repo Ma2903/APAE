@@ -12,6 +12,7 @@ $controler = new ControladorUsuarios();
     <title>Listar Usuários</title>
     <link rel="stylesheet" href="../../styles/ListarStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 </head>
 <body>
 <?php renderHeader(); ?>
@@ -64,7 +65,6 @@ $controler = new ControladorUsuarios();
         <tbody id="user-table-body">
             <?php
             $usuarios = $controler->listarUsuarios();
-            // Ordenar usuários em ordem alfabética pelo nome
             usort($usuarios, function($a, $b) {
                 return strcmp($a->getNome(), $b->getNome());
             });
@@ -76,15 +76,15 @@ $controler = new ControladorUsuarios();
                     switch ($usuario->getTipoUsuario()) {
                         case 'administrador':
                             $classeUsuario = 'administrador';
-                            $iconeUsuario = '<i class="fas fa-user-shield"></i>'; // Ícone para Administrador
+                            $iconeUsuario = '<i class="fas fa-user-shield"></i>';
                             break;
                         case 'nutricionista':
                             $classeUsuario = 'nutricionista';
-                            $iconeUsuario = '<i class="fas fa-utensils"></i>'; // Ícone para Nutricionista
+                            $iconeUsuario = '<i class="fas fa-utensils"></i>';
                             break;
                         case 'contador':
                             $classeUsuario = 'contador';
-                            $iconeUsuario = '<i class="fas fa-calculator"></i>'; // Ícone para Adm Compras
+                            $iconeUsuario = '<i class="fas fa-calculator"></i>';
                             break;
                     }
                     $tipo = $usuario->getTipoUsuario() === "contador" ? 'Adm Compras' : ucfirst($usuario->getTipoUsuario());
@@ -96,7 +96,7 @@ $controler = new ControladorUsuarios();
                     echo "<td>{$usuario->getEmail()}</td>";
                     echo "<td>{$iconeUsuario} {$tipo}</td>";
                     echo "<td><a href='../editarUsuario/editUsuario.php?id={$usuario->getId()}' class='acao-editar'><i class='fas fa-edit'></i> Editar</a></td>";
-                    echo "<td><a href='../deleteUsuario/delUsuario.php?id={$usuario->getId()}' class='acao-deletar'><i class='fas fa-trash'></i> Deletar</a></td>";
+                    echo "<td><a href='#' class='acao-deletar' onclick='confirmDelete({$usuario->getId()}, \"{$usuario->getNome()}\")'><i class='fas fa-trash'></i> Deletar</a></td>";
                     echo "</tr>";
                 }
             } else {
@@ -143,6 +143,28 @@ function searchUsers() {
         }
     });
 }
+
+    function confirmDelete(usuarioId, usuarioNome) {
+        Swal.fire({
+            title: `Deseja realmente excluir o usuário "${usuarioNome}"?`,
+            text: "Digite 'DELETAR' para confirmar.",
+            input: 'text',
+            inputPlaceholder: 'Digite DELETAR',
+            showCancelButton: true,
+            confirmButtonText: 'Excluir',
+            cancelButtonText: 'Cancelar',
+            inputValidator: (value) => {
+                if (value !== 'DELETAR') {
+                    return 'Você precisa digitar "DELETAR" para confirmar!';
+                }
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redireciona para o script de exclusão
+                window.location.href = `../deleteUsuario/delUsuario.php?id=${usuarioId}`;
+            }
+        });
+    }
 </script>
 </body>
 </html>

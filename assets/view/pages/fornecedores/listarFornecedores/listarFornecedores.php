@@ -10,6 +10,7 @@ $controler = new ControladorFornecedor();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Fornecedores</title>
     <link rel="stylesheet" href="../../styles/ListarStyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -58,7 +59,6 @@ $controler = new ControladorFornecedor();
         <tbody id="supplier-table-body">
             <?php
             $fornecedores = $controler->verFornecedor();
-            // Ordenar fornecedores em ordem alfabética pelo nome
             usort($fornecedores, function($a, $b) {
                 return strcmp($a->getNome(), $b->getNome());
             });
@@ -68,25 +68,25 @@ $controler = new ControladorFornecedor();
                     $iconeRamo = '';
                     switch (strtolower($fornecedor->getRamo())) {
                         case 'alimenticio':
-                            $iconeRamo = '<i class="fas fa-utensils"></i>'; // Ícone para Alimentício
+                            $iconeRamo = '<i class="fas fa-utensils"></i>';
                             break;
                         case 'açougue':
-                            $iconeRamo = '<i class="fas fa-drumstick-bite"></i>'; // Ícone para Açougue
+                            $iconeRamo = '<i class="fas fa-drumstick-bite"></i>';
                             break;
                         case 'frutas':
-                            $iconeRamo = '<i class="fas fa-apple-alt"></i>'; // Ícone para Frutas
+                            $iconeRamo = '<i class="fas fa-apple-alt"></i>';
                             break;
                         case 'verduras':
-                            $iconeRamo = '<i class="fas fa-leaf"></i>'; // Ícone para Verduras
+                            $iconeRamo = '<i class="fas fa-leaf"></i>';
                             break;
                         case 'limpeza':
-                            $iconeRamo = '<i class="fas fa-broom"></i>'; // Ícone para Limpeza
+                            $iconeRamo = '<i class="fas fa-broom"></i>';
                             break;
                         case 'outros':
-                            $iconeRamo = '<i class="fas fa-box"></i>'; // Ícone para Outros
+                            $iconeRamo = '<i class="fas fa-box"></i>';
                             break;
                         default:
-                            $iconeRamo = '<i class="fas fa-question-circle"></i>'; // Ícone padrão
+                            $iconeRamo = '<i class="fas fa-question-circle"></i>';
                             break;
                     }
 
@@ -98,7 +98,7 @@ $controler = new ControladorFornecedor();
                     echo "<td>{$fornecedor->getEmail()}</td>";
                     echo "<td>{$iconeRamo} {$fornecedor->getRamo()}</td>";
                     echo "<td><a href='../editarFornecedores/editFornecedores.php?id={$fornecedor->getId()}' class='acao-editar'><i class='fas fa-edit'></i> Editar</a></td>";
-                    echo "<td><a href='../deleteFornecedores/delFornecedores.php?id={$fornecedor->getId()}' class='acao-deletar'><i class='fas fa-trash'></i> Deletar</a></td>";
+                    echo "<td><a href='#' class='acao-deletar' onclick='confirmDelete({$fornecedor->getId()}, \"{$fornecedor->getNome()}\")'><i class='fas fa-trash'></i> Deletar</a></td>";
                     echo "</tr>";
                 }
             } else {
@@ -137,6 +137,28 @@ $controler = new ControladorFornecedor();
 
     // Adiciona o evento de input ao campo de busca
     document.getElementById('search-input').addEventListener('input', searchSuppliers);
+
+    function confirmDelete(fornecedorId, fornecedorNome) {
+        Swal.fire({
+            title: `Deseja realmente excluir o fornecedor "${fornecedorNome}"?`,
+            text: "Digite 'DELETAR' para confirmar.",
+            input: 'text',
+            inputPlaceholder: 'Digite DELETAR',
+            showCancelButton: true,
+            confirmButtonText: 'Excluir',
+            cancelButtonText: 'Cancelar',
+            inputValidator: (value) => {
+                if (value !== 'DELETAR') {
+                    return 'Você precisa digitar "DELETAR" para confirmar!';
+                }
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redireciona para o script de exclusão
+                window.location.href = `../deleteFornecedores/delFornecedores.php?id=${fornecedorId}`;
+            }
+        });
+    }
 </script>
 </body>
 </html>
