@@ -224,19 +224,3 @@ a:focus {
 .menu li a i {
     font-size: 1.8rem;
 }
-
-/* Botão de logout */
-.logout-btn {
-    background-color: var(--darkblue);
-    color: var(--white);
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-.logout-btn:hover {
-    background-color: var(--yellow);
-    color: var(--darkblue);
-}

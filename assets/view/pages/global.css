@@ -66,6 +66,7 @@ header {
     align-items: center;
     padding: 0; /* Remove o padding */
     background-color: transparent; /* Torna o fundo transparente */
+    gap: 10px;
 }
 
 .greeting {
@@ -88,35 +89,37 @@ header {
     font-weight: bold; /* Negrito para o nome */
 }
 
-.logout-btn {
+.logout-btn, .home-btn {
     display: flex;
-    background-color: var(--darkred);
+    align-items: center;
+    justify-content: center;
+    background-color: var(--darkblue);
     color: var(--white);
-    padding: 10px 20px;
+    padding: 10px 15px;
     border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
-    transition: background-color 0.2s ease, transform 0.2s ease;
+    font-size: 1rem;
+    margin-left: 10px; /* Espaço entre os botões */
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.logout-btn i{
-    margin-left: 10px;
+.logout-btn i, .home-btn i {
+    margin-left: 8px;
+    font-size: 1.2rem; /* Aumenta o tamanho do ícone e do texto */
+    color: var(--white); /* Cor do ícone e do texto */
+    vertical-align: middle;
+}
+
+.home-btn:hover {
+    background-color: var(--lightblue);
+    transform: scale(1.05);
 }
 
 .logout-btn:hover {
     background-color: var(--red);
     transform: scale(1.05);
 }
-
-.home-btn {  
-    padding: 10px 20px;  
-    background-color: var(--darkblue);  
-    color: var(--white);  
-    font-size: 1rem;  
-    cursor: pointer;  
-    text-decoration: none; /* Remove o sublinhado do link */  
-    transition: background-color 0.3s ease;  
-} 
 
 /* Configuração do layout principal */
 body {
