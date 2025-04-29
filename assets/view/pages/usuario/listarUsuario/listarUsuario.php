@@ -20,7 +20,9 @@ $controler = new ControladorUsuarios();
     <section class="search">
         <input type="text" id="search-input" name="search" placeholder="Pesquisar usuários..." onkeyup="searchUsers()">
         <section class="add-user">
-            <href="../cadastroUsuario/register_user.php" class="add-user-btn"> <i class="fas fa-users"></i> Cadastrar Novo Usuário</a>
+            <a href="../cadastroUsuario/register_user.php" class="add-user-btn">
+                <i class="fas fa-users"></i> Cadastrar Novo Usuário
+            </a>
         </section>
         <section class="filter">
             <label for="tipo-usuario" class="filter-label">Filtrar por Tipo de Usuário:</label>
