@@ -15,28 +15,6 @@ $controler = new ControladorProdutos();
 </head>
 <body>
 <?php renderHeader(); ?>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
-        if (logoutButton) {
-            logoutButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                Swal.fire({
-                    title: 'Deseja realmente sair?',
-                    text: "Você será desconectado do sistema.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Sim, sair',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = logoutButton.href;
-                    }
-                });
-            });
-        }
-    });
-</script>
 <main>
     <a href="../listarProduto/listarProduto.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h1><i class="fas fa-box"></i> Cadastro de Produto</h1>
@@ -77,6 +55,8 @@ $controler = new ControladorProdutos();
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nome = $_POST['nome'];
             $categoria = $_POST['categoria'];
+            $un = $_POST['un'];
+            // Definindo o fuso horário para São Paulo
             date_default_timezone_set('America/Sao_Paulo');
             $data_criacao = date("Y-m-d H:i:s");
 
@@ -90,5 +70,27 @@ $controler = new ControladorProdutos();
     ?>
 </main>
 <?php renderFooter(); ?>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
+        if (logoutButton) {
+            logoutButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Deseja realmente sair?',
+                    text: "Você será desconectado do sistema.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, sair',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = logoutButton.href;
+                    }
+                });
+            });
+        }
+    });
+</script>
 </body>
 </html>

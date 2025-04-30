@@ -39,18 +39,20 @@ class ControladorProdutos{
         $arr = [];
         foreach($todosProdutos as $produto){
             $novoProduto = new Produto($produto['id'], $produto['nome'], $produto['categoria'], $produto['data_criacao']);
+            $novoProduto->setUnidadeMedida($produto['unidade_medida']); // Adicionado
             $arr[] = $novoProduto;
         }
         return $arr;
     }
     
-    public function editarProdutos($idParaEditar, $nome, $categoria, $un){
-            $this->bd->update('produtos', (object)[
-                'nome'=> $nome,
-                'categoria'=> $categoria,
-                'unidade_medida'=> $un,
-            ],$idParaEditar);
-        }
+    public function editarProduto($idParaEditar, $nome, $categoria, $un) { // Renomeado de editarProdutos para editarProduto
+        $this->bd->update('produtos', (object)[
+            'nome' => $nome,
+            'categoria' => $categoria,
+            'unidade_medida' => $un,
+        ], $idParaEditar);
+    }
+
     public function deletarProdutos($id){
         $this->bd->delete("produtos", $id);
     }

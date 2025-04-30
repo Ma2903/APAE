@@ -15,28 +15,6 @@ $controler = new ControladorProdutos();
 </head>
 <body>
 <?php renderHeader(); ?>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
-        if (logoutButton) {
-            logoutButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                Swal.fire({
-                    title: 'Deseja realmente sair?',
-                    text: "Você será desconectado do sistema.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Sim, sair',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = logoutButton.href;
-                    }
-                });
-            });
-        }
-    });
-</script>
 <main>
     <a href="../listarProduto/listarProduto.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h1><i class="fas fa-box"></i> Editar Produto</h1>
@@ -67,13 +45,12 @@ $controler = new ControladorProdutos();
                 <section>
                     <label for="un"><i class="fas fa-balance-scale"></i> Unidade de Medida:</label>
                     <select id="un" name="un" required>
-                        <option value="CX"'; if ($produto->getUnidade() == "CX") echo ' selected'; echo '>Caixa (CX)</option>
-                        <option value="UN"'; if ($produto->getUnidade() == "UN") echo ' selected'; echo '>Unidade (UN)</option>
-                        <option value="KG"'; if ($produto->getUnidade() == "KG") echo ' selected'; echo '>Quilograma (KG)</option>
-                        <option value="MC"'; if ($produto->getUnidade() == "MC") echo ' selected'; echo '>Metro Cúbico (MC)</option>
-                        <option value="SC"'; if ($produto->getUnidade() == "SC") echo ' selected'; echo '>Saco (SC)</option>
-                        <option value="BDJ"'; if ($produto->getUnidade() == "BDJ") echo ' selected'; echo '>Balde (BDJ)</option>
-                        <option value="CBÇ"'; if ($produto->getUnidade() == "CBÇ") echo ' selected'; echo '>Cabeça (CBÇ)</option>
+                        <option value="CX"'; if ($produto->getUnidadeMedida() == "CX") echo ' selected'; echo '>Caixa (CX)</option>
+                        <option value="UN"'; if ($produto->getUnidadeMedida() == "UN") echo ' selected'; echo '>Unidade (UN)</option>
+                        <option value="KG"'; if ($produto->getUnidadeMedida() == "KG") echo ' selected'; echo '>Quilograma (KG)</option>
+                        <option value="SC"'; if ($produto->getUnidadeMedida() == "SC") echo ' selected'; echo '>Saco (SC)</option>
+                        <option value="BDJ"'; if ($produto->getUnidadeMedida() == "BDJ") echo ' selected'; echo '>Balde (BDJ)</option>
+                        <option value="CBÇ"'; if ($produto->getUnidadeMedida() == "CBÇ") echo ' selected'; echo '>Cabeça (CBÇ)</option>
                     </select>
                 </section>
                 <button type="submit"><i class="fas fa-save"></i> Salvar Alterações</button>';
@@ -83,11 +60,33 @@ $controler = new ControladorProdutos();
     </form>
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $controler->editarProduto($_GET['id'], $_POST['nome'], $_POST['categoria'], $_POST['un']);
+        $controler->editarProduto($_GET['id'], $_POST['nome'], $_POST['categoria'], $_POST['un']); // Corrigido para editarProduto
         header('Location: ../listarProduto/listarProduto.php');
     }
     ?>
 </main>
 <?php renderFooter(); ?>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
+        if (logoutButton) {
+            logoutButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Deseja realmente sair?',
+                    text: "Você será desconectado do sistema.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, sair',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = logoutButton.href;
+                    }
+                });
+            });
+        }
+    });
+</script>
 </body>
 </html>

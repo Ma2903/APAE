@@ -4,6 +4,7 @@ class Produto {
     private $nome;
     private $categoria;
     private $dt_criacao;
+    private $unidade_medida; // Renomeado de $un para $unidade_medida
 
     public function __construct($id, $nome, $categoria, $dt_criacao) {
         $this->id = $id;
@@ -36,12 +37,12 @@ class Produto {
         $this->categoria = $categoria;
     }
 
-    public function getUn() {
-        return $this->un;
+    public function getUnidadeMedida() { // Renomeado de getUn para getUnidadeMedida
+        return $this->unidade_medida;
     }
 
-    public function setUn($un) {
-        $this->un = $un;
+    public function setUnidadeMedida($unidade_medida) { // Renomeado de setUn para setUnidadeMedida
+        $this->unidade_medida = $unidade_medida;
     }
 
     public function getDtCriacao() {
