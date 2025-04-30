@@ -41,7 +41,17 @@ $controler = new ControladorFornecedor();
         </section>
         <section>
             <label for="ramo_atuacao"><i class="fas fa-briefcase"></i> Ramo de Atuação:</label>
-            <input type="text" id="ramo_atuacao" name="ramo_atuacao" placeholder="Ramo de Atuação">
+            <select id="ramo_atuacao" name="ramo_atuacao" required>
+                <option value="Frutas">Frutas</option>
+                <option value="Verduras">Verduras</option>
+                <option value="Higiene Pessoal">Higiene Pessoal</option>
+                <option value="Açougue">Açougue</option>
+                <option value="Limpeza">Limpeza</option>
+                <option value="Descartáveis">Descartáveis</option>
+                <option value="Frios">Frios</option>
+                <option value="Alimenticios">Alimentícios</option>
+                <option value="Outros">Outros</option>
+            </select>
         </section>
         <button type="submit"><i class="fas fa-save"></i> Cadastrar Fornecedor</button>
     </form>

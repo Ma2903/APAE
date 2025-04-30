@@ -10,33 +10,11 @@ $controler = new ControladorFornecedor();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Fornecedores</title>
     <link rel="stylesheet" href="../../styles/ListarStyle.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <?php renderHeader(); ?>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
-        if (logoutButton) {
-            logoutButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                Swal.fire({
-                    title: 'Deseja realmente sair?',
-                    text: "Você será desconectado do sistema.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Sim, sair',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = logoutButton.href;
-                    }
-                });
-            });
-        }
-    });
-</script>
 <main>
     <h1><i class="fas fa-truck"></i> Lista de Fornecedores</h1>
     <section class="search">
@@ -57,13 +35,16 @@ $controler = new ControladorFornecedor();
     <section class="filter">
         <label for="ramo" class="filter-label">Filtrar por Ramo de Atuação:</label>
         <select id="ramo" name="ramo" onchange="filterSuppliersBySelect()" aria-label="Filtrar fornecedores por ramo">
-            <option value="">Todos</option>
-            <option value="alimenticio">Alimentício</option>
-            <option value="açougue">Açougue</option>
-            <option value="frutas">Frutas</option>
-            <option value="verduras">Verduras</option>
-            <option value="limpeza">Limpeza</option>
-            <option value="outros">Outros</option>
+        <option value="">Todas</option>
+            <option value="Frutas">Frutas</option>
+            <option value="Verduras">Verduras</option>
+            <option value="Higiene Pessoal">Higiene Pessoal</option>
+            <option value="Açougue">Açougue</option>
+            <option value="Limpeza">Limpeza</option>
+            <option value="Descartáveis">Descartáveis</option>
+            <option value="Frios">Frios</option>
+            <option value="Alimenticios">Alimenticios</option>
+            <option value="Outros">Outros</option>
         </select>
     </section>
     <table>
@@ -89,26 +70,35 @@ $controler = new ControladorFornecedor();
                 foreach ($fornecedores as $fornecedor) {
                     $iconeRamo = '';
                     switch (strtolower($fornecedor->getRamo())) {
-                        case 'alimenticio':
-                            $iconeRamo = '<i class="fas fa-utensils"></i>';
-                            break;
-                        case 'açougue':
-                            $iconeRamo = '<i class="fas fa-drumstick-bite"></i>';
-                            break;
                         case 'frutas':
                             $iconeRamo = '<i class="fas fa-apple-alt"></i>';
                             break;
                         case 'verduras':
                             $iconeRamo = '<i class="fas fa-leaf"></i>';
                             break;
+                        case 'higiene pessoal':
+                            $iconeRamo = '<i class="fas fa-soap"></i>';
+                            break;
+                        case 'açougue':
+                            $iconeRamo = '<i class="fas fa-drumstick-bite"></i>';
+                            break;
                         case 'limpeza':
                             $iconeRamo = '<i class="fas fa-broom"></i>';
+                            break;
+                        case 'descartáveis':
+                            $iconeRamo = '<i class="fas fa-trash-alt"></i>';
+                            break;
+                        case 'frios':
+                            $iconeRamo = '<i class="fas fa-cheese"></i>';
+                            break;
+                        case 'alimenticios':
+                            $iconeRamo = '<i class="fas fa-utensils"></i>';
                             break;
                         case 'outros':
                             $iconeRamo = '<i class="fas fa-box"></i>';
                             break;
                         default:
-                            $iconeRamo = '<i class="fas fa-question-circle"></i>';
+                            $iconeRamo = '<i class="fas fa-box"></i>'; // Ícone padrão
                             break;
                     }
 
@@ -181,6 +171,27 @@ $controler = new ControladorFornecedor();
             }
         });
     }
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
+        if (logoutButton) {
+            logoutButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Deseja realmente sair?',
+                    text: "Você será desconectado do sistema.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, sair',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = logoutButton.href;
+                    }
+                });
+            });
+        }
+    });
 </script>
 </body>
 </html>
+``` 

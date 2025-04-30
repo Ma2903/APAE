@@ -46,7 +46,17 @@ $controler = new ControladorFornecedor();
                 </section>
                 <section>
                     <label for="ramo"><i class="fas fa-briefcase"></i> Ramo de Atuação:</label>
-                    <input type="text" id="ramo" name="ramo" value="'.$fornecedor->getRamo().'">
+                    <select id="ramo" name="ramo" required>
+                        <option value="Frutas" '.($fornecedor->getRamo() == 'Frutas' ? 'selected' : '').'>Frutas</option>
+                        <option value="Verduras" '.($fornecedor->getRamo() == 'Verduras' ? 'selected' : '').'>Verduras</option>
+                        <option value="Higiene Pessoal" '.($fornecedor->getRamo() == 'Higiene Pessoal' ? 'selected' : '').'>Higiene Pessoal</option>
+                        <option value="Açougue" '.($fornecedor->getRamo() == 'Açougue' ? 'selected' : '').'>Açougue</option>
+                        <option value="Limpeza" '.($fornecedor->getRamo() == 'Limpeza' ? 'selected' : '').'>Limpeza</option>
+                        <option value="Descartáveis" '.($fornecedor->getRamo() == 'Descartáveis' ? 'selected' : '').'>Descartáveis</option>
+                        <option value="Frios" '.($fornecedor->getRamo() == 'Frios' ? 'selected' : '').'>Frios</option>
+                        <option value="Alimenticios" '.($fornecedor->getRamo() == 'Alimenticios' ? 'selected' : '').'>Alimentícios</option>
+                        <option value="Outros" '.($fornecedor->getRamo() == 'Outros' ? 'selected' : '').'>Outros</option>
+                    </select>
                 </section>
                 <button type="submit"><i class="fas fa-save"></i> Salvar Alterações</button>';
             }

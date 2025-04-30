@@ -29,28 +29,6 @@ $podeGerenciarProdutos = verificarPermissao($tipo_usuario, 'gerenciar_produtos')
 </head>
 <body>
     <?php renderHeader(); ?>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
-            if (logoutButton) {
-                logoutButton.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    Swal.fire({
-                        title: 'Deseja realmente sair?',
-                        text: "Você será desconectado do sistema.",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'Sim, sair',
-                        cancelButtonText: 'Cancelar'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = logoutButton.href;
-                        }
-                    });
-                });
-            }
-        });
-    </script>
     <main>
         <h1>  <i class="fas fa-box"></i> Listar Produtos</h1>
         <section class="search">
@@ -133,7 +111,7 @@ $podeGerenciarProdutos = verificarPermissao($tipo_usuario, 'gerenciar_produtos')
                                 $iconeCategoria = '<i class="fas fa-utensils"></i>';
                                 break;
                             case 'outros':
-                                $iconeCategoria = '<i class="fas fa-ellipsis-h"></i>';
+                                $iconeCategoria = '<i class="fas fa-box"></i>';
                                 break;
                             default:
                                 $iconeCategoria = '<i class="fas fa-box"></i>'; // Ícone padrão
@@ -208,6 +186,26 @@ $podeGerenciarProdutos = verificarPermissao($tipo_usuario, 'gerenciar_produtos')
                 }
             });
         }
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
+            if (logoutButton) {
+                logoutButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    Swal.fire({
+                        title: 'Deseja realmente sair?',
+                        text: "Você será desconectado do sistema.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sim, sair',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = logoutButton.href;
+                        }
+                    });
+                });
+            }
+        });
     </script>
 </body>
 </html>
