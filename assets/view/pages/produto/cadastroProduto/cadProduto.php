@@ -43,7 +43,6 @@ $controler = new ControladorProdutos();
                 <option value="CX">Caixa (CX)</option>
                 <option value="UN">Unidade (UN)</option>
                 <option value="KG">Quilograma (KG)</option>
-                <!-- <option value="MC">Metro Cúbico (MC)</option> -->
                 <option value="SC">Saco (SC)</option>
                 <option value="BDJ">Balde (BDJ)</option>
                 <option value="CBÇ">Cabeça (CBÇ)</option>

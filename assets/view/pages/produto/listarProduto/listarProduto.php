@@ -68,6 +68,7 @@ $podeGerenciarProdutos = verificarPermissao($tipo_usuario, 'gerenciar_produtos')
                 <tr>
                     <th scope="col">Nome</th>
                     <th scope="col">Categoria</th>
+                    <th scope="col">Unidade de Medida</th>
                     <th scope="col">Data de Criação</th>
                     <?php if ($podeGerenciarProdutos): ?>
                         <th scope="col" colspan="2">Ações</th>
@@ -121,6 +122,8 @@ $podeGerenciarProdutos = verificarPermissao($tipo_usuario, 'gerenciar_produtos')
                         echo "<tr>";
                         echo "<td>{$produto->getNome()}</td>";
                         echo "<td>{$iconeCategoria} {$produto->getCategoria()}</td>";
+                        echo "<td>{$produto->getUnidadeMedida()}</td>";
+                        // Formata a data de criação
                         echo "<td>{$dataCriacao}</td>";
                         if ($podeGerenciarProdutos) {
                             echo "<td><a href='../editarProduto/editProduto.php?id={$produto->getId()}' class='acao-editar' aria-label='Editar produto {$produto->getNome()}'><i class='fas fa-edit'></i> Editar</a></td>";
