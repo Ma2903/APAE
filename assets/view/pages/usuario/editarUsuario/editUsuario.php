@@ -15,28 +15,6 @@ $controler = new ControladorUsuarios();
 </head>
 <body>
 <?php renderHeader(); ?>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
-        if (logoutButton) {
-            logoutButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                Swal.fire({
-                    title: 'Deseja realmente sair?',
-                    text: "Você será desconectado do sistema.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Sim, sair',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = logoutButton.href;
-                    }
-                });
-            });
-        }
-    });
-</script>
 <main>
     <a href="../listarUsuario/listarUsuario.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
     <h1><i class="fas fa-user-edit"></i> Editar Usuário</h1>
@@ -74,7 +52,9 @@ $controler = new ControladorUsuarios();
                     <label for="email"><i class="fas fa-envelope"></i> E-mail:</label>
                     <input type="email" id="email" name="email" value="'.$usuario->getEmail().'" required>
                 </section>
-                <section>
+                <section style="display: none;">
+                    <input type="password" id="senha" name="senha" value="'.$usuario->getSenha().'">
+                </section>
                     <label for="tipo_usuario"><i class="fas fa-users"></i> Tipo de Usuário:</label>
                     <select id="tipo_usuario" name="tipo_usuario" required>
                         <option value="administrador"'; if ($usuario->getTipoUsuario() == 'administrador') echo 'selected'; echo '>Administrador</option>
@@ -97,11 +77,33 @@ $controler = new ControladorUsuarios();
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $crn = isset($_POST['crn']) ? $_POST['crn'] : 'nulo';
-        $controler->editarUsuario($_GET['id'], $_POST['cpf'], $_POST['nome'], $_POST['sobrenome'], $_POST['data_nascimento'], $_POST['endereco'], $_POST['telefone'], $_POST['email'], $_POST['tipo_usuario'], $crn);
+        $controler->editarUsuario($_GET['id'], $_POST['cpf'], $_POST['nome'], $_POST['sobrenome'], $_POST['data_nascimento'], $_POST['endereco'], $_POST['telefone'], $_POST['email'],$_POST['senha'], $_POST['tipo_usuario'], $crn);
         header('Location: ../listarUsuario/listarUsuario.php');
     }
     ?>
 </main>
 <?php renderFooter(); ?>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
+        if (logoutButton) {
+            logoutButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Deseja realmente sair?',
+                    text: "Você será desconectado do sistema.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, sair',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = logoutButton.href;
+                    }
+                });
+            });
+        }
+    });
+</script>
 </body>
 </html>

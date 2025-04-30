@@ -176,8 +176,8 @@ a:focus, button:focus, input:focus {
 
 /* Estilização das linhas da tabela de acordo com o tipo de usuário */
 tr.administrador {
-    background-color: #808080 !important; /* Cinza escuro */
-    color: var(--white) !important;
+    background-color: #808080; /* Cinza escuro */
+    color: var(--white);
 }
 
 tr.nutricionista {
