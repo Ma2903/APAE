@@ -21,42 +21,48 @@ $cotas = $controladorCotacao->verCotas();
 </head>
 <body>
 <?php renderHeader(); ?>
-    <main>
+<main>
     <a href="../listarCotacoes/listarCotacoes.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
-    <h1>Cadastrar Cotação</h1>
+    <h1><i class="fas fa-file-invoice-dollar"></i> Cadastrar Cotação</h1>
     <form action="" method="post">
-            <label for="produto_id">Produto:</label>
+        <section>
+            <label for="produto_id"><i class="fas fa-box"></i> Produto:</label>
             <select id="produto_id" name="produto_id" required>
                 <?php
                 foreach ($controladorProduto->verProdutos() as $produto) {
                     echo "<option value='{$produto->getId()}'>{$produto->getNome()}</option>";
                 }
-                
                 ?>
             </select>
-            <label for="fornecedor_id">Fornecedor:</label>
+        </section>
+        <section>
+            <label for="fornecedor_id"><i class="fas fa-truck"></i> Fornecedor:</label>
             <select id="fornecedor_id" name="fornecedor_id" required>
                 <?php
                 foreach ($controladorFornecedor->verFornecedor() as $fornecedor) {
                     echo "<option value='{$fornecedor->getId()}'>{$fornecedor->getNome()}</option>";
                 }
-                
                 ?>
             </select>
-            <label for="preco_unitario">Preço Unitário:</label>
+        </section>
+        <section>
+            <label for="preco_unitario"><i class="fas fa-dollar-sign"></i> Preço Unitário:</label>
             <input type="number" step="0.01" id="preco_unitario" name="preco_unitario" required placeholder="Ex: 19.99 (Reais)">
-            <label for="quantidade">Quantidade:</label>
-            <input type="number" step="0.01" id="quantidade" name="quantidade" required placeholder="Ex: 5 (Unidade)" >
-            <label for="quantidade">Relação Peso da Unidade:</label>
+        </section>
+        <section>
+            <label for="quantidade"><i class="fas fa-sort-numeric-up"></i> Quantidade:</label>
+            <input type="number" step="0.01" id="quantidade" name="quantidade" required placeholder="Ex: 5 (Unidade)">
+        </section>
+        <section>
+            <label for="rel_un_peso"><i class="fas fa-weight"></i> Relação Peso da Unidade:</label>
             <input type="number" step="0.01" id="rel_un_peso" name="rel_un_peso" required placeholder="Ex: 200 (gramas / unidade)">
-            <button type="submit">Cadastrar Cotação</button>
+        </section>
+        <button type="submit"><i class="fas fa-save"></i> Cadastrar Cotação</button>
     </form>
     <?php
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $controladorCotacao->cadastrarCota($_POST['produto_id'], $_POST['fornecedor_id'], $_POST['preco_unitario'],$_POST['rel_un_peso'], $_POST['quantidade']);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $controladorCotacao->cadastrarCota($_POST['produto_id'], $_POST['fornecedor_id'], $_POST['preco_unitario'], $_POST['rel_un_peso'], $_POST['quantidade']);
     }
-    
-    
     ?>
 </main>
 <?php renderFooter(); ?>

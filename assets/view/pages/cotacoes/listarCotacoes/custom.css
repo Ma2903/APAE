@@ -21,6 +21,18 @@
 .search > div .input-filter-date{
     width: 40%;
 }
+
+/* Ajuste para inputs de filtro de data */
+.input-filter-date {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input-filter-date input {
+    width: 100%;
+}
+
 .tableHeader{
     position: relative;
     display: flex;
@@ -32,6 +44,13 @@
     padding: 20px;
     font-size: 24px;
     cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 .tableHeader:hover{
     background: var(--superdarkblue);
@@ -47,19 +66,31 @@
 .history{
     display: none;
     max-height: 0;
+    margin-top: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 .history tr{
     padding: 200px;
 }
 .history.active{
-    display:inline-table;
-    animation: entry 200ms;
-}
-table{
-    margin: 0;
+    display: table;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 @keyframes entry {
     0%{transform: translateY(-50%);}   
     100%{transform: translateY(0);} 
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

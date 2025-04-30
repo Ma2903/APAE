@@ -162,7 +162,7 @@ function construirTabelas($cotas) {
             echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
             if ($podeGerenciarCotacoes) {
                 echo "<td> <a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
-                echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
+                echo "<td> <a href='#' class='acao-deletar' onclick='confirmDelete({$cotacao->getId()}, \"{$produtoNome}\")'><i class='fas fa-trash'></i> Deletar </a></td>";
             }
             echo "</tr>";
             $indexNum++;
@@ -200,7 +200,6 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == n
     <title>Listar Cotações</title>
     <link rel="stylesheet" href="../../styles/ListarStyle.css">
     <link rel="stylesheet" href="./custom.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
    <style>
@@ -212,26 +211,36 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == n
 <body>
 <?php renderHeader(); ?>
 <main>
-    <h1>Listar Cotações</h1>
+    <h1><i class="fas fa-file-invoice-dollar"></i> Listar Cotações</h1>
+    <?php if (isset($_GET['deleted']) && $_GET['deleted'] === 'true'): ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Cotação deletada com sucesso!',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    <?php endif; ?>
     <section class="search">
         <?php if ($podeGerenciarCotacoes): ?>
             <?php endif; ?>
             <div>
                 <section class="input-filter-date">
-                    <label for="dataInicio">Data Início:</label>
+                    <label for="dataInicio"><i class="fas fa-calendar-alt"></i> Data Início:</label>
                     <input type="date" id="dataInicio" name="dataInicio">
                 </section>
                 <section class="input-filter-date">
-                    <label for="dataFim">Data Fim:</label>
+                    <label for="dataFim"><i class="fas fa-calendar-alt"></i> Data Fim:</label>
                     <input type="date" id="dataFim" name="dataFim">
                 </section>
             </div>
             <div class="right">
                 <section class="add-quote">
-                    <a href="../resumoCotacoes/" class="add-quote-btn">Resumo </a>
+                    <a href="../resumoCotacoes/" class="add-quote-btn"><i class="fas fa-chart-bar"></i> Resumo</a>
                 </section>
                 <section class="add-quote">
-                    <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn">Cadastrar Nova Cotação</a>
+                    <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn"><i class="fas fa-plus"></i> Cadastrar Nova Cotação</a>
                 </section>
             </div>
     </section>
@@ -239,12 +248,12 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == n
         <thead>
             <?php if (isset($cotasFiltradas)): ?>
                 <section class="section-cotasfiltradas">
-                    <h1 class="table-title">Cotas Filtradas</h1>
-                    <button onclick="limparfiltros()">Limpar Filtro</button>
+                    <h1 class="table-title"><i class="fas fa-filter"></i> Cotas Filtradas</h1>
+                    <button onclick="limparfiltros()" class="buttonLimpar"><i class="fas fa-times"></i> Limpar Filtro</button>
                 </section>
             <?php endif; ?> 
             <?php if (!isset($cotasFiltradas)): ?>
-                <h1 class="table-title">Semana Atual</h1>
+                <h1 class="table-title"><i class="fas fa-calendar-week"></i> Semana Atual</h1>
             <?php endif; ?>
             <tr>
                 <th>Nome do Produto</th>
@@ -296,7 +305,7 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == n
                     echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
                     if ($podeGerenciarCotacoes) {
                         echo "<td> <a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
-                        echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
+                        echo "<td> <a href='#' class='acao-deletar' onclick='confirmDelete({$cotacao->getId()}, \"{$produtoNome}\")'><i class='fas fa-trash'></i> Deletar </a></td>";
                     }
                     echo "</tr>";
                 }
@@ -336,7 +345,7 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == n
                     echo "<td> <span class='maior-preco'>{$fornecedorMaiorPreco} ↑</span> | <span class='menor-preco'>{$fornecedorMenorPreco} ↓</span></td>";
                     if ($podeGerenciarCotacoes) {
                         echo "<td> <a href='../editarCotacoes/editCotacoes.php?id={$cotacao->getId()}'class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
-                        echo "<td> <a href='../deletarCotacoes/delCotacoes.php?id={$cotacao->getId()}'class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
+                        echo "<td> <a href='#' class='acao-deletar' onclick='confirmDelete({$cotacao->getId()}, \"{$produtoNome}\")'><i class='fas fa-trash'></i> Deletar </a></td>";
                     }
                     echo "</tr>";
                 }
@@ -547,6 +556,28 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == n
             });
         }
     });
+
+    function confirmDelete(cotacaoId, produtoNome) {
+        Swal.fire({
+            title: `Deseja realmente excluir a cotação do produto "${produtoNome}"?`,
+            text: "Digite 'DELETAR' para confirmar.",
+            input: 'text',
+            inputPlaceholder: 'Digite DELETAR',
+            showCancelButton: true,
+            confirmButtonText: 'Excluir',
+            cancelButtonText: 'Cancelar',
+            inputValidator: (value) => {
+                if (value !== 'DELETAR') {
+                    return 'Você precisa digitar "DELETAR" para confirmar!';
+                }
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redireciona para o script de exclusão com parâmetro de sucesso
+                window.location.href = `../deletarCotacoes/delCotacoes.php?id=${cotacaoId}&redirect=true`;
+            }
+        });
+    }
 </script>
 </body>
 </html>
