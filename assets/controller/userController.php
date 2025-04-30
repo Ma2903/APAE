@@ -26,16 +26,18 @@ class ControladorUsuarios
         $usuarioEncontrado = false;
         foreach($usuarios as $usuarioBanco)
         {
-            if($usuarioBanco['email'] == $email)
+            if($usuarioBanco['email'] == $email || $usuarioBanco['cpf'] == $cpf)
             {
                 $usuarioEncontrado = true;
-                echo "Usuario já cadastrado";
-                break;
-            }
-            if($usuarioBanco['cpf'] == $cpf)
-            {
-                $usuarioEncontrado = true;
-                echo "Usuario já cadastrado";
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erro',
+                            text: 'Usuário já cadastrado!',
+                        });
+                    });
+                </script>";
                 break;
             }
         }
@@ -100,11 +102,27 @@ class ControladorUsuarios
                 }
                 return $_SESSION['user'];
             } else {
-                echo "Senha Incorreta";
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erro',
+                            text: 'Senha incorreta!',
+                        });
+                    });
+                </script>";
                 return false;
             }
         } else {
-            echo "<script>alert('Usuario Não Encontrado!')</script>";
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro',
+                        text: 'Usuário não encontrado!',
+                    });
+                });
+            </script>";
             return false;
         }
     }
@@ -178,7 +196,7 @@ class ControladorUsuarios
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = 'godlolpro32@gmail.com';
-            $mail->Password = 'bepn wogf bvty gtpb';
+            $mail->Password = 'avmf upsc essi dscq';
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
         
@@ -191,7 +209,15 @@ class ControladorUsuarios
         
             $mail->send();
         } catch (Exception $e) {
-            echo "E-mail não pôde ser enviado. Erro: {$mail->ErrorInfo}";
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro',
+                        text: 'E-mail não pôde ser enviado. Erro: {$mail->ErrorInfo}',
+                    });
+                });
+            </script>";
         }
     }
 

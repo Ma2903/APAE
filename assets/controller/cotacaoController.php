@@ -21,7 +21,17 @@ class ControladorCotacao {
             "rel_un_peso" => $relacaoUnidadePeso,
             "data_cotacao" => $data_criacao
         ]);
-        header("Location: ./../listarCotacoes/listarCotacoes.php");    
+
+        echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cota cadastrada com sucesso!',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.href = './../listarCotacoes/listarCotacoes.php';
+                });
+              </script>";
     }
 
     public function verCotas() {
@@ -41,11 +51,29 @@ class ControladorCotacao {
             'preco_unitario' => $precoUnitario,
             'quantidade' => $quantidade,
             'data_cotacao' => $dataCotacao
-        ], $idParaEditar);
+        ]);
+
+        echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cota editada com sucesso!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+              </script>";
     }
 
     public function deletarCota($id) {
         $this->bd->delete("cotas", $id);
+
+        echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cota deletada com sucesso!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+              </script>";
     }
 
     public function verCadProdutos($cardapio_id){

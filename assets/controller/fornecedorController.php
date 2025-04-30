@@ -17,6 +17,14 @@ class ControladorFornecedor{
             "ramo_atuacao" => $ramo_atuacao,
             "data_criacao" => $data_criacao
         ]);
+        echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Fornecedor cadastrado com sucesso!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+              </script>";
     }
     public function verFornecedor(){
         $todosFornecedores = $this->bd->read("fornecedores");
@@ -36,9 +44,25 @@ class ControladorFornecedor{
             "email" => $email,
             "ramo_atuacao" => $ramo_atuacao,
         ], $id);
+        echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Fornecedor editado com sucesso!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+              </script>";
     }
     public function deletarFornecedor($id){
         $this->bd->delete("fornecedores", $id);
+        echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Fornecedor deletado com sucesso!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+              </script>";
     }
     
     public function verFornecedorPorId($id) {
