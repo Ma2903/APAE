@@ -6,9 +6,11 @@
 
 - **Gerenciamento de Usuários**: Gerencie informações de usuários e suas permissões, além de realizar login.
 - **Gerenciamento de Recursos**: Controle de recursos e serviços oferecidos pelo sistema, como:
+- **Gerenciar Usuários**
 - **Gerenciar Produtos**
 - **Gerenciar Fornecedores**
 - **Gerenciar Cotações**
+- **Gerenciar Cardápios**
 
 ## Tecnologias
 
