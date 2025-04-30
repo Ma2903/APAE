@@ -12,13 +12,6 @@ if (!isset($_SESSION['user'])) {
 
 $notificacaoController = new ControladorNotificacao();
 $user = $_SESSION['user'];
-$notificacoes = $notificacaoController->verNotificacaoPorId($user->getId());
-
-if (sizeof($notificacoes) > 0) {
-    $ultimaNotificacao = $notificacoes[sizeof($notificacoes) - 1]->getMensagem();
-    echo "<script>setTimeout(() => alert('$ultimaNotificacao'), 1000);</script>";
-}
-
 $tipo_usuario = $user->getTipoUsuario();
 ?>
 <!DOCTYPE html>
@@ -106,6 +99,22 @@ $tipo_usuario = $user->getTipoUsuario();
             </section>
         </section>
     </main>
+    <?php
+    $notificacoes = $notificacaoController->verNotificacaoPorId($user->getId());
+
+    if (sizeof($notificacoes) > 0) {
+        $ultimaNotificacao = $notificacoes[sizeof($notificacoes) - 1]->getMensagem();
+        
+        echo "<script>
+        Swal.fire({
+                title: 'Você tem uma nova notificação!',
+                text: '$ultimaNotificacao',
+                icon: 'warning',
+                confirmButtonText: 'Ok!',
+            })
+        </script>";
+    }
+    ?>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const logoutButton = document.querySelector('a[href="../logout.php"]'); // Caminho ajustado
@@ -127,6 +136,20 @@ $tipo_usuario = $user->getTipoUsuario();
                 });
             }
         });
+        function showNotification(text){
+            Swal.fire({
+                title: 'Deseja realmente sair?',
+                text: text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, sair',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = logoutButton.href;
+                }
+            });
+        }
     </script>
     <?php renderFooter(); ?>
 </body>

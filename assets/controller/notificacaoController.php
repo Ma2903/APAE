@@ -18,7 +18,7 @@ class ControladorNotificacao{
         $todasNotificacoes = $this->bd->read("notificacoes");
         $arr = [];
         foreach($todasNotificacoes as $notificacao){
-            $novaNotificacao = new Notificacao($notificacao['id'],$notificacao['usuario_id'], $notificacao['mensagem'],$notificacao['data_notificacao'], $notificacao['is_active']);
+            $novaNotificacao = new Notificacao($notificacao['id'],$notificacao['usuario_id'], $notificacao['mensagem'],$notificacao['data_notificacao'] );
             $arr[] = $novaNotificacao;
         }
         return $arr;
