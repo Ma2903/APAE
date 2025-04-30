@@ -14,6 +14,14 @@ class ControladorProdutos{
             "unidade_medida" => $un,
             "data_criacao" => $dt_criacao
         ]);
+        echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Produto cadastrado com sucesso!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+              </script>";
     }
 
 
@@ -51,10 +59,26 @@ class ControladorProdutos{
             'categoria' => $categoria,
             'unidade_medida' => $un,
         ], $idParaEditar);
+        echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Produto editado com sucesso!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+              </script>";
     }
 
     public function deletarProdutos($id){
         $this->bd->delete("produtos", $id);
+        echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Produto deletado com sucesso!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+              </script>";
     }
 
     public function filtrarProdutos() {
