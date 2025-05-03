@@ -37,9 +37,21 @@ $tipo_usuario = $user->getTipoUsuario();
                 <span class="user-name"><?php echo $user->getNome(); ?></span>
             </span>
         </section>
-        <a href="../logout.php" class="logout-btn" aria-label="Sair do sistema">
-            Sair <i class="fas fa-door-open"></i>
-        </a>
+        <div class="right-div">
+            <section class="notification-container">
+                <span href="../notificacoes/notificacoes.php" class="notification-btn" aria-label="Notificações">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">
+                        <?php
+                        echo count($notificacaoController->verNotificacaoPorId($user->getId()));
+                        ?>
+                    </span>
+                </span>
+            </section>
+            <a href="../logout.php" class="logout-btn" aria-label="Sair do sistema">
+                Sair <i class="fas fa-door-open"></i>
+            </a>
+        </div>
     </header>
     <main>
         <section class="dashboard">

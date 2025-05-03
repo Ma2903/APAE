@@ -114,10 +114,15 @@ function filterUsersBySelect() {
     const rows = document.querySelectorAll('#user-table-body tr');
     rows.forEach(row => {
         const userType = row.querySelector('td:nth-child(6)').textContent.toLowerCase(); // Coluna "Tipo de Usuário"
-        if (selectedValue === "" || userType.includes(selectedValue)) {
+
+        row.style.display = 'none';
+
+        if(selectedValue === '' || userType.includes(selectedValue)) {
             row.style.display = '';
-        } else {
-            row.style.display = 'none';
+        }
+        console.log(selectedValue +  "é igual a" + userType);
+        if(selectedValue === 'contador') {
+            row.style.display = userType.includes('adm compras') ? '' : 'none';
         }
     });
 }

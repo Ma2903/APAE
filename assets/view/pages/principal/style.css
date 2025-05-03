@@ -225,3 +225,16 @@ a:focus {
 .menu li a i {
     font-size: 1.8rem;
 }
+
+.notification-container{
+    background: var(--yellow);
+    color: var(--darkblue);
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.right-div{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
