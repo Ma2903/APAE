@@ -44,15 +44,17 @@ class ControladorCotacao {
         return $arr;
     }
 
-    public function editarCota($idParaEditar, $produtoId, $fornecedorId, $precoUnitario, $quantidade, $dataCotacao) {
+    public function editarCota($idParaEditar, $produtoId, $fornecedorId, $precoUnitario,$rel_un_preco, $quantidade, $dataCotacao) {
         $this->bd->update('cotas', (object)[
             'produto_id' => $produtoId,
             'fornecedor_id' => $fornecedorId,
             'preco_unitario' => $precoUnitario,
+            'rel_un_peso' => $rel_un_preco,
             'quantidade' => $quantidade,
             'data_cotacao' => $dataCotacao
-        ]);
-
+        ], $idParaEditar);
+        
+        echo $dataCotacao;
         echo "<script>
                 Swal.fire({
                     icon: 'success',

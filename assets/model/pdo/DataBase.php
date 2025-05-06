@@ -85,5 +85,14 @@ class Database {
             return false;
         }
     }
+    public function executeQuery($query, $params = []) {
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->execute($params);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
 }
 ?>

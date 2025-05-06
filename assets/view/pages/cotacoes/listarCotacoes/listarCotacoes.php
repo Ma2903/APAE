@@ -237,9 +237,6 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == n
             </div>
             <div class="right">
                 <section class="add-quote">
-                    <a href="../resumoCotacoes/" class="add-quote-btn"><i class="fas fa-chart-bar"></i> Resumo</a>
-                </section>
-                <section class="add-quote">
                     <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn"><i class="fas fa-plus"></i> Cadastrar Nova Cotação</a>
                 </section>
             </div>

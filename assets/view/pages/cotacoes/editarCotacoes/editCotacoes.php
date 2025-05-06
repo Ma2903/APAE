@@ -66,7 +66,7 @@ $controladorFornecedor = new ControladorFornecedor();
                 </section>
                 <section>
                     <label for="rel_un_peso"><i class="fas fa-weight"></i> Relação Peso da Unidade:</label>
-                    <input type="number" step="0.01" id="rel_un_peso" name="rel_un_peso" required value="' . $cotacao->getRelUnPeso() . '">
+                    <input type="number" step="0.01" id="rel_un_peso" name="rel_un_peso" required value="' . $cotacao->getRelacaoUnidadePeso() . '">
                 </section>
                 <section>
                     <label for="data_cotacao"><i class="fas fa-calendar-alt"></i> Data da Cotação:</label>
@@ -88,7 +88,7 @@ $controladorFornecedor = new ControladorFornecedor();
             $_POST['quantidade'],
             $_POST['data_cotacao']
         );
-        header('Location: ../listarCotacoes/listarCotacoes.php');
+        // header('Location: ../listarCotacoes/listarCotacoes.php');
     }
     ?>
 </main>

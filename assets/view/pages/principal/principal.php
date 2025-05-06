@@ -12,6 +12,7 @@ if (!isset($_SESSION['user'])) {
 
 $notificacaoController = new ControladorNotificacao();
 $user = $_SESSION['user'];
+$notificacaoController->verificarNotificacoes($_SESSION['user']);
 $tipo_usuario = $user->getTipoUsuario();
 ?>
 <!DOCTYPE html>
