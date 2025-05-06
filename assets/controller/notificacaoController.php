@@ -1,14 +1,16 @@
 <?php
 require_once __DIR__ . '/../model/pdo/DataBase.php';
 require_once __DIR__ . '/../model/Notificacao.php';
+require_once __DIR__ . '/../model/Usuario.php';
 
 class ControladorNotificacao{
     private $bd;
     public function __construct() {
         $this->bd = new Database();
     }
-    public function cadastrarNotificacao($descricao, $data_criacao){
+    public function cadastrarNotificacao($usuarioId,$descricao, $data_criacao){
         $this->bd->insert("notificacoes", (object)[
+            "usuario_id" => $usuarioId,
             "mensagem" => $descricao,
             "data_notificacao" => $data_criacao
         ]);
@@ -67,13 +69,24 @@ class ControladorNotificacao{
             $resultado = $this->bd->executeQuery($query, $params);
     
             if ($resultado[0]['total'] == 0) {
-                // Gera uma notificação caso não haja cotações
                 $this->cadastrarNotificacao(
-                    "Lembrete de Cotações",
+                    $usuarioId,
                     "Você não realizou cotações nesta semana. Não se esqueça de realizar suas cotações!",
                     date('Y-m-d H:i:s')
                 );
+
+                $todosUsuario = $this->bd->read("usuarios");
+                foreach($todosUsuario as $usuariobd){
+                    if($usuariobd['tipo_usuario'] == 'administrador'){
+                        $this->cadastrarNotificacao(
+                            $usuariobd['id'],
+                            "Não houve cotações nesta semana. Favor verificar com os contadores.",
+                            date('Y-m-d H:i:s')
+                        );
+                    }
+                }
             }
+
         }
     }
 }
