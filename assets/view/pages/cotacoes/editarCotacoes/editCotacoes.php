@@ -88,7 +88,7 @@ $controladorFornecedor = new ControladorFornecedor();
             $_POST['quantidade'],
             $_POST['data_cotacao']
         );
-        // header('Location: ../listarCotacoes/listarCotacoes.php');
+         header('Location: ../listarCotacoes/listarCotacoes.php');
     }
     ?>
 </main>
