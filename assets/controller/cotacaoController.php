@@ -29,7 +29,7 @@ class ControladorCotacao {
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
-                    // window.location.href = './../listarCotacoes/listarCotacoes.php';
+                     window.location.href = './../listarCotacoes/listarCotacoes.php';
                 });
               </script>";
     }

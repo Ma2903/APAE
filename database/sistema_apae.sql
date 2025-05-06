@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 30-Abr-2025 às 20:12
--- Versão do servidor: 10.4.27-MariaDB
--- versão do PHP: 8.2.0
+-- Tempo de geração: 07/05/2025 às 01:44
+-- Versão do servidor: 10.4.28-MariaDB
+-- Versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `cardapios`
+-- Estrutura para tabela `cardapios`
 --
 
 CREATE TABLE `cardapios` (
@@ -37,7 +37,7 @@ CREATE TABLE `cardapios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `cardapios`
+-- Despejando dados para a tabela `cardapios`
 --
 
 INSERT INTO `cardapios` (`id`, `nutricionista_id`, `dataC`, `periodo`, `descricao`, `data_criacao`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `cardapios` (`id`, `nutricionista_id`, `dataC`, `periodo`, `descrica
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `cardapio_produtos`
+-- Estrutura para tabela `cardapio_produtos`
 --
 
 CREATE TABLE `cardapio_produtos` (
@@ -60,7 +60,7 @@ CREATE TABLE `cardapio_produtos` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `cotas`
+-- Estrutura para tabela `cotas`
 --
 
 CREATE TABLE `cotas` (
@@ -69,13 +69,22 @@ CREATE TABLE `cotas` (
   `fornecedor_id` int(11) NOT NULL,
   `preco_unitario` decimal(10,2) NOT NULL,
   `quantidade` decimal(10,2) NOT NULL,
-  `data_cotacao` date NOT NULL
+  `data_cotacao` date NOT NULL,
+  `rel_un_peso` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `cotas`
+--
+
+INSERT INTO `cotas` (`id`, `produto_id`, `fornecedor_id`, `preco_unitario`, `quantidade`, `data_cotacao`, `rel_un_peso`) VALUES
+(11, 8, 1, 19.99, 10.00, '2025-05-06', 50),
+(13, 12, 1, 25.00, 5.00, '2025-05-06', 200);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `fornecedores`
+-- Estrutura para tabela `fornecedores`
 --
 
 CREATE TABLE `fornecedores` (
@@ -90,30 +99,18 @@ CREATE TABLE `fornecedores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `fornecedores`
+-- Despejando dados para a tabela `fornecedores`
 --
 
 INSERT INTO `fornecedores` (`id`, `nome`, `endereco`, `telefone`, `whatsapp`, `email`, `ramo_atuacao`, `data_criacao`) VALUES
-(31, 'Mercado Bom Preço', 'Rua das Laranjeiras, 120', '(18) 99999-1001', '(18) 99999-1001', 'contato@bompreco.com', 'Alimenticios', '2025-04-30 18:07:02'),
-(32, 'Supermercado Popular', 'Av. Central, 550', '(18) 99999-1002', '(18) 99999-1002', 'vendas@superpopular.com', 'Alimenticios', '2025-04-30 18:07:02'),
-(33, 'Distribuidora Central', 'Rua Dom Pedro, 210', '(18) 99999-1003', '(18) 99999-1003', 'comercial@distcentral.com', 'Frios', '2025-04-30 18:07:02'),
-(34, 'Mercado da APAE', 'Rua Esperança, 300', '(18) 99999-1004', '(18) 99999-1004', 'mercado@apae.org', 'Outros', '2025-04-30 18:07:02'),
-(35, 'Atacadão', 'Rodovia SP-270, km 452', '(18) 99999-1005', '(18) 99999-1005', 'compras@atacadao.com', 'Alimenticios', '2025-04-30 18:07:02'),
-(36, 'Cooperativa São João', 'Estrada Rural, km 3', '(18) 99999-1006', '(18) 99999-1006', 'contato@coopsaojoao.com', 'Verduras', '2025-04-30 18:07:02'),
-(37, 'Hortifruti Feliz', 'Rua das Flores, 80', '(18) 99999-1007', '(18) 99999-1007', 'vendas@hortifrutifeliz.com', 'Frutas', '2025-04-30 18:07:02'),
-(38, 'Distribuidora Barato', 'Av. Brasil, 1020', '(18) 99999-1008', '(18) 99999-1008', 'barato@distribuidora.com', 'Limpeza', '2025-04-30 18:07:02'),
-(39, 'Central do Alimento', 'Rua da Feira, 95', '(18) 99999-1009', '(18) 99999-1009', 'central@alimentos.com', 'Frios', '2025-04-30 18:07:02'),
-(40, 'Estoque Total', 'Rua São João, 410', '(18) 99999-1010', '(18) 99999-1010', 'estoque@total.com', 'Descartáveis', '2025-04-30 18:07:02'),
-(41, 'Comercial Hortifruti', 'Rua Verdejante, 78', '(18) 99999-1011', '(18) 99999-1011', 'comercial@hortifruti.com', 'Frutas', '2025-04-30 18:07:02'),
-(42, 'Super Compra', 'Av. das Nações, 332', '(18) 99999-1012', '(18) 99999-1012', 'compras@supercompra.com', 'Alimenticios', '2025-04-30 18:07:02'),
-(43, 'Fornecedor Local A', 'Rua Independência, 10', '(18) 99999-1013', '(18) 99999-1013', 'locala@fornecedor.com', 'Outros', '2025-04-30 18:07:02'),
-(44, 'Fornecedor Local B', 'Rua dos Ipês, 250', '(18) 99999-1014', '(18) 99999-1014', 'localb@fornecedor.com', 'Outros', '2025-04-30 18:07:02'),
-(45, 'Fornecedor Local C', 'Rua Primavera, 300', '(18) 99999-1015', '(18) 99999-1015', 'localc@fornecedor.com', 'Outros', '2025-04-30 18:07:02');
+(1, 'Ceasa', 'Rua dos Alimentos, 123', '(18) 3333-3333', '(18) 99999-0000', 'ceasa@alimentos.com', 'Frutas', '2024-09-18 01:39:19'),
+(2, 'Supermercado Bom Preço', 'Av. Central, 456', '(18) 3444-4444', '(18) 98888-1111', 'contato@bompreco.com', 'Açougue', '2024-09-18 01:39:19'),
+(6, 'Supermercado Estrela', 'Avenida Brasil, 35', '(18) 3226-0671', '(18) 3226-0671', 'Estrela@mercados.com', 'Alimenticio', '2024-11-06 11:59:07');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `notificacoes`
+-- Estrutura para tabela `notificacoes`
 --
 
 CREATE TABLE `notificacoes` (
@@ -123,15 +120,29 @@ CREATE TABLE `notificacoes` (
   `data_notificacao` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `notificacoes`
+--
+
+INSERT INTO `notificacoes` (`id`, `usuario_id`, `mensagem`, `data_notificacao`) VALUES
+(2, NULL, 'Lembrete de Cotações', '0000-00-00 00:00:00'),
+(3, NULL, 'Lembrete de Cotações', '0000-00-00 00:00:00'),
+(4, 10, 'Você não realizou cotações nesta semana. Não se esqueça de realizar suas cotações!', '2025-05-07 04:19:58'),
+(5, 4, 'Não houve cotações nesta semana. Favor verificar com os contadores.', '2025-05-07 04:19:58'),
+(6, 10, 'Você não realizou cotações nesta semana. Não se esqueça de realizar suas cotações!', '2025-05-07 04:20:51'),
+(7, 4, 'Não houve cotações nesta semana. Favor verificar com os contadores.', '2025-05-07 04:20:51'),
+(8, 10, 'Você não realizou cotações nesta semana. Não se esqueça de realizar suas cotações!', '2025-05-07 04:21:55'),
+(9, 4, 'Não houve cotações nesta semana. Favor verificar com os contadores.', '2025-05-07 04:21:55');
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `permissoes`
+-- Estrutura para tabela `permissoes`
 --
 
 CREATE TABLE `permissoes` (
   `id` int(11) NOT NULL,
-  `tipo_usuario` enum('administrador','funcionario','nutricionista') NOT NULL,
+  `tipo_usuario` enum('administrador','contador','nutricionista') NOT NULL,
   `gerenciar_usuarios` tinyint(1) NOT NULL DEFAULT 0,
   `gerenciar_cardapios` tinyint(1) NOT NULL DEFAULT 0,
   `ver_cardapios` tinyint(1) NOT NULL DEFAULT 0,
@@ -143,18 +154,18 @@ CREATE TABLE `permissoes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `permissoes`
+-- Despejando dados para a tabela `permissoes`
 --
 
 INSERT INTO `permissoes` (`id`, `tipo_usuario`, `gerenciar_usuarios`, `gerenciar_cardapios`, `ver_cardapios`, `gerenciar_produtos`, `ver_produtos`, `gerenciar_cotacoes`, `ver_cotacoes`, `gerenciar_fornecedores`) VALUES
 (1, 'administrador', 1, 1, 1, 1, 1, 1, 1, 1),
-(2, 'funcionario', 0, 0, 1, 1, 1, 1, 1, 1),
+(2, '', 0, 0, 1, 1, 1, 1, 1, 1),
 (3, 'nutricionista', 0, 1, 1, 0, 1, 0, 1, 0);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `produtos`
+-- Estrutura para tabela `produtos`
 --
 
 CREATE TABLE `produtos` (
@@ -166,30 +177,22 @@ CREATE TABLE `produtos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `produtos`
+-- Despejando dados para a tabela `produtos`
 --
 
 INSERT INTO `produtos` (`id`, `nome`, `categoria`, `unidade_medida`, `data_criacao`) VALUES
-(1, 'ACEM MOÍDO', 'Açougue', 'KG', '2025-04-30 17:58:37'),
-(2, 'ARROZ TIPO 1', 'Alimenticios', 'KG', '2025-04-30 17:58:37'),
-(3, 'FEIJÃO CARIOCA', 'Alimenticios', 'KG', '2025-04-30 17:58:37'),
-(4, 'BATATA INGLESA', 'Verduras', 'KG', '2025-04-30 17:58:37'),
-(5, 'CEBOLA', 'Verduras', 'KG', '2025-04-30 17:58:37'),
-(6, 'ALHO', 'Verduras', 'KG', '2025-04-30 17:58:37'),
-(7, 'LEITE INTEGRAL', 'Frios', 'CX', '2025-04-30 17:58:37'),
-(8, 'MACARRÃO ESPAGUETE', 'Alimenticios', 'UN', '2025-04-30 17:58:37'),
-(9, 'PAPEL HIGIÊNICO', 'Higiene Pessoal', 'UN', '2025-04-30 17:58:37'),
-(10, 'DETERGENTE', 'Limpeza', 'UN', '2025-04-30 17:58:37'),
-(11, 'ÓLEO DE SOJA', 'Alimenticios', 'CX', '2025-04-30 17:58:37'),
-(12, 'AÇÚCAR CRISTAL', 'Alimenticios', 'KG', '2025-04-30 17:58:37'),
-(13, 'SAL REFINADO', 'Alimenticios', 'KG', '2025-04-30 17:58:37'),
-(14, 'FARINHA DE TRIGO', 'Alimenticios', 'KG', '2025-04-30 17:58:37'),
-(15, 'CAFÉ EM PÓ', 'Alimenticios', 'KG', '2025-04-30 17:58:37');
+(8, 'Achocolatado em pó', 'Alimenticios', 'UN', '2024-11-06 11:42:20'),
+(9, 'Creme Dental', 'Higiene Pessoal', 'UN', '2024-11-06 11:43:36'),
+(10, 'Detergente', 'Limpeza', 'UN', '2024-11-06 11:44:02'),
+(11, 'Farinha de Trigo', 'Alimenticios', 'UN', '2024-11-06 11:44:20'),
+(12, 'Mussarela', 'Frios', 'KG', '2024-11-06 11:44:47'),
+(13, 'Pães Frances', 'Outros', 'UN', '2024-11-06 11:45:33'),
+(14, 'Banana', 'Frutas', 'KG', '2024-11-06 11:46:58');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `usuarios`
+-- Estrutura para tabela `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -208,33 +211,27 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `usuarios`
+-- Despejando dados para a tabela `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `cpf`, `nome`, `sobrenome`, `data_nascimento`, `endereco`, `telefone`, `email`, `senha`, `tipo_usuario`, `crn`, `data_criacao`) VALUES
 (3, '11122233344', 'Ana', 'Santos', '1990-07-10', 'Rua da Saúde, 789', '(18) 97777-7777', 'ana@apae.org', 'nutri123', 'nutricionista', 'CRN-12345', '2024-09-18 01:39:03'),
 (4, '487.677.598', 'Manoela', 'Pinheiro da Silva', '2006-03-29', 'Rua Ângelo Salvatore, 125', '(18) 99681-6585', 'manoela2903@outlook.com', '2903', 'administrador', NULL, '2024-10-02 02:58:40'),
-(5, '456.765.098', 'Renata', 'Costa', '1992-05-12', 'Rua ABC N 12', '(18) 99215-9875', 'CostaRenata@apae.org', 'cont123', 'contador', '', '2024-11-06 12:28:24'),
-(9, '123098456-1', 'João Pedro', 'Garcia Girotto', '2006-01-04', 'Rua bla bla bla', '18 998532901', 'joao.girotto@gmail.com', '0401', 'administrador', '', '2025-04-30 16:41:38'),
-(10, '12345678900', 'Ana', 'Silva', '1985-03-12', 'Rua A, 123', '(18) 99999-1001', 'ana@exemplo.com', 'senha123', 'administrador', NULL, '2025-04-30 18:09:49'),
-(11, '23456789011', 'Bruno', 'Souza', '1990-06-23', 'Rua B, 456', '(18) 99999-1002', 'bruno@exemplo.com', 'senha456', 'contador', NULL, '2025-04-30 18:09:49'),
-(12, '34567890122', 'Carla', 'Pereira', '1992-11-05', 'Av. C, 789', '(18) 99999-1003', 'carla@exemplo.com', 'senha789', 'nutricionista', 'CRN12345', '2025-04-30 18:09:49'),
-(13, '45678901233', 'Diego', 'Oliveira', '1988-08-15', 'Rua D, 101', '(18) 99999-1004', 'diego@exemplo.com', 'senha101', 'administrador', NULL, '2025-04-30 18:09:49'),
-(14, '56789012344', 'Eduarda', 'Mendes', '1995-01-30', 'Rua E, 202', '(18) 99999-1005', 'eduarda@exemplo.com', 'senha202', 'nutricionista', 'CRN67890', '2025-04-30 18:09:49');
+(10, '0987654321', 'Lorena', 'Andrade', '2000-02-07', 'Rua etc', '18 99875642', 'lorena@apae.org', 'admcompras123', 'contador', '', '2025-05-06 22:25:22');
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices para tabela `cardapios`
+-- Índices de tabela `cardapios`
 --
 ALTER TABLE `cardapios`
   ADD PRIMARY KEY (`id`),
   ADD KEY `nutricionista_id` (`nutricionista_id`);
 
 --
--- Índices para tabela `cardapio_produtos`
+-- Índices de tabela `cardapio_produtos`
 --
 ALTER TABLE `cardapio_produtos`
   ADD PRIMARY KEY (`id`),
@@ -242,7 +239,7 @@ ALTER TABLE `cardapio_produtos`
   ADD KEY `produto_id` (`produto_id`);
 
 --
--- Índices para tabela `cotas`
+-- Índices de tabela `cotas`
 --
 ALTER TABLE `cotas`
   ADD PRIMARY KEY (`id`),
@@ -250,32 +247,32 @@ ALTER TABLE `cotas`
   ADD KEY `fornecedor_id` (`fornecedor_id`);
 
 --
--- Índices para tabela `fornecedores`
+-- Índices de tabela `fornecedores`
 --
 ALTER TABLE `fornecedores`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `notificacoes`
+-- Índices de tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
--- Índices para tabela `permissoes`
+-- Índices de tabela `permissoes`
 --
 ALTER TABLE `permissoes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `produtos`
+-- Índices de tabela `produtos`
 --
 ALTER TABLE `produtos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `usuarios`
+-- Índices de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
@@ -283,7 +280,7 @@ ALTER TABLE `usuarios`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
@@ -302,19 +299,19 @@ ALTER TABLE `cardapio_produtos`
 -- AUTO_INCREMENT de tabela `cotas`
 --
 ALTER TABLE `cotas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de tabela `fornecedores`
 --
 ALTER TABLE `fornecedores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `permissoes`
@@ -326,40 +323,40 @@ ALTER TABLE `permissoes`
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- Restrições para despejos de tabelas
+-- Restrições para tabelas despejadas
 --
 
 --
--- Limitadores para a tabela `cardapios`
+-- Restrições para tabelas `cardapios`
 --
 ALTER TABLE `cardapios`
   ADD CONSTRAINT `cardapios_ibfk_1` FOREIGN KEY (`nutricionista_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `cardapio_produtos`
+-- Restrições para tabelas `cardapio_produtos`
 --
 ALTER TABLE `cardapio_produtos`
   ADD CONSTRAINT `cardapio_produtos_ibfk_1` FOREIGN KEY (`cardapio_id`) REFERENCES `cardapios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `cardapio_produtos_ibfk_2` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `cotas`
+-- Restrições para tabelas `cotas`
 --
 ALTER TABLE `cotas`
   ADD CONSTRAINT `cotas_ibfk_1` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `cotas_ibfk_2` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedores` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `notificacoes`
+-- Restrições para tabelas `notificacoes`
 --
 ALTER TABLE `notificacoes`
   ADD CONSTRAINT `notificacoes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
