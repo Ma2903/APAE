@@ -178,7 +178,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_cardapio'])
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     var produtosSelecionados = [];
-    var produtosSalvos = [];
     var produtosRemovidos = [];
 
     // Carrega os produtos do banco de dados com os custos já calculados
@@ -188,6 +187,56 @@ document.addEventListener('DOMContentLoaded', function () {
 
     atualizarTabela();
     atualizarValorTotal();
+
+    // Adicionar produto
+    document.getElementById('produtoForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var produtoSelect = document.getElementById('produto');
+        var produtoId = produtoSelect.value;
+        var produtoNome = produtoSelect.options[produtoSelect.selectedIndex].text;
+        var quantidade = parseFloat(document.getElementById('quantidade').value);
+        var precoPorGrama = parseFloat(produtoSelect.options[produtoSelect.selectedIndex].getAttribute('precopergrama'));
+
+        if (!produtoId || !quantidade || isNaN(precoPorGrama)) {
+            alert("Preencha todos os campos corretamente.");
+            return;
+        }
+
+        var produtoCusto = precoPorGrama * quantidade;
+
+        // Verifica se o produto já existe na lista
+        var produtoExistente = produtosSelecionados.find(function (produto) {
+            return produto.produto_id === produtoId;
+        });
+
+        if (produtoExistente) {
+            // Atualiza a quantidade e o custo do produto existente
+            produtoExistente.quantidade += quantidade;
+            produtoExistente.custo += produtoCusto;
+        } else {
+            // Adiciona o novo produto à lista
+            produtosSelecionados.push({
+                produto_id: produtoId,
+                produto_nome: produtoNome,
+                quantidade: quantidade,
+                custo: produtoCusto
+            });
+        }
+
+        atualizarTabela();
+        atualizarValorTotal();
+        limpaFormulario();
+    });
+
+    // Remover produto
+    function removerProduto(index) {
+        var produtoRemovido = produtosSelecionados[index];
+        produtosSelecionados.splice(index, 1); // Remove o produto da lista visual
+        produtosRemovidos.push(produtoRemovido.produto_id); // Adiciona ao array de removidos
+        atualizarTabela();
+        atualizarValorTotal();
+    }
 
     // Atualizar tabela de produtos
     function atualizarTabela() {
@@ -223,6 +272,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         document.querySelector("#valCardapio").innerHTML = `Total: R$${total.toFixed(2)}`;
     }
+
+    // Limpar campos do formulário
+    function limpaFormulario() {
+        document.getElementById('produto').value = '';
+        document.getElementById('quantidade').value = '';
+    }
+
+    // Antes de enviar o formulário principal, armazena os produtos no campo oculto
+    document.querySelector("#cardapioForm").addEventListener('submit', function () {
+        document.getElementById('produtos').value = JSON.stringify(produtosSelecionados);
+        document.getElementById('produtosRemovidos').value = JSON.stringify(produtosRemovidos);
+    });
 });
 </script>
 </body>

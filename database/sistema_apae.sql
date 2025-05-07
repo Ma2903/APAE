@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 07/05/2025 às 14:57
+-- Tempo de geração: 07/05/2025 às 15:54
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -41,8 +41,9 @@ CREATE TABLE `cardapios` (
 --
 
 INSERT INTO `cardapios` (`id`, `nutricionista_id`, `dataC`, `periodo`, `descricao`, `data_criacao`) VALUES
-(1, 3, '2024-09-18', '', 'Cardápio saudável para a semana.', '2024-09-18 01:39:59'),
-(15, 3, '2025-05-21', 'manha', 'oi teste', '2025-05-07 11:14:10');
+(16, 3, '2025-05-08', 'manha-tarde', 'Arroz, feijão, frango grelhado, macarrão com molho de tomate, salada de alface com cebola e sobremesa de creme de leite com frutas.', '2025-05-07 13:19:08'),
+(18, 3, '2025-05-10', 'tarde', 'Arroz, feijão, frango grelhado.', '2025-05-07 13:38:36'),
+(19, 3, '2025-05-11', 'manha', 'Sopa de legumes.', '2025-05-07 13:38:36');
 
 -- --------------------------------------------------------
 
@@ -62,9 +63,24 @@ CREATE TABLE `cardapio_produtos` (
 --
 
 INSERT INTO `cardapio_produtos` (`id`, `cardapio_id`, `produto_id`, `quantidade`) VALUES
-(10, 15, 8, 30.00),
-(11, 15, 12, 50.00),
-(13, 15, 14, 1.00);
+(20, 16, 20, 5.00),
+(21, 16, 21, 3.00),
+(22, 16, 22, 4.00),
+(23, 16, 23, 2.00),
+(31, 16, 24, 3.00),
+(32, 16, 25, 2.00),
+(33, 16, 26, 1.00),
+(34, 16, 27, 0.50),
+(35, 16, 28, 1.00),
+(579, 18, 20, 3.00),
+(580, 18, 21, 2.00),
+(581, 18, 22, 1.50),
+(582, 18, 28, 0.50),
+(583, 18, 27, 0.10),
+(584, 18, 26, 0.20),
+(585, 19, 23, 2.00),
+(586, 19, 24, 1.00),
+(587, 19, 12, 0.50);
 
 -- --------------------------------------------------------
 
@@ -89,7 +105,19 @@ CREATE TABLE `cotas` (
 INSERT INTO `cotas` (`id`, `produto_id`, `fornecedor_id`, `preco_unitario`, `quantidade`, `data_cotacao`, `rel_un_peso`) VALUES
 (11, 8, 1, 19.99, 10.00, '2025-05-06', 50),
 (13, 12, 1, 25.00, 5.00, '2025-05-06', 200),
-(14, 14, 6, 10.00, 80.00, '2025-05-07', 1);
+(14, 14, 6, 10.00, 80.00, '2025-05-07', 1),
+(15, 8, 1, 19.99, 10.00, '2025-05-06', 50),
+(16, 12, 1, 25.00, 5.00, '2025-05-06', 200),
+(17, 14, 6, 10.00, 80.00, '2025-05-07', 1),
+(18, 20, 9, 5.99, 10.00, '2025-05-07', 100),
+(19, 21, 9, 6.49, 10.00, '2025-05-07', 100),
+(20, 22, 8, 12.90, 5.00, '2025-05-07', 100),
+(21, 23, 7, 4.50, 6.00, '2025-05-07', 100),
+(22, 24, 7, 2.99, 3.00, '2025-05-07', 200),
+(23, 25, 7, 3.50, 4.00, '2025-05-07', 200),
+(24, 26, 1, 2.00, 2.00, '2025-05-07', 300),
+(25, 27, 1, 3.00, 1.00, '2025-05-07', 300),
+(26, 28, 1, 4.50, 1.00, '2025-05-07', 200);
 
 -- --------------------------------------------------------
 
@@ -115,7 +143,10 @@ CREATE TABLE `fornecedores` (
 INSERT INTO `fornecedores` (`id`, `nome`, `endereco`, `telefone`, `whatsapp`, `email`, `ramo_atuacao`, `data_criacao`) VALUES
 (1, 'Ceasa', 'Rua dos Alimentos, 123', '(18) 3333-3333', '(18) 99999-0000', 'ceasa@alimentos.com', 'Frutas', '2024-09-18 01:39:19'),
 (2, 'Supermercado Bom Preço', 'Av. Central, 456', '(18) 3444-4444', '(18) 98888-1111', 'contato@bompreco.com', 'Açougue', '2024-09-18 01:39:19'),
-(6, 'Supermercado Estrela', 'Avenida Brasil, 35', '(18) 3226-0671', '(18) 3226-0671', 'Estrela@mercados.com', 'Alimenticio', '2024-11-06 11:59:07');
+(6, 'Supermercado Estrela', 'Avenida Brasil, 35', '(18) 3226-0671', '(18) 3226-0671', 'Estrela@mercados.com', 'Alimenticio', '2024-11-06 11:59:07'),
+(7, 'Distribuidora Alimentar Sabor & Vida', 'Rua das Indústrias, 101', '(18) 3222-1234', '(18) 99876-5432', 'saborvida@distribuidora.com', 'Alimentos Secos', '2025-05-07 13:18:37'),
+(8, 'Frango Forte Ltda.', 'Avenida das Aves, 1001', '(18) 3555-0001', '(18) 97777-8888', 'contato@frangoforte.com.br', 'Carnes', '2025-05-07 13:18:37'),
+(9, 'Cerealista União', 'Estrada Rural, Km 25', '(18) 3000-4040', '(18) 91111-2222', 'uniao@cerealista.com', 'Grãos e Cereais', '2025-05-07 13:18:37');
 
 -- --------------------------------------------------------
 
@@ -135,8 +166,6 @@ CREATE TABLE `notificacoes` (
 --
 
 INSERT INTO `notificacoes` (`id`, `usuario_id`, `mensagem`, `data_notificacao`) VALUES
-(2, NULL, 'Lembrete de Cotações', '0000-00-00 00:00:00'),
-(3, NULL, 'Lembrete de Cotações', '0000-00-00 00:00:00'),
 (8, 10, 'Você não realizou cotações nesta semana. Não se esqueça de realizar suas cotações!', '2025-05-07 04:21:55');
 
 -- --------------------------------------------------------
@@ -192,7 +221,16 @@ INSERT INTO `produtos` (`id`, `nome`, `categoria`, `unidade_medida`, `data_criac
 (11, 'Farinha de Trigo', 'Alimenticios', 'UN', '2024-11-06 11:44:20'),
 (12, 'Mussarela', 'Frios', 'KG', '2024-11-06 11:44:47'),
 (13, 'Pães Frances', 'Outros', 'UN', '2024-11-06 11:45:33'),
-(14, 'Banana', 'Frutas', 'KG', '2024-11-06 11:46:58');
+(14, 'Banana', 'Frutas', 'KG', '2024-11-06 11:46:58'),
+(20, 'Arroz Tipo 1', 'Cereais', 'KG', '2025-05-07 13:18:52'),
+(21, 'Feijão Carioca', 'Cereais', 'KG', '2025-05-07 13:18:52'),
+(22, 'Frango Congelado', 'Carnes', 'KG', '2025-05-07 13:18:52'),
+(23, 'Macarrão Espaguete', 'Massas', 'KG', '2025-05-07 13:18:52'),
+(24, 'Molho de Tomate', 'Molhos e Condimentos', 'UN', '2025-05-07 13:18:52'),
+(25, 'Creme de Leite', 'Laticínios', 'UN', '2025-05-07 13:18:52'),
+(26, 'Óleo de Soja', 'Óleos e Gorduras', 'UN', '2025-05-07 13:18:52'),
+(27, 'Alho', 'Temperos', 'KG', '2025-05-07 13:18:52'),
+(28, 'Cebola', 'Vegetais', 'KG', '2025-05-07 13:18:52');
 
 -- --------------------------------------------------------
 
@@ -292,25 +330,25 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `cardapios`
 --
 ALTER TABLE `cardapios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de tabela `cardapio_produtos`
 --
 ALTER TABLE `cardapio_produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=588;
 
 --
 -- AUTO_INCREMENT de tabela `cotas`
 --
 ALTER TABLE `cotas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de tabela `fornecedores`
 --
 ALTER TABLE `fornecedores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes`
@@ -328,7 +366,7 @@ ALTER TABLE `permissoes`
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
