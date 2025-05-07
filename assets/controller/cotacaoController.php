@@ -78,6 +78,7 @@ class ControladorCotacao {
               </script>";
     }
 
+
     public function verCadProdutos($cardapio_id){
         $todosCadProdutosCot = $this->bd->read("cardapio_produtos");
         $todosCardapios = $this->bd->read("cardapios");
@@ -104,6 +105,28 @@ class ControladorCotacao {
         }
         return $arr;
     }
+    public function listarCadProdutos($cardapio_id) {
+        $todosCadProdutos = $this->bd->read("cardapio_produtos");
+        $todosProdutos = $this->bd->read("produtos");
     
+        $produtosSelecionados = [];
+    
+        foreach ($todosCadProdutos as $cadProduto) {
+            if ($cadProduto['cardapio_id'] == $cardapio_id) {
+                foreach ($todosProdutos as $produto) {
+                    if ($produto['id'] == $cadProduto['produto_id']) {
+                        $produtosSelecionados[] = [
+                            'produtoId' => $produto['id'],
+                            'produto' => $produto['nome'],
+                            'quantidade' => $cadProduto['quantidade'],
+                            'custo' => $produto['custo'] ?? 0 // Assuming 'custo' exists in the 'produtos' table
+                        ];
+                    }
+                }
+            }
+        }
+    
+        return $produtosSelecionados;
+    }
 }
 ?>

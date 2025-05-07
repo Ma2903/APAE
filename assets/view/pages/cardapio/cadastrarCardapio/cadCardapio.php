@@ -11,14 +11,16 @@ $controladorProduto = new ControladorProdutos();
 $controladorCotacao = new ControladorCotacao();
 $controladorNutricionista = new ControladorUsuarios();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['form_type'] === 'cardapioForm') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_cardapio'])) {
     if (empty($_POST['nutricionista']) || empty($_POST['dataC']) || empty($_POST['periodo']) || empty($_POST['descricao'])) {
         die("Todos os campos são obrigatórios.");
     }
 
+    // Cria o cardápio
     $controladorCardapio->criarcardapio($_POST['nutricionista'], $_POST['dataC'], $_POST['periodo'], $_POST['descricao']);
     $cardapios = $controladorCardapio->listarcardapios();
 
+    // Obtém o ID do último cardápio criado
     $cardMaior = 0;
     foreach ($cardapios as $cardapio) {
         if ($cardapio->getId() > $cardMaior) {
@@ -26,14 +28,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['form_type'] === 'cardapioFo
         }
     }
 
-    $produtos = json_decode($_POST['produtos']);
-    foreach ($produtos as $produto) {
-        $controladorCardapio->criarCadProd($cardMaior, $produto->produtoId, $produto->quantidade, $produto->custo);
+    // Decodifica os produtos enviados como JSON
+    $produtos = json_decode($_POST['produtos'], true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        die("Erro ao decodificar JSON: " . json_last_error_msg());
     }
 
-    header('Location: ../listarCardapio/listarCardapio.php');
-    exit();
+    // Insere os produtos no banco de dados
+    if (is_array($produtos)) {
+        foreach ($produtos as $produto) {
+            if (isset($produto['produtoId'], $produto['quantidade'])) {
+                var_dump($cardMaior, $produto['produtoId'], $produto['quantidade']); // Depuração
+                $controladorCardapio->criarCadProd($cardMaior, $produto['produtoId'], $produto['quantidade']);
+            } else {
+                error_log("Produto com dados incompletos: " . json_encode($produto));
+            }
+        }
+    }
+
+    // Redireciona para a página de listagem de cardápios
+    // header('Location: ../listarCardapio/listarCardapio.php');
+    // exit();
 }
+var_dump($_POST['produtos']);
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['form_type'] === 'cardapioFo
     <link rel="stylesheet" href="./custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
-
 </head>
 <body>
 <?php renderHeader(); ?>
@@ -58,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['form_type'] === 'cardapioFo
     <div class="form-left">
         <form id="cardapioForm" action="" method="post">
             <input type="hidden" name="form_type" value="cardapioForm">
+            <input type="hidden" id="produtos" name="produtos"> <!-- Campo oculto para armazenar os produtos -->
             <section>
                 <label for="nutricionista"><i class="fas fa-user-md"></i> Nutricionista:</label>
                 <select id="nutricionista" name="nutricionista" required>
@@ -134,6 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['form_type'] === 'cardapioFo
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var produtosSelecionados = [];
+    var produtosSalvos = [];
 
     document.getElementById('produtoForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Impede o envio padrão do formulário
@@ -145,10 +164,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         var produtoCusto = produtoSelect.options[produtoSelect.selectedIndex].getAttribute('precopergrama') * quantidade;
 
-
         // Adiciona o produto à lista
-        produtosSelecionados.push({ produtoId: produtoId ,produto: produtoNome, quantidade: quantidade , custo: produtoCusto});
-
+        produtosSelecionados.push({ produtoId: produtoId, produto: produtoNome, quantidade: quantidade, custo: produtoCusto });
+        produtosSalvos.push({ produtoId: produtoId, produto: produtoNome, quantidade: quantidade});
         // Atualiza a tabela
         atualizarTabela();
         atualizarValorTotal();
@@ -159,6 +177,13 @@ document.addEventListener('DOMContentLoaded', function() {
         var tableBody = document.getElementById('produtosBody');
         tableBody.innerHTML = '';
 
+        // produtosSalvos.forEach(function(produto, index) {
+        //     var newRow = tableBody.insertRow();
+        //     var cell1 = newRow.insertCell(0);
+        //     var cell2 = newRow.insertCell(1);
+        //     cell1.innerHTML = produto.produto;
+        //     cell2.innerHTML = produto.quantidade;
+        // });
         produtosSelecionados.forEach(function(produto) {
             var newRow = tableBody.insertRow();
             var cell1 = newRow.insertCell(0);
@@ -169,61 +194,28 @@ document.addEventListener('DOMContentLoaded', function() {
             cell3.innerHTML = `R$${produto.custo.toFixed(2)}`;
         });
         console.log(produtosSelecionados);
+        console.log(produtosSalvos); // Depuração
     }
-    function atualizarValorTotal(){
-        let total = 0
+
+    function atualizarValorTotal() {
+        let total = 0;
         produtosSelecionados.forEach(function(produto) {
             total += produto.custo;
         });
         document.querySelector("#valCardapio").innerHTML = `Total: R$${total.toFixed(2)}`;
     }
 
-    function limpaValores(){
+    function limpaValores() {
         document.getElementById('produto').value = '';
         document.getElementById('quantidade').value = '';
     }
 
-    document.querySelector("#cardapioForm").addEventListener('submit', function(event) {
-        // event.preventDefault(); // Comente esta linha para testar
-
-        let formData = new FormData();
-
-        formData.append('nutricionista_id', document.querySelector("#nutricionista").value);
-        formData.append('dataC', document.querySelector("#dataC").value);
-        formData.append('periodo', document.querySelector("#periodo").value);
-        formData.append('descricao', document.querySelector("#descricao").value);
-
-        formData.append('produtos', JSON.stringify(produtosSelecionados));
-        console.log(produtosSelecionados);
-        console.log(formData.get('produtos'));
-
-        fetch('procCad.php', {
-            method: 'POST',
-            body: formData
-        }).then(response => window.location.href = '../listarCardapio/listarCardapio.php')//.then(response => window.location.href = '../listarCardapio/listarCardapio.php')
+    // Antes de enviar o formulário principal, armazena os produtos no campo oculto
+    document.querySelector("#cardapioForm").addEventListener('submit', function() {
+        document.getElementById('produtos').value = JSON.stringify(produtosSalvos);
+        console.log("Produtos enviados:", produtosSalvos); // Depuração
     });
 });
-
-document.addEventListener('DOMContentLoaded', () => {
-        const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
-        if (logoutButton) {
-            logoutButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                Swal.fire({
-                    title: 'Deseja realmente sair?',
-                    text: "Você será desconectado do sistema.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Sim, sair',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = logoutButton.href;
-                    }
-                });
-            });
-        }
-    });
 </script>
 </body>
 </html>

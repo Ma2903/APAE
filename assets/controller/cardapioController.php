@@ -21,20 +21,18 @@ class cardapioController {
             die("Erro ao cadastrar cardápio: " . $e->getMessage());
         }
     }
-    public function criarCadProd($cardapio_id, $produto_id, $quantidade, $custo) {
+    public function criarCadProd($cardapio_id, $produto_id, $quantidade) {
         $this->db->insert("cardapio_produtos", (object)[
             "cardapio_id" => $cardapio_id,
             "produto_id" => $produto_id,
             "quantidade" => $quantidade,
-            "custo" => $custo
         ]);
     }
-    public function editarCadProd($cardapio_id, $produto_id, $quantidade, $custo) {
+    public function editarCadProd($cardapio_id, $produto_id, $quantidade) {
         $this->db->update("cardapio_produtos", (object)[
             "cardapio_id" => $cardapio_id,
             "produto_id" => $produto_id,
             "quantidade" => $quantidade,
-            "custo" => $custo
         ]);
     }
 
