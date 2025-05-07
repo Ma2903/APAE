@@ -236,9 +236,11 @@ if(isset($_GET['dataInicio']) && isset($_GET['dataFim']) && $cotasFiltradas == n
                 </section>
             </div>
             <div class="right">
-                <section class="add-quote">
-                    <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn"><i class="fas fa-plus"></i> Cadastrar Nova Cotação</a>
-                </section>
+                <?php if ($tipo_usuario !== 'nutricionista'): ?>
+                    <section class="add-quote">
+                        <a href="../cadastrarCotacoes/cadCotacoes.php" class="add-quote-btn"><i class="fas fa-plus"></i> Cadastrar Nova Cotação</a>
+                    </section>
+                <?php endif; ?>
             </div>
     </section>
     <table>

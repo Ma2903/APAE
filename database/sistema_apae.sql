@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 07/05/2025 às 01:44
+-- Tempo de geração: 07/05/2025 às 06:45
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -42,7 +42,9 @@ CREATE TABLE `cardapios` (
 
 INSERT INTO `cardapios` (`id`, `nutricionista_id`, `dataC`, `periodo`, `descricao`, `data_criacao`) VALUES
 (1, 3, '2024-09-18', '', 'Cardápio saudável para a semana.', '2024-09-18 01:39:59'),
-(2, 3, '2024-11-11', 'manha', 'BLA BLA BLA ', '2024-11-11 17:13:30');
+(3, 3, '2025-05-07', 'manha-tarde', 'oi', '2025-05-07 03:12:00'),
+(4, 3, '2025-05-08', 'tarde', 'boa noite', '2025-05-07 03:18:39'),
+(8, 3, '2025-05-09', 'manha', 'oi p', '2025-05-07 03:53:05');
 
 -- --------------------------------------------------------
 
@@ -127,12 +129,7 @@ CREATE TABLE `notificacoes` (
 INSERT INTO `notificacoes` (`id`, `usuario_id`, `mensagem`, `data_notificacao`) VALUES
 (2, NULL, 'Lembrete de Cotações', '0000-00-00 00:00:00'),
 (3, NULL, 'Lembrete de Cotações', '0000-00-00 00:00:00'),
-(4, 10, 'Você não realizou cotações nesta semana. Não se esqueça de realizar suas cotações!', '2025-05-07 04:19:58'),
-(5, 4, 'Não houve cotações nesta semana. Favor verificar com os contadores.', '2025-05-07 04:19:58'),
-(6, 10, 'Você não realizou cotações nesta semana. Não se esqueça de realizar suas cotações!', '2025-05-07 04:20:51'),
-(7, 4, 'Não houve cotações nesta semana. Favor verificar com os contadores.', '2025-05-07 04:20:51'),
-(8, 10, 'Você não realizou cotações nesta semana. Não se esqueça de realizar suas cotações!', '2025-05-07 04:21:55'),
-(9, 4, 'Não houve cotações nesta semana. Favor verificar com os contadores.', '2025-05-07 04:21:55');
+(8, 10, 'Você não realizou cotações nesta semana. Não se esqueça de realizar suas cotações!', '2025-05-07 04:21:55');
 
 -- --------------------------------------------------------
 
@@ -159,7 +156,7 @@ CREATE TABLE `permissoes` (
 
 INSERT INTO `permissoes` (`id`, `tipo_usuario`, `gerenciar_usuarios`, `gerenciar_cardapios`, `ver_cardapios`, `gerenciar_produtos`, `ver_produtos`, `gerenciar_cotacoes`, `ver_cotacoes`, `gerenciar_fornecedores`) VALUES
 (1, 'administrador', 1, 1, 1, 1, 1, 1, 1, 1),
-(2, '', 0, 0, 1, 1, 1, 1, 1, 1),
+(2, 'contador', 0, 0, 1, 1, 1, 1, 1, 1),
 (3, 'nutricionista', 0, 1, 1, 0, 1, 0, 1, 0);
 
 -- --------------------------------------------------------
@@ -287,7 +284,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `cardapios`
 --
 ALTER TABLE `cardapios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `cardapio_produtos`
