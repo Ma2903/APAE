@@ -110,13 +110,15 @@
                         }
                         echo "</tr>";
                         echo "<tr>";
-                        echo "<td colspan='7'><ul>";
+                        echo "<td colspan='7'>";
                         $produtinhos = $cotacaoController->verCadProdutos($cardapio->getId());
-                        var_dump($produtinhos);
-                        foreach($produtinhos as $produtoes){
-                            echo '<li>' .$produtoes . '</li>';
+                        // var_dump($produtinhos);
+                        if (!empty($produtinhos)) {
+                            echo implode(', ', $produtinhos); // Exibe os produtos separados por vírgula
+                        } else {
+                            echo "Nenhum produto cadastrado.";
                         }
-                        echo "</ul></td>";
+                        echo "</td>";
                         echo "</tr>";
                         echo "</tbody>";
                         echo "</table>";

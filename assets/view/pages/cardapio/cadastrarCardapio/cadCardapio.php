@@ -48,10 +48,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_cardapio'])
     }
 
     // Redireciona para a página de listagem de cardápios
-    // header('Location: ../listarCardapio/listarCardapio.php');
-    // exit();
+    header('Location: ../listarCardapio/listarCardapio.php');
+     exit();
 }
-var_dump($_POST['produtos']);
+// var_dump($_POST['produtos']);
 ?>
 
 <!DOCTYPE html>
@@ -137,6 +137,7 @@ var_dump($_POST['produtos']);
                             <th>Produto</th>
                             <th>Quantidade</th>
                             <th>Custo</th>
+                            <th>Ação</th>
                         </tr>
                     </thead>
                     <tbody id="produtosBody">
@@ -177,24 +178,33 @@ document.addEventListener('DOMContentLoaded', function() {
         var tableBody = document.getElementById('produtosBody');
         tableBody.innerHTML = '';
 
-        // produtosSalvos.forEach(function(produto, index) {
+// produtosSalvos.forEach(function(produto, index) {
         //     var newRow = tableBody.insertRow();
         //     var cell1 = newRow.insertCell(0);
         //     var cell2 = newRow.insertCell(1);
         //     cell1.innerHTML = produto.produto;
         //     cell2.innerHTML = produto.quantidade;
         // });
-        produtosSelecionados.forEach(function(produto) {
+        produtosSelecionados.forEach(function(produto, index) {
             var newRow = tableBody.insertRow();
             var cell1 = newRow.insertCell(0);
             var cell2 = newRow.insertCell(1);
             var cell3 = newRow.insertCell(2);
+            var cell4 = newRow.insertCell(3); // Nova célula para o botão de remoção
+
             cell1.innerHTML = produto.produto;
             cell2.innerHTML = produto.quantidade;
             cell3.innerHTML = `R$${produto.custo.toFixed(2)}`;
+            cell4.innerHTML = `<button class="remove-btn" data-index="${index}"><i class="fas fa-trash"></i> Remover</button>`;
         });
-        console.log(produtosSelecionados);
-        console.log(produtosSalvos); // Depuração
+
+        // Adiciona evento de clique para os botões de remoção
+        document.querySelectorAll('.remove-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var index = this.getAttribute('data-index');
+                removerProduto(index);
+            });
+        });
     }
 
     function atualizarValorTotal() {
@@ -208,6 +218,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function limpaValores() {
         document.getElementById('produto').value = '';
         document.getElementById('quantidade').value = '';
+    }
+
+    function removerProduto(index) {
+        produtosSelecionados.splice(index, 1); // Remove o produto da lista visual
+        produtosSalvos.splice(index, 1); // Remove o produto da lista que será enviada ao banco
+        atualizarTabela(); // Atualiza a tabela
+        atualizarValorTotal(); // Atualiza o valor total
     }
 
     // Antes de enviar o formulário principal, armazena os produtos no campo oculto
