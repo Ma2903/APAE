@@ -34,18 +34,24 @@ $tipo_usuario = $user->getTipoUsuario();
         </section>
         <section class="user-info">
             <span class="greeting">
-                Olá, <span class="user-role"><?php echo get_class($user); ?></span> 
+                Olá, <span class="user-role">
+                <?php 
+                if ($user->getTipoUsuario() == 'contador') {
+                    echo 'Administrador de Compras';
+                } else {
+                    echo $user->getTipoUsuario();
+                }
+                ?>
+                </span> 
                 <span class="user-name"><?php echo $user->getNome(); ?></span>
             </span>
         </section>
         <div class="right-div">
             <section class="notification-container">
-                <span href="../notificacoes/notificacoes.php" class="notification-btn" aria-label="Notificações">
+                <span class="notification-btn" aria-label="Notificações">
                     <i class="fas fa-bell"></i>
                     <span class="notification-badge">
-                        <?php
-                        echo count($notificacaoController->verNotificacaoPorId($user->getId()));
-                        ?>
+                        <?php echo count($notificacaoController->verNotificacaoPorId($user->getId())); ?>
                     </span>
                 </span>
             </section>
@@ -115,19 +121,14 @@ $tipo_usuario = $user->getTipoUsuario();
     <?php
     $notificacoes = $notificacaoController->verNotificacaoPorId($user->getId());
 
-    if (sizeof($notificacoes) > 0) {
-        $ultimaNotificacao = $notificacoes[sizeof($notificacoes) - 1]->getMensagem();
-        
-        echo "<script>
-        Swal.fire({
-                title: 'Você tem uma nova notificação!',
-                text: '$ultimaNotificacao',
-                icon: 'warning',
-                confirmButtonText: 'Ok!',
-            })
-        </script>";
-    }
+    // Converte as notificações para arrays associativos
+    $notificacoesArray = array_map(function($notificacao) {
+        return $notificacao->toArray();
+    }, $notificacoes);
     ?>
+    <script>
+        const notifications = <?php echo json_encode($notificacoesArray); ?>;
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const logoutButton = document.querySelector('a[href="../logout.php"]'); // Caminho ajustado
@@ -163,6 +164,91 @@ $tipo_usuario = $user->getTipoUsuario();
                 }
             });
         }
+        document.addEventListener('DOMContentLoaded', () => {
+            const notificationButton = document.querySelector('.notification-btn'); // Botão do sininho
+
+            // Função para formatar a data no formato brasileiro
+            function formatarDataBrasileira(data) {
+                const dataObj = new Date(data);
+                const dia = String(dataObj.getDate()).padStart(2, '0');
+                const mes = String(dataObj.getMonth() + 1).padStart(2, '0'); // Mês começa do 0
+                const ano = dataObj.getFullYear();
+                return `${dia}/${mes}/${ano}`;
+            }
+
+            if (notificationButton) {
+                notificationButton.addEventListener('click', () => {
+                    if (notifications.length > 0) {
+                        let notificationList = '<ul style="text-align: left; list-style: none; padding: 0;">';
+                        notifications.forEach(notification => {
+                            const dataFormatada = formatarDataBrasileira(notification.dt_notification);
+                            notificationList += `
+                                <li style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
+                                    <strong style="color: #333;">Mensagem:</strong> ${notification.mensagem}<br>
+                                    <small style="color: #666;"><strong>Data:</strong> ${dataFormatada}</small>
+                                    <button class="delete-notification-btn" data-id="${notification.id}" style="margin-top: 10px; padding: 5px 10px; background-color: #ff4d4d; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                                        Excluir
+                                    </button>
+                                </li>`;
+                        });
+                        notificationList += '</ul>';
+
+                        Swal.fire({
+                            title: '<h3 style="color: #333;">Suas Notificações</h3>',
+                            html: notificationList,
+                            icon: 'info',
+                            confirmButtonText: 'Fechar',
+                            didRender: () => {
+                                document.querySelectorAll('.delete-notification-btn').forEach(button => {
+                                    button.addEventListener('click', (event) => {
+                                        const notificationId = event.target.getAttribute('data-id');
+                                        excluirNotificacao(notificationId);
+                                    });
+                                });
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Sem notificações',
+                            text: 'Você não possui notificações no momento.',
+                            icon: 'info',
+                            confirmButtonText: 'Fechar'
+                        });
+                    }
+                });
+            }
+
+            // Função para excluir notificação
+            function excluirNotificacao(notificationId) {
+                fetch(`../../../controller/notificacao/excluirNotificacao.php?id=${notificationId}`, {
+                    method: 'GET'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Resposta do servidor:', data); // Log para depuração
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Notificação excluída!',
+                            text: 'A notificação foi removida com sucesso.',
+                            icon: 'success',
+                            confirmButtonText: 'Fechar'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Erro!',
+                            text: 'Não foi possível excluir a notificação.',
+                            icon: 'error',
+                            confirmButtonText: 'Fechar'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao excluir notificação:', error); // Log para erros
+                });
+            }
+        });
     </script>
     <?php renderFooter(); ?>
 </body>

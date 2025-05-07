@@ -185,6 +185,28 @@ footer {
     margin: 20px auto;
 }
 
+/* Estilo padrão para o botão de notificações */
+.notification-btn {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* Efeito de hover */
+.notification-btn:hover {
+    color: #007bff; /* Altere a cor do ícone ao passar o mouse */
+}
+
+/* Estilo padrão para o contêiner de notificações */
+.notification-container {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Efeito de hover no contêiner */
+.notification-container:hover {
+    background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
     .dashboard {
@@ -226,15 +248,48 @@ a:focus {
     font-size: 1.8rem;
 }
 
-.notification-container{
+.notification-container {
     background: var(--yellow);
     color: var(--darkblue);
     padding: 8px;
     border-radius: 4px;
 }
 
-.right-div{
+.right-div {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+
+/* Estilo para o modal do SweetAlert2 */
+.custom-swal-popup {
+    font-family: 'Roboto', sans-serif;
+    text-align: left;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para a lista de notificações */
+.custom-swal-popup ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.custom-swal-popup li {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.custom-swal-popup li strong {
+    color: #333;
+}
+
+.custom-swal-popup li small {
+    color: #666;
 }

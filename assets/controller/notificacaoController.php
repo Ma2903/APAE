@@ -30,8 +30,8 @@ class ControladorNotificacao{
             "descricao" => $descricao
         ], $id);
     }
-    public function deletarNotificacao($id){
-        $this->bd->delete("notificacoes", $id);
+    public function deletarNotificacao($id) {
+        return $this->bd->delete("notificacoes", $id);
     }
     
     public function verNotificacaoPorId($id) {

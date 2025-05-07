@@ -89,10 +89,7 @@
                         echo "<td colspan='6' onclick='openFolder(\"{$id}\")'><h2>{$cardapio->getDataC()}</h2></td>";
                         echo "<td class='close-btn' onclick='closeFolder(\"{$id}\")' style='display: none;'>Fechar</td>";
                         echo "</tr>";
-                        // echo "<tr id='$id'>";
-                        // echo "<tr class='folder-content'>";
                         echo "<td colspan='7' class='folder-content'>";
-                        // echo "<span class='close-btn' onclick='closeFolder()'>Fechar</span>";
                         echo "<table>";
                         echo "<thead>";
                         echo "<tr>";
@@ -113,7 +110,7 @@
                         echo "<td>{$cardapio->getDescricao()}</td>";
                         if ($podeGerenciarCardapios) {
                             echo "<td><a href='../editarCardapio/editCardapio.php?id={$cardapio->getId()}&nutricionista_id={$cardapio->getNutricionistaId()}' class='acao-editar'><i class='fas fa-edit'></i> Editar </a></td>";
-                            echo "<td><a href='../deleteCardapio/delCardapio.php?id={$cardapio->getId()}' class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
+                            echo "<td><a href='#' onclick='confirmDelete({$cardapio->getId()}, \"{$cardapio->getDescricao()}\")' class='acao-deletar'><i class='fas fa-trash'></i> Deletar </a></td>";
                         }
                         echo "</tr>";
                         echo "<tr>";
@@ -127,7 +124,6 @@
                         echo "</tbody>";
                         echo "</table>";
                         echo "</td>";
-                        // echo "</tr>";
                         echo "</tbody>";
                     }
                 } 
@@ -142,11 +138,6 @@
     <script>
         
         function openFolder(id) {
-            // let folder = document.getElementById('folder');
-            // let folderContent = document.querySelector('.folder-content');
-            // let closeBtn = document.querySelector('.close-btn');
-            // folderContent.style.display = 'block';
-            // closeBtn.style.display = 'block';
             let folder = document.getElementById('folder');
             let folderContent = document.querySelector('#folder' + id);
             let closeBtn = document.querySelector('.close-btn');
@@ -184,6 +175,28 @@
             });
         }
     });
+
+    function confirmDelete(cardapioId, cardapioDescricao) {
+        Swal.fire({
+            title: `Deseja realmente excluir o cardápio "${cardapioDescricao}"?`,
+            text: "Digite 'DELETAR' para confirmar.",
+            input: 'text',
+            inputPlaceholder: 'Digite DELETAR',
+            showCancelButton: true,
+            confirmButtonText: 'Excluir',
+            cancelButtonText: 'Cancelar',
+            inputValidator: (value) => {
+                if (value !== 'DELETAR') {
+                    return 'Você precisa digitar "DELETAR" para confirmar!';
+                }
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redireciona para o script de exclusão
+                window.location.href = `../deleteCardapio/delCardapio.php?id=${cardapioId}`;
+            }
+        });
+    }
     </script>
 </body>
 </html>

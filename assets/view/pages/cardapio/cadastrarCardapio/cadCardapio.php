@@ -11,6 +11,29 @@ $controladorProduto = new ControladorProdutos();
 $controladorCotacao = new ControladorCotacao();
 $controladorNutricionista = new ControladorUsuarios();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['form_type'] === 'cardapioForm') {
+    if (empty($_POST['nutricionista']) || empty($_POST['dataC']) || empty($_POST['periodo']) || empty($_POST['descricao'])) {
+        die("Todos os campos são obrigatórios.");
+    }
+
+    $controladorCardapio->criarcardapio($_POST['nutricionista'], $_POST['dataC'], $_POST['periodo'], $_POST['descricao']);
+    $cardapios = $controladorCardapio->listarcardapios();
+
+    $cardMaior = 0;
+    foreach ($cardapios as $cardapio) {
+        if ($cardapio->getId() > $cardMaior) {
+            $cardMaior = $cardapio->getId();
+        }
+    }
+
+    $produtos = json_decode($_POST['produtos']);
+    foreach ($produtos as $produto) {
+        $controladorCardapio->criarCadProd($cardMaior, $produto->produtoId, $produto->quantidade, $produto->custo);
+    }
+
+    header('Location: ../listarCardapio/listarCardapio.php');
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,22 +51,24 @@ $controladorNutricionista = new ControladorUsuarios();
 <?php renderHeader(); ?>
 <main>
 <a href="../listarCardapio/listarCardapio.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
-    <h1>Cadastrar Cardápio</h1>
-    <div class="form">
+<h1><i class="fas fa-utensils"></i> Cadastrar Cardápio</h1>
+<div class="form">
+    <!-- Coluna Esquerda -->
+    <div class="form-left">
         <form id="cardapioForm" action="" method="post">
             <input type="hidden" name="form_type" value="cardapioForm">
             <section>
-                <label for="nutricionista">Nutricionista:</label>
+                <label for="nutricionista"><i class="fas fa-user-md"></i> Nutricionista:</label>
                 <select id="nutricionista" name="nutricionista" required>
                     <?php $controladorNutricionista->filtrarNutricionistas(); ?>
                 </select>
             </section>
             <section>
-                <label for="dataC">Data:</label>
+                <label for="dataC"><i class="fas fa-calendar-alt"></i> Data:</label>
                 <input type="date" id="dataC" name="dataC" required>
             </section>
             <section>
-                <label for="periodo">Período:</label>
+                <label for="periodo"><i class="fas fa-clock"></i> Período:</label>
                 <select id="periodo" name="periodo" required>
                     <option value="manha">Manhã</option>
                     <option value="tarde">Tarde</option>
@@ -51,41 +76,43 @@ $controladorNutricionista = new ControladorUsuarios();
                 </select>
             </section>
             <section>
-                <label for="descricao">Descrição:</label>
-                <textarea id="descricao" name="descricao" style="resize: none" rows="6" cols="100"></textarea>
+                <label for="descricao"><i class="fas fa-align-left"></i> Descrição:</label>
+                <textarea id="descricao" name="descricao" placeholder="Digite a descrição do cardápio..." required></textarea>
             </section>
             <section class="confirm">
-                <button type="submit" name="cadastrar_cardapio" id="cadBtn">Cadastrar Cardápio</button>
+                <button type="submit" name="cadastrar_cardapio" id="cadBtn"><i class="fas fa-save"></i> Cadastrar Cardápio</button>
                 <span id="valCardapio">Total: R$00.00</span>
             </section>
         </form>
-        <div class="barra"></div>
+    </div>
+
+    <!-- Coluna Direita -->
+    <div class="form-right">
         <form id="produtoForm" name="produtosForm" action="" method="post">
-            <input type="hidden" name="form_type" value="produtosForm">
             <section>
-                <label for="produto_id">Produto:</label>
+                <label for="produto"><i class="fas fa-box"></i> Produto:</label>
                 <select id="produto" name="produto" required>
                     <?php 
                     $produtos = $controladorProduto->filtrarProdutosCotadosSemanaAtual();
                     foreach ($produtos as $produto) {
                         echo "<option value='{$produto['produto']->getId()}' precopergrama='{$produto['preco_por_grama']}'>{$produto['produto']->getNome()}</option>";
                     }
-                    if(empty($produtos)){
+                    if (empty($produtos)) {
                         echo "<option value=''>Nenhum produto disponível</option>";
                     }
                     ?>
                 </select>
             </section>
             <section>
-                <label for="quantidade">Quantidade (g):</label>
+                <label for="quantidade"><i class="fas fa-weight"></i> Quantidade (g):</label>
                 <input type="number" id="quantidade" name="quantidade" required placeholder="30(g)">
             </section>
             <section class="secbutton">
-                <button type="submit" name="adicionar_produto">Adicionar Produto</button>
+                <button type="submit" name="adicionar_produto"><i class="fas fa-plus"></i> Adicionar Produto</button>
             </section>
             <div class="lista-produtos">
-                <h2>Lista de Produtos Adicionados</h2>
-                <table id="listaProdutosTable" width="100%">
+                <h2><i class="fas fa-list"></i> Lista de Produtos Adicionados</h2>
+                <table id="listaProdutosTable">
                     <thead>
                         <tr>
                             <th>Produto</th>
@@ -100,6 +127,7 @@ $controladorNutricionista = new ControladorUsuarios();
             </div>
         </form>
     </div>
+</div>
 </main>
 <?php renderFooter(); ?>
 <script>
@@ -154,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     document.querySelector("#cardapioForm").addEventListener('submit', function(event) {
-        event.preventDefault();
+        // event.preventDefault(); // Comente esta linha para testar
 
         let formData = new FormData();
 

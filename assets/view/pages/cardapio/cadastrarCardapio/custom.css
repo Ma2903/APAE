@@ -1,50 +1,117 @@
-form{
+form {
     min-height: 500px;
 }
 
-#produtoForm{
+#produtoForm {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
 
-#cardapioForm{
+#cardapioForm {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.secbutton{
+.secbutton {
     display: flex;
     justify-content: end;
 }
 
-.lista-produtos{
-    color: #2a3e85;
-    overflow-y: scroll;
-    min-height: 240px;
-    max-height: 240px;
-    margin-top: 10px;
+.form {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
 }
-table{
+
+.form-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-right {
+    background-color: var(--lightwhite);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.lista-produtos {
+    color: #2a3e85;
+    overflow-y: auto;
+    min-height: 240px;
+    max-height: 300px;
+    margin-top: 10px;
+    border: 1px solid var(--darkblue);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.lista-produtos table {
+    width: 100%;
     border-collapse: collapse;
 }
 
-.lista-produtos th, .lista-produtos td{
-    border: 1px solid #2a3e85;
+.lista-produtos th, .lista-produtos td {
+    border: 1px solid var(--darkblue);
+    padding: 8px;
+    text-align: left;
 }
 
-.lista-produtos td{
-    padding: 5px;   
+.lista-produtos td {
+    padding: 5px;
 }
-.confirm{
+
+.confirm {
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    button{
+    button {
         margin-top: 0;
-    }	
+    }
 }
-#valCardapio{
+
+#valCardapio {
     font-size: 24px;
 }
 
+
+#editBtn {
+    padding: 12px 20px;
+    background-color: var(--darkblue);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#editBtn:hover {
+    background-color: var(--yellow);
+    color: var(--darkblue);
+    transform: scale(1.05);
+}
+
+/* Estilização para o campo descrição */
+textarea#descricao {
+    padding: 15px;
+    font-size: 1rem;
+    border: 2px solid var(--darkblue);
+    border-radius: 8px;
+    background-color: var(--lightwhite);
+    color: var(--darkgray);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    resize: vertical; /* Permite redimensionar verticalmente */
+    min-height: 120px; /* Altura mínima */
+    max-height: 300px; /* Altura máxima */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+textarea#descricao:focus {
+    border-color: var(--yellow);
+    box-shadow: 0 0 8px rgba(255, 223, 0, 0.5); /* Efeito de foco */
+    outline: none;
+}

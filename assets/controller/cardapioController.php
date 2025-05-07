@@ -10,12 +10,16 @@ class cardapioController {
     }
 
     public function criarcardapio($nutricionista_id, $dataC, $periodo, $descricao) {
-        $this->db->insert("cardapios", (object)[
-            "nutricionista_id" => $nutricionista_id,
-            "dataC" => $dataC,
-            "periodo" => $periodo,
-            "descricao" => $descricao
-        ]);
+        try {
+            $this->db->insert("cardapios", (object)[
+                "nutricionista_id" => $nutricionista_id,
+                "dataC" => $dataC,
+                "periodo" => $periodo,
+                "descricao" => $descricao
+            ]);
+        } catch (Exception $e) {
+            die("Erro ao cadastrar cardápio: " . $e->getMessage());
+        }
     }
     public function criarCadProd($cardapio_id, $produto_id, $quantidade, $custo) {
         $this->db->insert("cardapio_produtos", (object)[

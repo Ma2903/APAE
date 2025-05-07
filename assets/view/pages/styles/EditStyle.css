@@ -130,3 +130,24 @@ footer {
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
     flex-shrink: 0;
 }
+
+/* Ícones nos campos */
+form label i {
+    color: var(--yellow);
+    font-size: 1.2rem;
+}
+
+/* Estilização para o label do campo descrição */
+label[for="descricao"] {
+    font-weight: bold;
+    color: var(--darkblue);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+label[for="descricao"] i {
+    color: var(--yellow);
+    font-size: 1.2rem;
+}

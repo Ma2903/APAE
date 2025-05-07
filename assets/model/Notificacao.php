@@ -48,5 +48,15 @@ class Notificacao {
     public function getIsActive() {
         return $this->is_active;
     }
+
+    public function toArray() {
+        return [
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'mensagem' => $this->mensagem,
+            'dt_notification' => $this->dt_notification,
+            'is_active' => $this->is_active
+        ];
+    }
 }
 ?>
