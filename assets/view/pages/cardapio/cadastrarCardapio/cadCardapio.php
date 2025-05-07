@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['form_type'] === 'cardapioFo
     <link rel="stylesheet" href="./custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
+
 </head>
 <body>
 <?php renderHeader(); ?>
@@ -167,6 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
             cell2.innerHTML = produto.quantidade;
             cell3.innerHTML = `R$${produto.custo.toFixed(2)}`;
         });
+        console.log(produtosSelecionados);
     }
     function atualizarValorTotal(){
         let total = 0
@@ -192,11 +194,13 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('descricao', document.querySelector("#descricao").value);
 
         formData.append('produtos', JSON.stringify(produtosSelecionados));
+        console.log(produtosSelecionados);
+        console.log(formData.get('produtos'));
 
         fetch('procCad.php', {
             method: 'POST',
             body: formData
-        }).then(response => window.location.href = '../listarCardapio/listarCardapio.php')
+        }).then(response => window.location.href = '../listarCardapio/listarCardapio.php')//.then(response => window.location.href = '../listarCardapio/listarCardapio.php')
     });
 });
 
