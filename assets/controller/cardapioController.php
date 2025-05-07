@@ -46,6 +46,7 @@ class cardapioController {
             "cardapio_id" => $cardapio_id,
             "produto_id" => $produto_id
         ]);
+        error_log("Removendo produto do cardápio: cardapio_id={$cardapio_id}, produto_id={$produto_id}");
     }
 
     public function listarcardapios() {
@@ -125,6 +126,25 @@ class cardapioController {
             "produto_id" => $produto_id
         ]);
         return !empty($produtos); // Retorna true se o produto existir
+    }
+
+    public function listarCadProdutos($cardapioID) {
+        $query = "
+            SELECT 
+                cp.produto_id, 
+                cp.quantidade, 
+                p.nome AS produto_nome, 
+                (SELECT preco_unitario / rel_un_peso FROM cotas WHERE produto_id = cp.produto_id ORDER BY data_cotacao DESC LIMIT 1) AS preco_por_grama,
+                (cp.quantidade * (SELECT preco_unitario / rel_un_peso FROM cotas WHERE produto_id = cp.produto_id ORDER BY data_cotacao DESC LIMIT 1)) AS custo
+            FROM 
+                cardapio_produtos cp
+            JOIN 
+                produtos p ON cp.produto_id = p.id
+            WHERE 
+                cp.cardapio_id = :cardapio_id
+        ";
+
+        return $this->db->executeQuery($query, ['cardapio_id' => $cardapioID]);
     }
 }
 ?>

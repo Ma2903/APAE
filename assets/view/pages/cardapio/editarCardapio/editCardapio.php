@@ -60,10 +60,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_cardapio'])
         foreach ($produtosRemovidos as $produto) {
             if (isset($produto['produtoId'])) {
                 $controladorCardapio->deleteCadProd($cardapioID, $produto['produtoId']);
+                error_log("Produto removido: " . $produto['produtoId']); // Log para depuração
             } else {
                 error_log("Produto removido inválido: " . json_encode($produto));
             }
         }
+    } else {
+        error_log("Nenhum produto removido recebido ou formato inválido.");
     }
 
     // Redireciona para a página de listagem de cardápios
@@ -146,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_cardapio'])
             </section>
             <section>
                 <label for="quantidade"><i class="fas fa-weight"></i> Quantidade (g):</label>
-                <input type="number" id="quantidade" name="quantidade" required placeholder="30(g)">
+                <input type="number" id="quantidade" name="quantidade" placeholder="30(g)">
             </section>
             <section class="secbutton">
                 <button type="submit" name="adicionar_produto"><i class="fas fa-plus"></i> Adicionar Produto</button>
@@ -178,47 +181,13 @@ document.addEventListener('DOMContentLoaded', function () {
     var produtosSalvos = [];
     var produtosRemovidos = [];
 
-    // Carrega os produtos do banco de dados
+    // Carrega os produtos do banco de dados com os custos já calculados
     produtosSelecionados = produtosSelecionados.concat(
-        <?php echo json_encode($controladorCotacao->listarCadProdutos($cardapioID), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK); ?>
+        <?php echo json_encode($controladorCardapio->listarCadProdutos($cardapioID), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK); ?>
     );
 
     atualizarTabela();
     atualizarValorTotal();
-
-    // Adicionar produto
-    document.getElementById('produtoForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        var produtoSelect = document.getElementById('produto');
-        var produtoId = produtoSelect.value;
-        var produtoNome = produtoSelect.options[produtoSelect.selectedIndex].text;
-        var quantidade = parseFloat(document.getElementById('quantidade').value);
-        var precoPorGrama = parseFloat(produtoSelect.options[produtoSelect.selectedIndex].getAttribute('precopergrama'));
-
-        if (!produtoId || !quantidade || isNaN(precoPorGrama)) {
-            alert("Preencha todos os campos corretamente.");
-            return;
-        }
-
-        var produtoCusto = precoPorGrama * quantidade;
-
-        produtosSelecionados.push({ produtoId: produtoId, produto: produtoNome, quantidade: quantidade, custo: produtoCusto });
-        produtosSalvos.push({ produtoId: produtoId, quantidade: quantidade });
-
-        atualizarTabela();
-        atualizarValorTotal();
-        limpaValores();
-    });
-
-    // Remover produto
-    function removerProduto(index) {
-        var produtoRemovido = produtosSelecionados[index];
-        produtosSelecionados.splice(index, 1);
-        produtosRemovidos.push(produtoRemovido);
-        atualizarTabela();
-        atualizarValorTotal();
-    }
 
     // Atualizar tabela de produtos
     function atualizarTabela() {
@@ -232,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var cell3 = newRow.insertCell(2);
             var cell4 = newRow.insertCell(3);
 
-            cell1.innerHTML = produto.produto;
+            cell1.innerHTML = produto.produto_nome;
             cell2.innerHTML = `${produto.quantidade} g`;
             cell3.innerHTML = `R$${produto.custo.toFixed(2)}`;
             cell4.innerHTML = `<button class="remove-btn" data-index="${index}"><i class="fas fa-trash"></i> Remover</button>`;
@@ -254,21 +223,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         document.querySelector("#valCardapio").innerHTML = `Total: R$${total.toFixed(2)}`;
     }
-
-    // Limpar campos do formulário
-    function limpaValores() {
-        document.getElementById('produto').value = '';
-        document.getElementById('quantidade').value = '';
-    }
-
-    // Antes de enviar o formulário principal, armazena os produtos no campo oculto
-    document.querySelector("#cardapioForm").addEventListener('submit', function () {
-        document.getElementById('produtos').value = JSON.stringify(produtosSalvos);
-        document.getElementById('produtosRemovidos').value = JSON.stringify(produtosRemovidos);
-
-        console.log("Produtos enviados:", produtosSalvos);
-        console.log("Produtos removidos:", produtosRemovidos);
-    });
 });
 </script>
 </body>

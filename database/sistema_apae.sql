@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 07/05/2025 às 06:45
+-- Tempo de geração: 07/05/2025 às 14:57
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -42,9 +42,7 @@ CREATE TABLE `cardapios` (
 
 INSERT INTO `cardapios` (`id`, `nutricionista_id`, `dataC`, `periodo`, `descricao`, `data_criacao`) VALUES
 (1, 3, '2024-09-18', '', 'Cardápio saudável para a semana.', '2024-09-18 01:39:59'),
-(3, 3, '2025-05-07', 'manha-tarde', 'oi', '2025-05-07 03:12:00'),
-(4, 3, '2025-05-08', 'tarde', 'boa noite', '2025-05-07 03:18:39'),
-(8, 3, '2025-05-09', 'manha', 'oi p', '2025-05-07 03:53:05');
+(15, 3, '2025-05-21', 'manha', 'oi teste', '2025-05-07 11:14:10');
 
 -- --------------------------------------------------------
 
@@ -58,6 +56,15 @@ CREATE TABLE `cardapio_produtos` (
   `produto_id` int(11) NOT NULL,
   `quantidade` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `cardapio_produtos`
+--
+
+INSERT INTO `cardapio_produtos` (`id`, `cardapio_id`, `produto_id`, `quantidade`) VALUES
+(10, 15, 8, 30.00),
+(11, 15, 12, 50.00),
+(13, 15, 14, 1.00);
 
 -- --------------------------------------------------------
 
@@ -81,7 +88,8 @@ CREATE TABLE `cotas` (
 
 INSERT INTO `cotas` (`id`, `produto_id`, `fornecedor_id`, `preco_unitario`, `quantidade`, `data_cotacao`, `rel_un_peso`) VALUES
 (11, 8, 1, 19.99, 10.00, '2025-05-06', 50),
-(13, 12, 1, 25.00, 5.00, '2025-05-06', 200);
+(13, 12, 1, 25.00, 5.00, '2025-05-06', 200),
+(14, 14, 6, 10.00, 80.00, '2025-05-07', 1);
 
 -- --------------------------------------------------------
 
@@ -284,19 +292,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `cardapios`
 --
 ALTER TABLE `cardapios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de tabela `cardapio_produtos`
 --
 ALTER TABLE `cardapio_produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `cotas`
 --
 ALTER TABLE `cotas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `fornecedores`
