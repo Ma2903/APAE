@@ -25,66 +25,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listar Cardápios</title>
     <link rel="stylesheet" href="../../styles/ListarStyle.css">
+    <link rel="stylesheet" href="./customCardapio.css"> <!-- Novo arquivo CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
-   <style>
-        .close-btn{
-            text-align: center;
-            height: 50px;
-            padding: 12px 20px;
-            background-color: var(--darkblue);
-            color: var(--white);
-            border: none;
-            border-radius: 0px 8px 8px 0px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        table{
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 0px;
-        }
-
-        table th, table td{
-            padding: 15px;
-            white-space: nowrap;
-        }
-
-
-
-        .folder-content{
-            display: block;
-        }
-        .folder{
-            background-color: var(--darkblue);
-            color: var(--white);
-        }
-    </style>
 </head>
 <body>
     <?php renderHeader(); ?>
     <main>
         <h1>Listar Cardápios</h1>
         <section class="search">
-            <input type="text" id="search-input" name="search" placeholder="Pesquisar produtos...">
-        <section class="add-user">
-        <?php if ($podeGerenciarCardapios): ?>
-            <a href="../cadastrarCardapio/cadCardapio.php" class="add-user-btn">Cadastrar Cardápio</a>
-        <?php endif; ?>
-        </section>
-        <section class="filter">
-            <button class="filter-btn" onclick="toggleFilterMenu()">
-                <i class="fas fa-filter"></i> Filtrar
-            </button>
-            <section class="filter-menu" id="filter-menu">
-                <button onclick="filterUsers('contador')">Contadores</button>
-                <button onclick="filterUsers('nutricionista')">Nutricionistas</button>
-                <button onclick="filterUsers('administrador')">Administradores</button>
-                <button class="close-filter" onclick="clearFilter()"><i class="fas fa-times"></i></button>
-            </section>
-        </section>
+            <div>
+                <section class="input-filter-date">
+                    <label for="dataInicio"><i class="fas fa-calendar-alt"></i> Data Início:</label>
+                    <input type="date" id="dataInicio" name="dataInicio" value="<?php echo $_GET['dataInicio'] ?? ''; ?>">
+                </section>
+                <section class="input-filter-date">
+                    <label for="dataFim"><i class="fas fa-calendar-alt"></i> Data Fim:</label>
+                    <div class="input-group">
+                        <input type="date" id="dataFim" name="dataFim" value="<?php echo $_GET['dataFim'] ?? ''; ?>">
+                        <button class="buttonLimpar" onclick="limparFiltros()">
+                            <i class="fas fa-times"></i> Limpar Filtro
+                        </button>
+                    </div>
+                </section>
+            </div>
+            <div class="right">
+                <section class="add-user">
+                    <?php if ($podeGerenciarCardapios): ?>
+                        <a href="../cadastrarCardapio/cadCardapio.php" class="add-user-btn">
+                            <i class="fas fa-plus"></i> Cadastrar Cardápio
+                        </a>
+                    <?php endif; ?>
+                </section>
+            </div>
         </section>
         <table>
             <tbody>
@@ -94,23 +67,34 @@
                     usort($cardapios, function($a, $b) {
                         return strtotime($b->getDataC()) - strtotime($a->getDataC());
                     });
+
+                    if (isset($_GET['dataInicio']) && isset($_GET['dataFim'])) {
+                        $dataInicio = $_GET['dataInicio'];
+                        $dataFim = $_GET['dataFim'];
+
+                        $cardapios = array_filter($cardapios, function ($cardapio) use ($dataInicio, $dataFim) {
+                            $dataCardapio = $cardapio->getDataC();
+                            return $dataCardapio >= $dataInicio && $dataCardapio <= $dataFim;
+                        });
+                    }
+
                     foreach ($cardapios as $cardapio) {
                         $id = 'folder' . $cardapio->getId();
-                        echo "<tbody>";
-                        echo "<tr class='folder'>";
-                        echo "<td colspan='6' onclick='openFolder(\"{$id}\")'><h2>{$cardapio->getDataC()}</h2></td>";
-                        echo "<td class='close-btn' onclick='closeFolder(\"{$id}\")' style='display: none;'>Fechar</td>";
+                        $dataFormatada = date("d/m/Y", strtotime($cardapio->getDataC())); // Formata a data para o formato brasileiro
+                        echo "<tr class='folder' onclick='toggleFolder(\"{$id}\")'>";
+                        echo "<td colspan='6'><h2>{$dataFormatada} <i class='fas fa-chevron-down'></i></h2></td>"; // Adiciona a setinha
                         echo "</tr>";
-                        echo "<td colspan='7' class='folder-content'>";
+                        echo "<tr id='{$id}' class='folder-content'>";
+                        echo "<td colspan='7'>";
                         echo "<table>";
                         echo "<thead>";
                         echo "<tr>";
-                        echo "<th>ID</th>";
-                        echo "<th>Nutricionista</th>";
-                        echo "<th>Período</th>";
-                        echo "<th>Descrição</th>";
+                        echo "<th><i class='fas fa-hashtag'></i> ID</th>";
+                        echo "<th><i class='fas fa-user-md'></i> Nutricionista</th>";
+                        echo "<th><i class='fas fa-clock'></i> Período</th>";
+                        echo "<th><i class='fas fa-align-left'></i> Descrição</th>";
                         if ($podeGerenciarCardapios) {
-                            echo "<th colspan='2'>Ações</th>";
+                            echo "<th colspan='2'><i class='fas fa-tools'></i> Ações</th>";
                         }
                         echo "</tr>";
                         echo "</thead>";
@@ -137,10 +121,9 @@
                         echo "</tbody>";
                         echo "</table>";
                         echo "</td>";
-                        echo "</tbody>";
+                        echo "</tr>";
                     }
-                } 
-                else {
+                } else {
                     echo "<tr><td colspan='7'>Nenhum cardápio encontrado.</td></tr>";
                 }
                 ?>
@@ -149,9 +132,7 @@
     </main>
     <?php renderFooter(); ?>
     <script>
-        
         function openFolder(id) {
-            let folder = document.getElementById('folder');
             let folderContent = document.querySelector('#folder' + id);
             let closeBtn = document.querySelector('.close-btn');
             folderContent.style.display = 'block';
@@ -159,9 +140,8 @@
             console.log(folderContent);
             console.log(id);
         }
-        
+
         function closeFolder(id) {
-            let folder = document.getElementById('folder');
             let folderContent = document.querySelector('#folder' + id);
             let closeBtn = document.querySelector('.close-btn');
             folderContent.style.display = 'none';
@@ -169,47 +149,77 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-        const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
-        if (logoutButton) {
-            logoutButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                Swal.fire({
-                    title: 'Deseja realmente sair?',
-                    text: "Você será desconectado do sistema.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Sim, sair',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = logoutButton.href;
-                    }
+            const logoutButton = document.querySelector('a[href="../../logout.php"]'); // Caminho ajustado
+            if (logoutButton) {
+                logoutButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    Swal.fire({
+                        title: 'Deseja realmente sair?',
+                        text: "Você será desconectado do sistema.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sim, sair',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = logoutButton.href;
+                        }
+                    });
                 });
-            });
-        }
-    });
-
-    function confirmDelete(cardapioId, cardapioDescricao) {
-        Swal.fire({
-            title: `Deseja realmente excluir o cardápio "${cardapioDescricao}"?`,
-            text: "Digite 'DELETAR' para confirmar.",
-            input: 'text',
-            inputPlaceholder: 'Digite DELETAR',
-            showCancelButton: true,
-            confirmButtonText: 'Excluir',
-            cancelButtonText: 'Cancelar',
-            inputValidator: (value) => {
-                if (value !== 'DELETAR') {
-                    return 'Você precisa digitar "DELETAR" para confirmar!';
-                }
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Redireciona para o script de exclusão
-                window.location.href = `../deleteCardapio/delCardapio.php?id=${cardapioId}`;
             }
         });
-    }
+
+        function confirmDelete(cardapioId, cardapioDescricao) {
+            Swal.fire({
+                title: `Deseja realmente excluir o cardápio "${cardapioDescricao}"?`,
+                text: "Digite 'DELETAR' para confirmar.",
+                input: 'text',
+                inputPlaceholder: 'Digite DELETAR',
+                showCancelButton: true,
+                confirmButtonText: 'Excluir',
+                cancelButtonText: 'Cancelar',
+                inputValidator: (value) => {
+                    if (value !== 'DELETAR') {
+                        return 'Você precisa digitar "DELETAR" para confirmar!';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `../deleteCardapio/delCardapio.php?id=${cardapioId}`;
+                }
+            });
+        }
+
+        function limparFiltros() {
+            window.location.href = 'listarCardapio.php';
+        }
+
+        function filterByDate() {
+            const dataInicio = document.querySelector("#dataInicio").value;
+            const dataFim = document.querySelector("#dataFim").value;
+
+            if (dataInicio && dataFim) {
+                window.location.href = `listarCardapio.php?dataInicio=${dataInicio}&dataFim=${dataFim}`;
+            }
+        }
+
+        document.querySelector("#dataFim").addEventListener("change", filterByDate);
+        document.querySelector("#dataInicio").addEventListener("change", filterByDate);
+
+        function toggleFolder(id) {
+            const folderContent = document.getElementById(id);
+            const icon = folderContent.previousElementSibling.querySelector('i');
+
+            // Alterna a classe 'active' para abrir/fechar o conteúdo
+            folderContent.classList.toggle('active');
+
+            // Rotaciona a setinha
+            if (folderContent.classList.contains('active')) {
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
     </script>
 </body>
 </html>

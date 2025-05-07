@@ -200,18 +200,25 @@ a:focus, button:focus, input:focus {
 
 /* Botão de limpar filtros */
 .buttonLimpar {
-    padding: 10px 20px;
-    background-color: var(--red);
-    color: var(--white);
+    padding: 8px 15px;
+    background-color: #007bff; /* Azul padrão */
+    color: #fff;
+    border: none;
     border-radius: 5px;
-    font-size: 1rem;
-    text-align: center;
+    font-size: 0.9rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.buttonLimpar i {
+    font-size: 1rem;
+}
+
 .buttonLimpar:hover {
-    background-color: #b52a2a; /* Vermelho mais escuro */
+    background-color: #0056b3; /* Azul mais escuro */
     transform: scale(1.05);
 }
 

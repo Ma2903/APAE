@@ -1,0 +1,182 @@
+.search {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.search > div {
+    width: 50%;
+    display: flex;
+}
+
+.search > div > * {
+    margin: 0;
+    margin-right: 20px;
+}
+
+.search > div.right > * {
+    margin-right: 0;
+    margin-left: 20px;
+}
+
+.search > div.right {
+    justify-content: flex-end;
+}
+
+.input-filter-date {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 40%;
+}
+
+.input-filter-date label {
+    font-size: 1rem;
+    color: var(--darkblue);
+    font-weight: bold;
+}
+
+.input-filter-date input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid var(--darkblue);
+    border-radius: 5px;
+    background-color: var(--white);
+    color: var(--darkgray);
+    transition: border-color 0.3s ease;
+    width: 100%;
+}
+
+.input-filter-date input:focus {
+    border-color: var(--yellow);
+    outline: none;
+}
+
+.add-user-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: var(--darkblue);
+    color: var(--white);
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-user-btn i {
+    font-size: 1.2rem;
+}
+
+.add-user-btn:hover {
+    background-color: var(--yellow);
+    color: var(--darkblue);
+    transform: scale(1.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    text-align: left;
+    background-color: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+table thead tr {
+    background-color: var(--darkblue);
+    color: var(--white);
+    font-weight: bold;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid var(--darkblue);
+}
+
+.folder {
+    background-color: var(--darkblue);
+    color: var(--white);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.folder:hover {
+    background-color: var(--yellow);
+    color: var(--darkblue);
+}
+
+.folder h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin: 0;
+}
+
+.folder i {
+    transition: transform 0.3s ease;
+}
+
+.folder-content {
+    display: none;
+    padding: 10px;
+    background-color: var(--lightgray);
+    border-radius: 5px;
+}
+
+.folder-content.active {
+    display: table-row;
+}
+
+.close-btn {
+    text-align: center;
+    height: 50px;
+    padding: 12px 20px;
+    background-color: var(--darkblue);
+    color: var(--white);
+    border: none;
+    border-radius: 0px 8px 8px 0px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.close-btn:hover {
+    background-color: var(--yellow);
+    color: var(--darkblue);
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.buttonLimpar {
+    padding: 8px 15px;
+    background-color: var(--darkblue); /* Cor azul */
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.buttonLimpar i {
+    font-size: 1rem;
+}
+
+.buttonLimpar:hover {
+    background-color: #0056b3; /* Azul mais escuro */
+    transform: scale(1.05);
+}
