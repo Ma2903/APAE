@@ -13,43 +13,55 @@ $controladorProduto = new ControladorProdutos();
 $controladorCotacao = new ControladorCotacao();
 $controladorNutricionista = new ControladorUsuarios();
 
-if (isset($_GET['id'])) {
-    $cardapioID = $_GET['id'];
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $cardapioID = (int)$_GET['id'];
     $cardapio = $controladorCardapio->getCardapioById($cardapioID);
+
+    if (!$cardapio) {
+        die("Cardápio não encontrado.");
+    }
+} else {
+    die("ID inválido.");
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_cardapio'])) {
-    if (empty($_POST['nutricionista']) || empty($_POST['dataC']) || empty($_POST['periodo']) || empty($_POST['descricao'])) {
-        die("Todos os campos são obrigatórios.");
-    }
+    // Atualiza os dados do cardápio
+    $controladorCardapio->editarcardapio(
+        $cardapioID,
+        $_POST['nutricionista'],
+        $_POST['dataC'],
+        $_POST['periodo'],
+        $_POST['descricao']
+    );
 
-    // Cria o cardápio
-    $controladorCardapio->editarcardapio($cardapioID, $_POST['nutricionista'], $_POST['dataC'], $_POST['periodo'], $_POST['descricao']);
-    $cardapios = $controladorCardapio->listarcardapios();
-
-    // Obtém o ID do último cardápio criado
-    $cardMaior = 0;
-    foreach ($cardapios as $cardapio) {
-        if ($cardapio->getId() > $cardMaior) {
-            $cardMaior = $cardapio->getId();
-        }
-    }
-
-    // Decodifica os produtos enviados como JSON
+    // Processa os produtos adicionados
     $produtos = json_decode($_POST['produtos'], true);
-
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        die("Erro ao decodificar JSON: " . json_last_error_msg());
-    }
-
-    // Atualiza os produtos no banco de dados
     if (is_array($produtos)) {
         foreach ($produtos as $produto) {
             if (isset($produto['produtoId'], $produto['quantidade'])) {
-                //var_dump($cardMaior, $produto['produtoId'], $produto['quantidade']); // Depuração
-                $controladorCardapio->editarCadProd($cardMaior, $produto['produtoId'], $produto['quantidade']);
+                // Verifica se o produto já existe no cardápio
+                $produtoExistente = $controladorCardapio->verificarProdutoNoCardapio($cardapioID, $produto['produtoId']);
+                if ($produtoExistente) {
+                    // Atualiza a quantidade do produto
+                    $controladorCardapio->editarCadProd($cardapioID, $produto['produtoId'], $produto['quantidade']);
+                } else {
+                    // Insere um novo produto no cardápio
+                    $controladorCardapio->criarCadProd($cardapioID, $produto['produtoId'], $produto['quantidade']);
+                }
             } else {
-                error_log("Produto com dados incompletos: " . json_encode($produto));
+                error_log("Produto inválido: " . json_encode($produto));
+            }
+        }
+    }
+
+    // Processa os produtos removidos
+    $produtosRemovidos = json_decode($_POST['produtosRemovidos'], true);
+    if (is_array($produtosRemovidos)) {
+        foreach ($produtosRemovidos as $produto) {
+            if (isset($produto['produtoId'])) {
+                $controladorCardapio->deleteCadProd($cardapioID, $produto['produtoId']);
+            } else {
+                error_log("Produto removido inválido: " . json_encode($produto));
             }
         }
     }
@@ -83,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_cardapio'])
         <input type="hidden" name="id" value="<?php echo $cardapio->getId(); ?>">
             <input type="hidden" name="form_type" value="cardapioForm">
             <input type="hidden" id="produtos" name="produtos"> <!-- Campo oculto para armazenar os produtos -->
+            <input type="hidden" id="produtosRemovidos" name="produtosRemovidos"> <!-- Campo oculto para armazenar os produtos removidos -->
             <section>
                 <label for="nutricionista"><i class="fas fa-user-md"></i> Nutricionista:</label>
                 <select id="nutricionista" name="nutricionista" required>
@@ -121,7 +134,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_cardapio'])
                     <?php 
                     $produtos = $controladorProduto->filtrarProdutosCotadosSemanaAtual();
                     foreach ($produtos as $produto) {
-                        echo "<option value='{$produto['produto']->getId()}' precopergrama='{$produto['preco_por_grama']}'>{$produto['produto']->getNome()}</option>";
+                        echo "<option value='{$produto['produto']->getId()}' precopergrama='{$produto['preco_por_grama']}'>
+    {$produto['produto']->getNome()}
+</option>";
                     }
                     if (empty($produtos)) {
                         echo "<option value=''>Nenhum produto disponível</option>";
@@ -158,9 +173,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_cardapio'])
 </main>
 <?php renderFooter(); ?>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var produtosSelecionados = [];
     var produtosSalvos = [];
+    var produtosRemovidos = [];
 
     // Carrega os produtos do banco de dados
     produtosSelecionados = produtosSelecionados.concat(
@@ -170,72 +186,88 @@ document.addEventListener('DOMContentLoaded', function() {
     atualizarTabela();
     atualizarValorTotal();
 
-    document.getElementById('produtoForm').addEventListener('submit', function(event) {
+    // Adicionar produto
+    document.getElementById('produtoForm').addEventListener('submit', function (event) {
         event.preventDefault();
 
         var produtoSelect = document.getElementById('produto');
         var produtoId = produtoSelect.value;
         var produtoNome = produtoSelect.options[produtoSelect.selectedIndex].text;
-        var quantidade = document.getElementById('quantidade').value;
+        var quantidade = parseFloat(document.getElementById('quantidade').value);
+        var precoPorGrama = parseFloat(produtoSelect.options[produtoSelect.selectedIndex].getAttribute('precopergrama'));
 
-        var produtoCusto = produtoSelect.options[produtoSelect.selectedIndex].getAttribute('precopergrama') * quantidade;
+        if (!produtoId || !quantidade || isNaN(precoPorGrama)) {
+            alert("Preencha todos os campos corretamente.");
+            return;
+        }
+
+        var produtoCusto = precoPorGrama * quantidade;
 
         produtosSelecionados.push({ produtoId: produtoId, produto: produtoNome, quantidade: quantidade, custo: produtoCusto });
-        produtosSalvos.push({ produtoId: produtoId, produto: produtoNome, quantidade: quantidade });
+        produtosSalvos.push({ produtoId: produtoId, quantidade: quantidade });
 
         atualizarTabela();
         atualizarValorTotal();
         limpaValores();
     });
 
+    // Remover produto
+    function removerProduto(index) {
+        var produtoRemovido = produtosSelecionados[index];
+        produtosSelecionados.splice(index, 1);
+        produtosRemovidos.push(produtoRemovido);
+        atualizarTabela();
+        atualizarValorTotal();
+    }
+
+    // Atualizar tabela de produtos
     function atualizarTabela() {
         var tableBody = document.getElementById('produtosBody');
         tableBody.innerHTML = '';
 
-        produtosSelecionados.forEach(function(produto, index) {
+        produtosSelecionados.forEach(function (produto, index) {
             var newRow = tableBody.insertRow();
             var cell1 = newRow.insertCell(0);
             var cell2 = newRow.insertCell(1);
             var cell3 = newRow.insertCell(2);
-            var cell4 = newRow.insertCell(3); // Nova célula para o botão de remoção
+            var cell4 = newRow.insertCell(3);
 
             cell1.innerHTML = produto.produto;
-            cell2.innerHTML = produto.quantidade;
+            cell2.innerHTML = `${produto.quantidade} g`;
             cell3.innerHTML = `R$${produto.custo.toFixed(2)}`;
             cell4.innerHTML = `<button class="remove-btn" data-index="${index}"><i class="fas fa-trash"></i> Remover</button>`;
         });
 
-        // Adiciona evento de clique para os botões de remoção
-        document.querySelectorAll('.remove-btn').forEach(function(button) {
-            button.addEventListener('click', function() {
+        document.querySelectorAll('.remove-btn').forEach(function (button) {
+            button.addEventListener('click', function () {
                 var index = this.getAttribute('data-index');
                 removerProduto(index);
             });
         });
     }
 
-    function removerProduto(index) {
-        produtosSelecionados.splice(index, 1); // Remove o produto da lista
-        produtosSalvos.splice(index, 1); // Remove o produto salvo
-        atualizarTabela();
-        atualizarValorTotal();
-    }
-
+    // Atualizar valor total
     function atualizarValorTotal() {
         let total = 0;
-        produtosSelecionados.forEach(function(produto) {
+        produtosSelecionados.forEach(function (produto) {
             total += produto.custo;
         });
         document.querySelector("#valCardapio").innerHTML = `Total: R$${total.toFixed(2)}`;
     }
 
+    // Limpar campos do formulário
     function limpaValores() {
         document.getElementById('produto').value = '';
         document.getElementById('quantidade').value = '';
     }
 
-    document.querySelector("#cardapioForm").addEventListener('submit', function() {
+    // Antes de enviar o formulário principal, armazena os produtos no campo oculto
+    document.querySelector("#cardapioForm").addEventListener('submit', function () {
         document.getElementById('produtos').value = JSON.stringify(produtosSalvos);
+        document.getElementById('produtosRemovidos').value = JSON.stringify(produtosRemovidos);
+
+        console.log("Produtos enviados:", produtosSalvos);
+        console.log("Produtos removidos:", produtosRemovidos);
     });
 });
 </script>

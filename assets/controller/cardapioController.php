@@ -8,7 +8,7 @@ class cardapioController {
     public function __construct() {
         $this->db = new Database();
     }
-
+    
     public function criarcardapio($nutricionista_id, $dataC, $periodo, $descricao) {
         try {
             $this->db->insert("cardapios", (object)[
@@ -29,10 +29,22 @@ class cardapioController {
         ]);
     }
     public function editarCadProd($cardapio_id, $produto_id, $quantidade) {
-        $this->db->update("cardapio_produtos", (object)[
+        $this->db->update(
+            "cardapio_produtos",
+            (object)[
+                "quantidade" => $quantidade
+            ],
+            [
+                "cardapio_id" => $cardapio_id,
+                "produto_id" => $produto_id
+            ]
+        );
+    }
+
+    public function deleteCadProd($cardapio_id, $produto_id) {
+        $this->db->delete("cardapio_produtos", [
             "cardapio_id" => $cardapio_id,
-            "produto_id" => $produto_id,
-            "quantidade" => $quantidade,
+            "produto_id" => $produto_id
         ]);
     }
 
@@ -105,6 +117,14 @@ class cardapioController {
                 return new Cardapio($cardapios['id'], $cardapios['nutricionista_id'], $cardapios['dataC'], $cardapios['periodo'], $cardapios['descricao']);
             }
         }
+    }
+
+    public function verificarProdutoNoCardapio($cardapio_id, $produto_id) {
+        $produtos = $this->db->read("cardapio_produtos", [
+            "cardapio_id" => $cardapio_id,
+            "produto_id" => $produto_id
+        ]);
+        return !empty($produtos); // Retorna true se o produto existir
     }
 }
 ?>
