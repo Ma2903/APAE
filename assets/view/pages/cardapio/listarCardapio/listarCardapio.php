@@ -114,7 +114,7 @@
                         $produtinhos = $cotacaoController->verCadProdutos($cardapio->getId());
                         // var_dump($produtinhos);
                         if (!empty($produtinhos)) {
-                            echo implode(', ', $produtinhos); // Exibe os produtos separados por vírgula
+                            echo "Ingredientes: " . implode(', ', $produtinhos); // Exibe "Ingredientes: " seguido dos produtos separados por vírgula
                         } else {
                             echo "Nenhum produto cadastrado.";
                         }
