@@ -25,6 +25,14 @@ class cardapioController {
             "custo" => $custo
         ]);
     }
+    public function editarCadProd($cardapio_id, $produto_id, $quantidade, $custo) {
+        $this->db->update("cardapio_produtos", (object)[
+            "cardapio_id" => $cardapio_id,
+            "produto_id" => $produto_id,
+            "quantidade" => $quantidade,
+            "custo" => $custo
+        ]);
+    }
 
     public function listarcardapios() {
         $todosCardapio = $this->db->read("cardapios");

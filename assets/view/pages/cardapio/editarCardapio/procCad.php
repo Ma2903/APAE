@@ -11,21 +11,19 @@ $controladorProduto = new ControladorProdutos();
 $controladorCotacao = new ControladorCotacao();
 $controladorNutricionista = new ControladorUsuarios();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $controladorCardapio->criarcardapio($_POST['nutricionista_id'], $_POST['dataC'], $_POST['periodo'], $_POST['descricao']);
+$controladorCardapio->editarcardapio($_POST['nutricionista_id'], $_POST['dataC'], $_POST['periodo'], $_POST['descricao']);
+$cardapios = $controladorCardapio->listarcardapios();
+
+$cardMaior = 0;
+foreach($cardapios as $cardapio){
+    if($cardapio->getId() > $cardMaior){
+        $cardMaior = $cardapio->getId();
+    }
 }
-    // $cardapios = $controladorCardapio->listarcardapios();
 
-// $cardMaior = 0;
-// foreach($cardapios as $cardapio){
-//     if($cardapio->getId() > $cardMaior){
-//         $cardMaior = $cardapio->getId();
-//     }
-// }
+var_dump("AKI FILHA DA PUTA" . $cardMaior);
 
-// var_dump("AKI FILHA DA PUTA" . $cardMaior);
-$produtos = json_decode($_POST['produtos'], true); // Decodifica o JSON em um array associativo
-
+$produtos = json_decode($_POST['produtos']);
 
 foreach ($produtos as $produto) {
     $controladorCardapio->editarCadProd($cardMaior, $produto->produtoId, $produto->quantidade,$produto->custo);

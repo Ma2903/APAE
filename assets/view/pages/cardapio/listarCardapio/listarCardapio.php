@@ -41,13 +41,25 @@
             transition: background-color 0.3s ease;
         }
 
+        table{
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0px;
+        }
+
         table th, table td{
             padding: 15px;
             white-space: nowrap;
         }
 
+
+
         .folder-content{
             display: block;
+        }
+        .folder{
+            background-color: var(--darkblue);
+            color: var(--white);
         }
     </style>
 </head>
@@ -119,6 +131,7 @@
                         echo "<tr>";
                         echo "<td colspan='7'><ul>";
                         $produtinhos = $cotacaoController->verCadProdutos($cardapio->getId());
+                        var_dump($produtinhos);
                         foreach($produtinhos as $produtoes){
                             echo '<li>' .$produtoes . '</li>';
                         }
